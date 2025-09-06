@@ -99,7 +99,13 @@ class AnalysisSystem:
         
         # BLEU e ROUGE
         try:
+            # Tentar import relativo (quando chamado via main.py)
             from .bleu_rouge import calcular_bleu_rouge_completo
+        except ImportError:
+            # Fallback para import absoluto (quando executado diretamente)
+            from bleu_rouge import calcular_bleu_rouge_completo
+        
+        try:
             df_bleu_rouge, metricas_bleu_rouge, relatorio_bleu_rouge = calcular_bleu_rouge_completo(df)
         except Exception as e:
             print(f"❌ Erro ao calcular BLEU/ROUGE: {e}")
@@ -107,7 +113,13 @@ class AnalysisSystem:
         
         # BERTScore
         try:
+            # Tentar import relativo (quando chamado via main.py)
             from .bertscore import calcular_bertscore_completo
+        except ImportError:
+            # Fallback para import absoluto (quando executado diretamente)
+            from bertscore import calcular_bertscore_completo
+        
+        try:
             df_bertscore, metricas_bertscore, relatorio_bertscore = calcular_bertscore_completo(df_bleu_rouge)
         except Exception as e:
             print(f"❌ Erro ao calcular BERTScore: {e}")
@@ -599,7 +611,11 @@ class AnalysisSystem:
         relatorio.append(f"- **Taxa de Sucesso Geral**: {taxa_geral:.1%}")
         relatorio.append("")
         
-        # Ranking dos modelos
+        # Gerar rankings detalhados
+        relatorio_rankings = self._gerar_rankings_detalhados(metricas_por_modelo)
+        relatorio.append(relatorio_rankings)
+        
+        # Ranking dos modelos (versão simplificada)
         relatorio.append("## 🏆 Ranking dos Modelos")
         relatorio.append("")
         
@@ -726,6 +742,425 @@ class AnalysisSystem:
         
         return sorted(rankings, key=lambda x: x[1], reverse=True)
     
+    def _gerar_rankings_detalhados(self, metricas_por_modelo: Dict[str, Dict]) -> str:
+        """Gera rankings detalhados com métricas normalizadas."""
+        print("🏆 Gerando rankings detalhados...")
+        
+        # Preparar dados para normalização
+        dados_metricas = []
+        for modelo, metricas in metricas_por_modelo.items():
+            dados_modelo = {"Modelo": modelo}
+            
+            # Métricas acadêmicas
+            metricas_acad = metricas.get('academicas', {})
+            dados_modelo.update({
+                "BLEU": metricas_acad.get('bleu_medio', 0),
+                "ROUGE-1": metricas_acad.get('rouge1_medio', 0),
+                "ROUGE-2": metricas_acad.get('rouge2_medio', 0),
+                "ROUGE-L": metricas_acad.get('rougeL_medio', 0),
+                "BERTScore": metricas_acad.get('bertscore_f1_medio', 0)
+            })
+            
+            # Métricas Evidently AI
+            metricas_ev = metricas.get('evidently', {})
+            dados_modelo.update({
+                "Respostas Válidas": metricas_ev.get('respostas_validas', 0),
+                "Taxa de Validade": metricas_ev.get('taxa_validas', 0),
+                "Comprimento Médio": metricas_ev.get('comprimento_medio', 0),
+                "Palavras Médias": metricas_ev.get('palavras_medias', 0),
+                "Consistência de Comprimento": self._calcular_consistencia_comprimento(metricas_ev)
+            })
+            
+            dados_metricas.append(dados_modelo)
+        
+        # Converter para DataFrame
+        df = pd.DataFrame(dados_metricas)
+        
+        # Normalizar métricas
+        df_normalizado = self._normalizar_metricas(df)
+        
+        # Gerar rankings
+        rankings_individuais = self._gerar_rankings_individuais(df_normalizado)
+        rankings_consolidados = self._gerar_rankings_consolidados(df_normalizado)
+        
+        # Gerar relatório de rankings
+        relatorio = []
+        relatorio.append("## 🏆 Rankings Detalhados por Métrica")
+        relatorio.append("")
+        
+        # Rankings por métrica individual
+        for metrica, ranking in rankings_individuais.items():
+            relatorio.append(f"### {metrica}")
+            relatorio.append("")
+            relatorio.append("| Modelo | Score Normalizado | Rank |")
+            relatorio.append("|--------|------------------|------|")
+            
+            for _, row in ranking.iterrows():
+                relatorio.append(f"| {row['Modelo']} | {row[f'Normalized {metrica}']:.4f} | {row['Rank']} |")
+            relatorio.append("")
+        
+        # Rankings consolidados
+        relatorio.append("## 📊 Rankings Consolidados por Categoria")
+        relatorio.append("")
+        
+        for categoria, ranking in rankings_consolidados.items():
+            relatorio.append(f"### {categoria}")
+            relatorio.append("")
+            relatorio.append("| Modelo | Score | Rank |")
+            relatorio.append("|--------|-------|------|")
+            
+            for _, row in ranking.iterrows():
+                relatorio.append(f"| {row['Modelo']} | {row[categoria]:.4f} | {row['Rank']} |")
+            relatorio.append("")
+        
+        # Análise qualitativa
+        analise_qualitativa = self._gerar_analise_qualitativa(df_normalizado, rankings_consolidados)
+        relatorio.append(analise_qualitativa)
+        
+        return "\n".join(relatorio)
+    
+    def _calcular_consistencia_comprimento(self, metricas_ev: Dict) -> float:
+        """Calcula consistência de comprimento baseada no coeficiente de variação."""
+        comprimento_medio = metricas_ev.get('comprimento_medio', 0)
+        comprimento_std = metricas_ev.get('comprimento_std', 0)
+        
+        if comprimento_medio > 0:
+            cv = (comprimento_std / comprimento_medio) * 100
+            # Inverter CV para ranking (menor CV = maior consistência)
+            return max(0, 100 - cv)
+        return 0
+    
+    def _normalizar_metricas(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Normaliza métricas para escala 0-1 (quanto maior melhor)."""
+        df_normalizado = df.copy()
+        
+        # Métricas acadêmicas
+        academic_metrics = ["BLEU", "ROUGE-1", "ROUGE-2", "ROUGE-L", "BERTScore"]
+        # Métricas Evidently AI
+        evidently_metrics = ["Respostas Válidas", "Taxa de Validade", "Comprimento Médio", 
+                           "Palavras Médias", "Consistência de Comprimento"]
+        
+        for coluna in academic_metrics + evidently_metrics:
+            if coluna in df.columns:
+                max_val = df[coluna].max()
+                min_val = df[coluna].min()
+                
+                if max_val > min_val:
+                    # Normalização min-max
+                    df_normalizado[f"Normalized {coluna}"] = (df[coluna] - min_val) / (max_val - min_val)
+                else:
+                    # Se todos os valores são iguais, usar 1.0
+                    df_normalizado[f"Normalized {coluna}"] = 1.0
+        
+        return df_normalizado
+    
+    def _gerar_rankings_individuais(self, df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+        """Gera rankings por cada métrica individual."""
+        rankings = {}
+        
+        # Métricas acadêmicas
+        academic_metrics = ["BLEU", "ROUGE-1", "ROUGE-2", "ROUGE-L", "BERTScore"]
+        # Métricas Evidently AI
+        evidently_metrics = ["Respostas Válidas", "Taxa de Validade", "Comprimento Médio", 
+                           "Palavras Médias", "Consistência de Comprimento"]
+        
+        for metrica in academic_metrics + evidently_metrics:
+            coluna_normalizada = f"Normalized {metrica}"
+            if coluna_normalizada in df.columns:
+                ranking = df.sort_values(by=coluna_normalizada, ascending=False)[
+                    ["Modelo", coluna_normalizada]
+                ].reset_index(drop=True)
+                ranking["Rank"] = ranking.index + 1
+                rankings[metrica] = ranking
+        
+        return rankings
+    
+    def _gerar_rankings_consolidados(self, df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+        """Gera rankings consolidados por categoria."""
+        rankings = {}
+        
+        # Score Acadêmico
+        academic_metrics = ["BLEU", "ROUGE-1", "ROUGE-2", "ROUGE-L", "BERTScore"]
+        colunas_academicas = [f"Normalized {metrica}" for metrica in academic_metrics 
+                             if f"Normalized {metrica}" in df.columns]
+        if colunas_academicas:
+            df["Score Acadêmico"] = df[colunas_academicas].mean(axis=1)
+            ranking_academico = df.sort_values(by="Score Acadêmico", ascending=False)[
+                ["Modelo", "Score Acadêmico"]
+            ].reset_index(drop=True)
+            ranking_academico["Rank"] = ranking_academico.index + 1
+            rankings["Score Acadêmico"] = ranking_academico
+        
+        # Score Evidently AI
+        evidently_metrics = ["Respostas Válidas", "Taxa de Validade", "Comprimento Médio", 
+                           "Palavras Médias", "Consistência de Comprimento"]
+        colunas_evidently = [f"Normalized {metrica}" for metrica in evidently_metrics 
+                            if f"Normalized {metrica}" in df.columns]
+        if colunas_evidently:
+            df["Score Evidently AI"] = df[colunas_evidently].mean(axis=1)
+            ranking_evidently = df.sort_values(by="Score Evidently AI", ascending=False)[
+                ["Modelo", "Score Evidently AI"]
+            ].reset_index(drop=True)
+            ranking_evidently["Rank"] = ranking_evidently.index + 1
+            rankings["Score Evidently AI"] = ranking_evidently
+        
+        # Score Geral
+        todas_colunas = colunas_academicas + colunas_evidently
+        if todas_colunas:
+            df["Score Geral"] = df[todas_colunas].mean(axis=1)
+            ranking_geral = df.sort_values(by="Score Geral", ascending=False)[
+                ["Modelo", "Score Geral"]
+            ].reset_index(drop=True)
+            ranking_geral["Rank"] = ranking_geral.index + 1
+            rankings["Score Geral"] = ranking_geral
+        
+        return rankings
+    
+    def _gerar_analise_qualitativa(self, df: pd.DataFrame, rankings: Dict[str, pd.DataFrame]) -> str:
+        """Gera análise qualitativa dos resultados."""
+        analise = []
+        analise.append("## 🔍 Análise Qualitativa")
+        analise.append("")
+        
+        # Modelo mais consistente (menor variação)
+        if "Normalized Consistência de Comprimento" in df.columns:
+            mais_consistente = df.loc[df["Normalized Consistência de Comprimento"].idxmax(), "Modelo"]
+            analise.append(f"### 🎯 Modelo Mais Consistente: {mais_consistente}")
+            analise.append("- Menor variação no comprimento das respostas")
+            analise.append("- Maior estabilidade de performance")
+            analise.append("")
+        
+        # Modelo com maior fidelidade de texto (melhor BERTScore)
+        if "Normalized BERTScore" in df.columns:
+            melhor_bertscore = df.loc[df["Normalized BERTScore"].idxmax(), "Modelo"]
+            analise.append(f"### 🧠 Modelo com Maior Fidelidade de Texto: {melhor_bertscore}")
+            analise.append("- Melhor similaridade semântica com referências")
+            analise.append("- Maior qualidade de conteúdo gerado")
+            analise.append("")
+        
+        # Modelo com menor dispersão (melhor confiabilidade)
+        if "Normalized Taxa de Validade" in df.columns:
+            mais_confiavel = df.loc[df["Normalized Taxa de Validade"].idxmax(), "Modelo"]
+            analise.append(f"### 🛡️ Modelo Mais Confiável: {mais_confiavel}")
+            analise.append("- Maior taxa de respostas válidas")
+            analise.append("- Menor incidência de erros")
+            analise.append("")
+        
+        # Modelo mais detalhado (maior comprimento)
+        if "Normalized Comprimento Médio" in df.columns:
+            mais_detalhado = df.loc[df["Normalized Comprimento Médio"].idxmax(), "Modelo"]
+            analise.append(f"### 📝 Modelo Mais Detalhado: {mais_detalhado}")
+            analise.append("- Respostas mais longas e detalhadas")
+            analise.append("- Maior riqueza de informação")
+            analise.append("")
+        
+        # Análise de correlações
+        analise.append("### 📈 Análise de Correlações")
+        analise.append("")
+        
+        # Correlação entre métricas acadêmicas e Evidently AI
+        colunas_academicas = [f"Normalized {metrica}" for metrica in ["BLEU", "ROUGE-1", "ROUGE-2", "ROUGE-L", "BERTScore"]
+                             if f"Normalized {metrica}" in df.columns]
+        colunas_evidently = [f"Normalized {metrica}" for metrica in ["Respostas Válidas", "Taxa de Validade", "Comprimento Médio", 
+                           "Palavras Médias", "Consistência de Comprimento"]
+                            if f"Normalized {metrica}" in df.columns]
+        
+        if colunas_academicas and colunas_evidently:
+            score_academico = df[colunas_academicas].mean(axis=1)
+            score_evidently = df[colunas_evidently].mean(axis=1)
+            correlacao = np.corrcoef(score_academico, score_evidently)[0, 1]
+            
+            analise.append(f"- **Correlação Acadêmico vs Evidently AI**: {correlacao:.3f}")
+            
+            if correlacao > 0.7:
+                analise.append("  - Forte correlação positiva: modelos bons academicamente também são bons em qualidade de dados")
+            elif correlacao > 0.3:
+                analise.append("  - Correlação moderada: alguma relação entre métricas acadêmicas e qualidade de dados")
+            else:
+                analise.append("  - Correlação fraca: métricas acadêmicas e qualidade de dados são independentes")
+            analise.append("")
+        
+        # Análise de modelos open source vs proprietários
+        modelos_open_source = [m for m in df['Modelo'] if any(oss in m.lower() for oss in ['llama', 'gpt_oss', 'qwen', 'deepseek'])]
+        modelos_proprietarios = [m for m in df['Modelo'] if any(prop in m.lower() for prop in ['gemini'])]
+        
+        if modelos_open_source and modelos_proprietarios and "Score Geral" in df.columns:
+            score_oss = df[df['Modelo'].isin(modelos_open_source)]["Score Geral"].mean()
+            score_prop = df[df['Modelo'].isin(modelos_proprietarios)]["Score Geral"].mean()
+            
+            analise.append("### 🔓 vs 🔒 Open Source vs Proprietários")
+            analise.append("")
+            analise.append(f"- **Score Médio Open Source**: {score_oss:.3f}")
+            analise.append(f"- **Score Médio Proprietários**: {score_prop:.3f}")
+            
+            if score_oss > score_prop:
+                analise.append("- **Conclusão**: Modelos open source superam os proprietários em performance geral")
+            elif score_prop > score_oss:
+                analise.append("- **Conclusão**: Modelos proprietários superam os open source em performance geral")
+            else:
+                analise.append("- **Conclusão**: Performance similar entre modelos open source e proprietários")
+            analise.append("")
+        
+        return "\n".join(analise)
+    
+    def _salvar_rankings_detalhados(self, metricas_por_modelo: Dict[str, Dict], pasta_analise: str):
+        """Salva rankings detalhados em arquivos separados."""
+        print("💾 Salvando rankings detalhados...")
+        
+        # Preparar dados para normalização
+        dados_metricas = []
+        for modelo, metricas in metricas_por_modelo.items():
+            dados_modelo = {"Modelo": modelo}
+            
+            # Métricas acadêmicas
+            metricas_acad = metricas.get('academicas', {})
+            dados_modelo.update({
+                "BLEU": metricas_acad.get('bleu_medio', 0),
+                "ROUGE-1": metricas_acad.get('rouge1_medio', 0),
+                "ROUGE-2": metricas_acad.get('rouge2_medio', 0),
+                "ROUGE-L": metricas_acad.get('rougeL_medio', 0),
+                "BERTScore": metricas_acad.get('bertscore_f1_medio', 0)
+            })
+            
+            # Métricas Evidently AI
+            metricas_ev = metricas.get('evidently', {})
+            dados_modelo.update({
+                "Respostas Válidas": metricas_ev.get('respostas_validas', 0),
+                "Taxa de Validade": metricas_ev.get('taxa_validas', 0),
+                "Comprimento Médio": metricas_ev.get('comprimento_medio', 0),
+                "Palavras Médias": metricas_ev.get('palavras_medias', 0),
+                "Consistência de Comprimento": self._calcular_consistencia_comprimento(metricas_ev)
+            })
+            
+            dados_metricas.append(dados_modelo)
+        
+        # Converter para DataFrame
+        df = pd.DataFrame(dados_metricas)
+        
+        # Normalizar métricas
+        df_normalizado = self._normalizar_metricas(df)
+        
+        # Gerar rankings
+        rankings_individuais = self._gerar_rankings_individuais(df_normalizado)
+        rankings_consolidados = self._gerar_rankings_consolidados(df_normalizado)
+        
+        # Salvar arquivo de rankings principal
+        arquivo_rankings = os.path.join(pasta_analise, "rankings.md")
+        with open(arquivo_rankings, 'w', encoding='utf-8') as f:
+            f.write("# 🏆 Rankings Comparativos de Modelos LLM\n\n")
+            f.write(f"**Data da Análise**: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n\n")
+            
+            # Rankings por métrica individual
+            f.write("## Rankings por Métrica Individual\n\n")
+            for metrica, ranking in rankings_individuais.items():
+                f.write(f"### {metrica}\n")
+                f.write(ranking.to_markdown(index=False))
+                f.write("\n\n")
+            
+            # Rankings consolidados
+            f.write("## Rankings Consolidados por Categoria\n\n")
+            for categoria, ranking in rankings_consolidados.items():
+                f.write(f"### {categoria}\n")
+                f.write(ranking.to_markdown(index=False))
+                f.write("\n\n")
+        
+        # Salvar métricas normalizadas em JSON
+        arquivo_json = os.path.join(pasta_analise, "normalized_metrics.json")
+        df_normalizado.to_json(arquivo_json, orient='records', indent=2, force_ascii=False)
+        
+        # Salvar script de geração de rankings
+        script_rankings = os.path.join(pasta_analise, "generate_rankings.py")
+        self._gerar_script_rankings(script_rankings)
+        
+        print(f"✅ Rankings salvos em: {arquivo_rankings}")
+        print(f"✅ Métricas normalizadas em: {arquivo_json}")
+        print(f"✅ Script de geração em: {script_rankings}")
+    
+    def _gerar_script_rankings(self, caminho_script: str):
+        """Gera script Python para reproduzir os rankings."""
+        script_content = '''import json
+import pandas as pd
+
+with open("normalized_metrics.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+df = pd.DataFrame(data)
+
+# Define metric categories
+academic_metrics = [
+    "Normalized BLEU",
+    "Normalized ROUGE-1",
+    "Normalized ROUGE-2", 
+    "Normalized ROUGE-L",
+    "Normalized BERTScore"
+]
+evidently_ai_metrics = [
+    "Normalized Respostas Válidas",
+    "Normalized Taxa de Validade",
+    "Normalized Comprimento Médio",
+    "Normalized Palavras Médias",
+    "Normalized Consistência de Comprimento"
+]
+
+# --- Ranking por cada métrica individual ---
+individual_rankings = {}
+for col in academic_metrics + evidently_ai_metrics:
+    if col in df.columns:
+        individual_rankings[col] = df.sort_values(by=col, ascending=False)[["Modelo", col]].reset_index(drop=True)
+        individual_rankings[col]["Rank"] = individual_rankings[col].index + 1
+
+# --- Ranking consolidado por categoria ---
+if academic_metrics:
+    df["Score Acadêmico"] = df[academic_metrics].mean(axis=1)
+    academic_ranking = df.sort_values(by="Score Acadêmico", ascending=False)[[
+        "Modelo", "Score Acadêmico"]].reset_index(drop=True)
+    academic_ranking["Rank"] = academic_ranking.index + 1
+
+if evidently_ai_metrics:
+    df["Score Evidently AI"] = df[evidently_ai_metrics].mean(axis=1)
+    evidently_ai_ranking = df.sort_values(by="Score Evidently AI", ascending=False)[[
+        "Modelo", "Score Evidently AI"]].reset_index(drop=True)
+    evidently_ai_ranking["Rank"] = evidently_ai_ranking.index + 1
+
+# --- Ranking geral ---
+all_metrics = academic_metrics + evidently_ai_metrics
+if all_metrics:
+    df["Score Geral"] = df[all_metrics].mean(axis=1)
+    general_ranking = df.sort_values(by="Score Geral", ascending=False)[[
+        "Modelo", "Score Geral"]].reset_index(drop=True)
+    general_ranking["Rank"] = general_ranking.index + 1
+
+# --- Salvar resultados em arquivos Markdown ---
+with open("rankings.md", "w", encoding="utf-8") as f:
+    f.write("# 🏆 Rankings Comparativos de Modelos LLM\\n\\n")
+
+    f.write("## Rankings por Métrica Individual\\n\\n")
+    for metric, ranking_df in individual_rankings.items():
+        f.write(f"### {metric.replace('Normalized ', '')}\\n")
+        f.write(ranking_df.to_markdown(index=False))
+        f.write("\\n\\n")
+
+    f.write("## Rankings Consolidados por Categoria\\n\\n")
+    if 'academic_ranking' in locals():
+        f.write("### Score Acadêmico\\n")
+        f.write(academic_ranking.to_markdown(index=False))
+        f.write("\\n\\n")
+    if 'evidently_ai_ranking' in locals():
+        f.write("### Score Evidently AI\\n")
+        f.write(evidently_ai_ranking.to_markdown(index=False))
+        f.write("\\n\\n")
+
+    f.write("## Ranking Geral\\n\\n")
+    if 'general_ranking' in locals():
+        f.write(general_ranking.to_markdown(index=False))
+        f.write("\\n\\n")
+
+print("Rankings gerados e salvos em rankings.md")
+'''
+        
+        with open(caminho_script, 'w', encoding='utf-8') as f:
+            f.write(script_content)
+    
     def executar_analise_completa(self) -> str:
         """Executa análise completa e retorna caminho do relatório."""
         print("🚀 Iniciando Análise Consolidada")
@@ -769,7 +1204,13 @@ class AnalysisSystem:
             
             # Gerar relatórios Evidently AI
             try:
+                # Tentar import relativo (quando chamado via main.py)
                 from .evidently_reports import gerar_relatorios_evidently_completo
+            except ImportError:
+                # Fallback para import absoluto (quando executado diretamente)
+                from evidently_reports import gerar_relatorios_evidently_completo
+            
+            try:
                 pasta_evidently = os.path.join(pasta_modelo, "evidently_reports")
                 relatorios_evidently, relatorio_evidently = gerar_relatorios_evidently_completo(df_com_metricas, pasta_evidently)
                 print(f"📊 Relatórios Evidently AI salvos em: {pasta_evidently}")
@@ -824,6 +1265,9 @@ class AnalysisSystem:
         # Salvar métricas consolidadas
         with open(os.path.join(pasta_analise, "metricas_consolidadas.json"), 'w', encoding='utf-8') as f:
             json.dump(metricas_por_modelo, f, indent=2, ensure_ascii=False, default=str)
+        
+        # Gerar e salvar rankings detalhados
+        self._salvar_rankings_detalhados(metricas_por_modelo, pasta_analise)
         
         print(f"\n💾 Análise consolidada salva em: {pasta_analise}")
         print(f"📄 Relatório consolidado: {arquivo_relatorio_consolidado}")

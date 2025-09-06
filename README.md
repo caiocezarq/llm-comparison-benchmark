@@ -1,23 +1,24 @@
 # 🤖 Sistema de Comparação e Análise de Modelos LLM
 
-Sistema completo para comparação de modelos de linguagem (LLM) com métricas acadêmicas, análise de qualidade de dados e relatórios consolidados.
+Sistema completo para comparação de modelos de linguagem (LLM) com métricas acadêmicas, análise de qualidade de dados, sistema de ranking comparativo e relatórios consolidados.
 
 ## 📋 Resumo
 
-Este projeto implementa um pipeline automatizado para testar e comparar diferentes modelos de linguagem através de prompts padronizados, calculando métricas de qualidade acadêmica (BLEU, ROUGE, BERTScore) e análises de qualidade de dados usando Evidently AI. O sistema gera relatórios detalhados por modelo e um relatório consolidado final.
+Este projeto implementa um pipeline automatizado para testar e comparar diferentes modelos de linguagem através de prompts padronizados, calculando métricas de qualidade acadêmica (BLEU, ROUGE, BERTScore) e análises de qualidade de dados usando Evidently AI. O sistema gera relatórios detalhados por modelo, rankings comparativos e um relatório consolidado final com análise qualitativa.
 
 ## 🎯 Objetivo
 
 - **Comparar performance** de diferentes modelos LLM em tarefas padronizadas
 - **Avaliar qualidade** das respostas usando métricas acadêmicas reconhecidas
-- **Analisar dados** com ferramentas profissionais de qualidade
-- **Gerar relatórios** consolidados para tomada de decisão
-- **Automatizar** todo o processo de teste e análise
+- **Analisar dados** com ferramentas profissionais de qualidade (Evidently AI)
+- **Gerar rankings** comparativos com normalização e análise qualitativa
+- **Automatizar** todo o processo de teste, análise e comparação
+- **Fornecer insights** acadêmicos para tomada de decisão
 
 ## 📁 Estrutura do Projeto
 
 ```
-LLM/
+LLMv3/
 ├── 📄 main.py                          # Ponto de entrada principal
 ├── 📄 requirements.txt                 # Dependências Python
 ├── 📄 README.md                        # Este arquivo
@@ -26,11 +27,13 @@ LLM/
 ├── 📁 src/                             # Código fonte principal
 │   ├── 📄 config.py                    # Configurações centralizadas
 │   ├── 📄 pipeline.py                  # Pipeline de execução dos LLMs
+│   ├── 📄 models.py                    # Implementação dos modelos
 │   ├── 📄 utils.py                     # Utilitários e funções auxiliares
 │   └── 📄 logger.py                    # Sistema de logging
 │
-├── 📁 analysis/                        # Sistema de análise
+├── 📁 analysis/                        # Sistema de análise avançada
 │   ├── 📄 analysis.py                  # Orquestrador principal de análise
+│   ├── 📄 ranking_system.py            # Sistema de ranking comparativo
 │   ├── 📄 bleu_rouge.py               # Cálculo de métricas BLEU/ROUGE
 │   ├── 📄 bertscore.py                # Cálculo de métricas BERTScore
 │   └── 📄 evidently_reports.py        # Geração de relatórios Evidently AI
@@ -40,15 +43,22 @@ LLM/
 │   ├── 📁 resultado_2/                # Execução 2
 │   └── 📁 resultado_N/                # Execução N
 │
-└── 📁 analysis/                        # Análises consolidadas
-    └── 📁 analise_consolidada_YYYYMMDD_HHMMSS/
-        ├── 📄 relatorio_consolidado.md
-        ├── 📁 modelo_X/
-        │   ├── 📄 relatorio_modelo_X.md
-        │   └── 📁 evidently_reports/
-        │       ├── 📄 evidently_qualidade.html
-        │       └── 📄 evidently_texto.html
-        └── 📄 metricas_consolidadas.json
+├── 📁 analysis/                        # Análises consolidadas
+│   └── 📁 analise_consolidada_YYYYMMDD_HHMMSS/
+│       ├── 📄 relatorio_consolidado.md
+│       ├── 📄 rankings.md              # Rankings comparativos
+│       ├── 📄 normalized_metrics.json  # Métricas normalizadas
+│       ├── 📄 generate_rankings.py     # Script de reprodução
+│       ├── 📁 modelo_X/
+│       │   ├── 📄 relatorio_modelo_X.md
+│       │   ├── 📄 dados_modelo_X.csv
+│       │   └── 📁 evidently_reports/
+│       │       ├── 📄 evidently_qualidade.html
+│       │       └── 📄 evidently_texto.html
+│       └── 📄 metricas_consolidadas.json
+│
+└── 📁 docs/                            # Documentação
+    └── 📄 DOCUMENTACAO_PROJETO_TCC.md
 ```
 
 ## ⚙️ Configurações Necessárias
@@ -98,6 +108,7 @@ Edite `src/config.py` para ajustar:
 |---------|-----------|
 | `config.py` | **Configurações** - Centraliza todas as configurações do sistema (modelos, timeouts, paths) |
 | `pipeline.py` | **Pipeline Principal** - Executa prompts contra múltiplos LLMs e coleta respostas |
+| `models.py` | **Modelos** - Implementação dos runners para diferentes APIs (Groq, OpenAI, Google) |
 | `utils.py` | **Utilitários** - Funções para salvamento de dados, gerenciamento de pastas e formatação |
 | `logger.py` | **Logging** - Sistema de logs estruturado para monitoramento e debug |
 
@@ -106,6 +117,7 @@ Edite `src/config.py` para ajustar:
 | Arquivo | Descrição |
 |---------|-----------|
 | `analysis.py` | **Orquestrador** - Classe principal que coordena toda a análise consolidada |
+| `ranking_system.py` | **Sistema de Ranking** - Gera rankings comparativos com normalização e análise qualitativa |
 | `bleu_rouge.py` | **Métricas BLEU/ROUGE** - Calcula métricas de qualidade de tradução/summarização |
 | `bertscore.py` | **Métricas BERTScore** - Calcula similaridade semântica usando embeddings BERT |
 | `evidently_reports.py` | **Relatórios Evidently** - Gera análises de qualidade de dados em HTML |
@@ -142,6 +154,12 @@ Edite `src/config.py` para ajustar:
 - **Drift de Dados** - Detecção de mudanças na distribuição
 - **Métricas Estatísticas** - Média, mediana, desvio padrão, outliers
 
+### Sistema de Ranking
+- **Normalização Min-Max** - Escala 0-1 para comparação justa
+- **Rankings Individuais** - Por cada métrica específica
+- **Rankings Consolidados** - Por categoria (Acadêmico, Evidently AI, Geral)
+- **Análise Qualitativa** - Insights e correlações entre métricas
+
 ## 🔍 Sistema de Análise
 
 ### 1. Coleta de Dados
@@ -154,15 +172,17 @@ Edite `src/config.py` para ajustar:
 - Filtra respostas válidas vs. com erro
 - Calcula métricas acadêmicas e de qualidade
 
-### 3. Geração de Relatórios
+### 3. Sistema de Ranking
+- **Normalização** de métricas para escala 0-1
+- **Rankings individuais** por cada métrica
+- **Rankings consolidados** por categoria
+- **Análise qualitativa** com correlações e insights
+
+### 4. Geração de Relatórios
 - **Relatórios por Modelo** - Análise individual detalhada
 - **Relatórios Evidently AI** - Análises de qualidade em HTML
 - **Relatório Consolidado** - Comparação final com ranking
-
-### 4. Ranking e Comparação
-- Score composto baseado em métricas acadêmicas
-- Fator de confiabilidade baseado em taxa de sucesso
-- Penalizações para modelos com poucas respostas válidas
+- **Rankings Comparativos** - Tabelas e análises normalizadas
 
 ## 🚀 Como Usar
 
@@ -176,6 +196,11 @@ python main.py
 python -m analysis.analysis
 ```
 
+### Execução do Sistema de Ranking
+```bash
+python -m analysis.ranking_system
+```
+
 ### Configuração Personalizada
 1. Edite `src/config.py` para ajustar modelos e parâmetros
 2. Configure variáveis de ambiente no `.env`
@@ -187,7 +212,7 @@ python -m analysis.analysis
 ```markdown
 # 📊 Relatório Consolidado de Análise de Modelos LLM
 
-**Data da Análise**: 04/01/2025 20:58:15
+**Data da Análise**: 06/01/2025 12:09:40
 **Total de Respostas**: 480
 **Modelos Testados**: 8
 **Execuções**: resultado_1, resultado_2, resultado_3
@@ -208,6 +233,29 @@ python -m analysis.analysis
 - **Taxa de Sucesso**: 95.8%
 ```
 
+### Rankings Comparativos
+```markdown
+# 🏆 Rankings Comparativos de Modelos LLM
+
+## Rankings por Métrica Individual
+
+### BLEU
+| Modelo | Score Normalizado | Rank |
+|--------|------------------|------|
+| qwen_32b | 0.8500 | 1 |
+| deepseek_70b | 0.8200 | 2 |
+...
+
+## Rankings Consolidados por Categoria
+
+### Score Acadêmico
+| Modelo | Score | Rank |
+|--------|-------|------|
+| qwen_32b | 0.8450 | 1 |
+| deepseek_70b | 0.8200 | 2 |
+...
+```
+
 ## 🛠️ Dependências
 
 ### Principais
@@ -226,6 +274,7 @@ python -m analysis.analysis
 - `beautifulsoup4>=4.12.0` - Parsing HTML
 - `python-dotenv>=1.0.0` - Gerenciamento de variáveis de ambiente
 - `requests>=2.28.0` - Requisições HTTP
+- `scikit-learn>=1.3.0` - Normalização e análise estatística
 
 ## 🔧 Configurações Avançadas
 
@@ -254,10 +303,32 @@ PROMPTS = [
 # analysis/analysis.py
 def _calcular_ranking_modelos(self, metricas_por_modelo):
     # Ajuste os pesos das métricas aqui
-    peso_bleu = 0.2
-    peso_rouge = 0.3
-    peso_bertscore = 0.5
+    peso_bleu = 0.15
+    peso_rouge = 0.20
+    peso_bertscore = 0.25
+    peso_confiabilidade = 0.10
 ```
+
+## 🆕 Novas Funcionalidades
+
+### Sistema de Ranking Comparativo
+- **Normalização automática** de métricas para comparação justa
+- **Rankings individuais** por cada métrica específica
+- **Rankings consolidados** por categoria (Acadêmico, Evidently AI, Geral)
+- **Análise qualitativa** com correlações e insights
+
+### Análise Qualitativa
+- **Modelo mais consistente** (menor variação)
+- **Modelo com maior fidelidade** (melhor BERTScore)
+- **Modelo mais confiável** (maior taxa de sucesso)
+- **Análise de correlações** entre métricas acadêmicas e Evidently AI
+- **Comparação Open Source vs Proprietários**
+
+### Relatórios Avançados
+- **Rankings em Markdown** com tabelas formatadas
+- **Métricas normalizadas em JSON** para reprodutibilidade
+- **Scripts de geração** para reproduzir análises
+- **Análise de outliers** e distribuições estatísticas
 
 ## 🐛 Troubleshooting
 
@@ -279,12 +350,36 @@ def _calcular_ranking_modelos(self, metricas_por_modelo):
    - Aumente `TIMEOUT_ENTRE_PERGUNTAS`
    - Execute menos modelos por vez
 
+5. **Erro no BERTScore**
+   - Instale: `pip install bert-score`
+   - Verifique se há GPU disponível para acelerar
+
+6. **Erro no Evidently AI**
+   - Instale: `pip install evidently[llm]`
+   - Verifique se há dados suficientes para análise
+
 ## 📝 Logs e Debug
 
 O sistema gera logs detalhados em:
 - Console durante execução
 - Arquivos de log em `logs/` (se configurado)
 - Relatórios de erro em `results/resultado_X/`
+- Análises consolidadas em `analysis/analise_consolidada_*/`
+
+## 🎓 Uso Acadêmico
+
+### Para Trabalhos de TCC/Mestrado
+- **Dados normalizados** em `normalized_metrics.json`
+- **Rankings reproduzíveis** com scripts Python
+- **Métricas acadêmicas** padronizadas (BLEU, ROUGE, BERTScore)
+- **Análise estatística** com Evidently AI
+- **Relatórios detalhados** para documentação
+
+### Reproduzibilidade
+- Scripts de geração automática de rankings
+- Configurações centralizadas e versionadas
+- Logs detalhados de execução
+- Métricas normalizadas para comparação justa
 
 ## 🤝 Contribuição
 
@@ -308,3 +403,5 @@ Para dúvidas ou problemas:
 ---
 
 **Desenvolvido com ❤️ para comparação e análise de modelos LLM**
+
+*Sistema completo de avaliação acadêmica com métricas padronizadas, análise de qualidade de dados e ranking comparativo para pesquisa em modelos de linguagem.*

@@ -67,8 +67,10 @@ tmp/
 # Arquivos de resultados
 resultado_*/
 results/
+docs/
 *.csv
 *.json
+analise_consolidada_*/
 
 # Arquivos de backup
 *.bak
