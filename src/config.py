@@ -57,6 +57,20 @@ class Config:
     BERT_SCORE_USE_FAST_TOKENIZER = True
     
     # =============================================================================
+    # CONFIGURAÇÕES DE BENCHMARKS
+    # =============================================================================
+    # Incluir benchmarks padronizados (MMLU, HellaSwag)
+    INCLUDE_BENCHMARKS = True
+    
+    # Pasta e arquivo de prompts de benchmarks
+    BENCHMARKS_FOLDER = "prompts"
+    BENCHMARKS_FILE = "benchmarks.json"
+    
+    # Pasta e arquivo de prompts padrão
+    PROMPTS_FOLDER = "prompts"
+    PROMPTS_FILE = "prompts.json"
+    
+    # =============================================================================
     # CONFIGURAÇÕES DE ENCODING
     # =============================================================================
     ENCODING_CSV = "utf-8-sig"
@@ -130,6 +144,22 @@ class Config:
             "timeout": cls.API_TIMEOUT,
             "max_retries": cls.MAX_RETRIES,
             "retry_delay": cls.RETRY_DELAY
+        }
+    
+    @classmethod
+    def get_benchmarks_config(cls) -> Dict[str, Any]:
+        """
+        Retorna configurações de benchmarks.
+        
+        Returns:
+            Dict[str, Any]: Configurações para benchmarks
+        """
+        return {
+            "include_benchmarks": cls.INCLUDE_BENCHMARKS,
+            "benchmarks_folder": cls.BENCHMARKS_FOLDER,
+            "benchmarks_file": cls.BENCHMARKS_FILE,
+            "prompts_folder": cls.PROMPTS_FOLDER,
+            "prompts_file": cls.PROMPTS_FILE
         }
 
 

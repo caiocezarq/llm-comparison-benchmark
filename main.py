@@ -45,9 +45,13 @@ def main():
     print("=" * 60)
     print("📊 Modelos suportados: Groq + Google Gemini")
     print("🎯 Métricas: BLEU, ROUGE, BERTScore, EvidentlyAI")
+    if config.INCLUDE_BENCHMARKS:
+        print("🏆 Benchmarks: MMLU, HellaSwag")
     print("=" * 60)
     print(f"🔄 Execuções configuradas: {config.NUMERO_EXECUCOES}")
     print(f"⏱️  Timeout entre execuções: {config.TIMEOUT_ENTRE_EXECUCOES}s")
+    if config.INCLUDE_BENCHMARKS:
+        print(f"🏆 Benchmarks incluídos: {config.INCLUDE_BENCHMARKS}")
     print("=" * 60)
     
     # Log das configurações
@@ -78,7 +82,7 @@ def main():
             print(f"📁 Resultados da execução {execucao} serão salvos em: {result_folder}")
             
             # Executar pipeline
-            df = run_pipeline()
+            df = run_pipeline(include_benchmarks=config.INCLUDE_BENCHMARKS)
             
             tempo_execucao = time.time() - tempo_inicio
             

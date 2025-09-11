@@ -10,6 +10,7 @@ Este projeto implementa um pipeline automatizado para testar e comparar diferent
 
 - **Comparar performance** de diferentes modelos LLM em tarefas padronizadas
 - **Avaliar qualidade** das respostas usando métricas acadêmicas reconhecidas
+- **Testar benchmarks** padronizados (MMLU, HellaSwag) para avaliação comparativa
 - **Analisar dados** com ferramentas profissionais de qualidade (Evidently AI)
 - **Gerar rankings** comparativos com normalização e análise qualitativa
 - **Automatizar** todo o processo de teste, análise e comparação
@@ -31,9 +32,17 @@ LLMv3/
 │   ├── 📄 utils.py                     # Utilitários e funções auxiliares
 │   └── 📄 logger.py                    # Sistema de logging
 │
+├── 📁 prompts/                         # Prompts e benchmarks
+│   ├── 📄 prompts.json                 # 20 prompts padronizados estruturados
+│   └── 📄 benchmarks.json              # Benchmarks padronizados
+│
 ├── 📁 analysis/                        # Sistema de análise avançada
+│   ├── 📄 __init__.py                  # Pacote de análise
 │   ├── 📄 analysis.py                  # Orquestrador principal de análise
 │   ├── 📄 ranking_system.py            # Sistema de ranking comparativo
+│   ├── 📄 benchmarks.py                # Classe base para benchmarks
+│   ├── 📄 mmlu.py                      # Calculadora MMLU
+│   ├── 📄 hellaswag.py                 # Calculadora HellaSwag
 │   ├── 📄 bleu_rouge.py               # Cálculo de métricas BLEU/ROUGE
 │   ├── 📄 bertscore.py                # Cálculo de métricas BERTScore
 │   └── 📄 evidently_reports.py        # Geração de relatórios Evidently AI
@@ -58,7 +67,7 @@ LLMv3/
 │       └── 📄 metricas_consolidadas.json
 │
 └── 📁 docs/                            # Documentação
-    └── 📄 DOCUMENTACAO_PROJETO_TCC.md
+    └── 📄 DOCUMENTACAO_TCC_ANALISE_LLM.md
 ```
 
 ## ⚙️ Configurações Necessárias
@@ -91,6 +100,29 @@ Edite `src/config.py` para ajustar:
 - Lista de modelos a testar
 - Parâmetros de geração (max_tokens, temperature)
 - Timeouts e limites de taxa
+- Inclusão de benchmarks (INCLUDE_BENCHMARKS)
+
+## 🏆 Benchmarks Padronizados
+
+### **MMLU (Massive Multitask Language Understanding)**
+- **Descrição**: Avaliação de conhecimento em múltiplas disciplinas
+- **Métricas**: Accuracy por subject e geral
+- **Implementação**: `analysis/mmlu.py`
+- **Configuração**: Ativado via `INCLUDE_BENCHMARKS=True`
+
+### **HellaSwag (Commonsense Reasoning)**
+- **Descrição**: Raciocínio de senso comum e completamento de cenários
+- **Métricas**: Accuracy geral
+- **Implementação**: `analysis/hellaswag.py`
+- **Configuração**: Ativado via `INCLUDE_BENCHMARKS=True`
+
+### **Configuração de Benchmarks**
+```python
+# src/config.py
+INCLUDE_BENCHMARKS = True  # Incluir benchmarks na execução
+BENCHMARKS_FOLDER = "prompts"
+BENCHMARKS_FILE = "benchmarks.json"
+```
 
 ## 📄 Descrição dos Arquivos
 
@@ -135,7 +167,7 @@ Edite `src/config.py` para ajustar:
 - **gpt_oss_120b** - `openai/gpt-oss-120b`
 
 ### Modelos Google (Gemini)
-- **gemini_1_5_flash** - `models/gemini-1.5-flash`
+- **gemini_1_5_flash** - `models/gemini-1.5-flash` ⚠️ *Alta taxa de erro (49.5%)*
 - **gemini_2_5_flash_lite** - `models/gemini-2.5-flash-lite`
 
 ## 📊 Métricas Implementadas
@@ -143,9 +175,13 @@ Edite `src/config.py` para ajustar:
 ### Métricas Acadêmicas
 - **BLEU Score** - Precisão de n-gramas para avaliação de qualidade
 - **ROUGE-1** - Sobreposição de unigramas
-- **ROUGE-2** - Sobreposição de bigramas  
+- **ROUGE-2** - Sobreposição de bigramas (corrigido)
 - **ROUGE-L** - Sobreposição de subsequência mais longa
 - **BERTScore** - Similaridade semântica usando embeddings BERT
+
+### Benchmarks Acadêmicos
+- **MMLU** - Massive Multitask Language Understanding
+- **HellaSwag** - Commonsense Reasoning
 
 ### Métricas de Qualidade (Evidently AI)
 - **Distribuição de Comprimento** - Análise do tamanho das respostas
@@ -159,18 +195,23 @@ Edite `src/config.py` para ajustar:
 - **Rankings Individuais** - Por cada métrica específica
 - **Rankings Consolidados** - Por categoria (Acadêmico, Evidently AI, Geral)
 - **Análise Qualitativa** - Insights e correlações entre métricas
+- **Filtro Automático** - Exclusão de modelos com alta taxa de erro
+- **Insights Executivos** - Geração automática de recomendações
 
 ## 🔍 Sistema de Análise
 
 ### 1. Coleta de Dados
-- Executa prompts padronizados contra todos os modelos
+- Executa 20 prompts padronizados e estruturados contra todos os modelos
 - Coleta respostas com metadados (timestamp, comprimento, flags de erro)
 - Salva resultados em formato CSV e JSON
+- Detecta automaticamente modelos problemáticos
 
 ### 2. Processamento
 - Consolida dados de múltiplas execuções por modelo
 - Filtra respostas válidas vs. com erro
 - Calcula métricas acadêmicas e de qualidade
+- Executa benchmarks MMLU e HellaSwag
+- Analisa correlações entre métricas
 
 ### 3. Sistema de Ranking
 - **Normalização** de métricas para escala 0-1
@@ -183,11 +224,20 @@ Edite `src/config.py` para ajustar:
 - **Relatórios Evidently AI** - Análises de qualidade em HTML
 - **Relatório Consolidado** - Comparação final com ranking
 - **Rankings Comparativos** - Tabelas e análises normalizadas
+- **Análise de Correlações** - Identificação de consistência entre métricas
+- **Insights Executivos** - Recomendações automáticas
 
 ## 🚀 Como Usar
 
 ### Execução Completa
 ```bash
+python main.py
+```
+
+### Execução com Benchmarks
+```bash
+# Ativar benchmarks em src/config.py
+INCLUDE_BENCHMARKS = True
 python main.py
 ```
 
@@ -309,13 +359,14 @@ def _calcular_ranking_modelos(self, metricas_por_modelo):
     peso_confiabilidade = 0.10
 ```
 
-## 🆕 Novas Funcionalidades
+## 🆕 Funcionalidades Avançadas
 
 ### Sistema de Ranking Comparativo
 - **Normalização automática** de métricas para comparação justa
 - **Rankings individuais** por cada métrica específica
 - **Rankings consolidados** por categoria (Acadêmico, Evidently AI, Geral)
 - **Análise qualitativa** com correlações e insights
+- **Filtro automático** de modelos problemáticos
 
 ### Análise Qualitativa
 - **Modelo mais consistente** (menor variação)
@@ -323,12 +374,20 @@ def _calcular_ranking_modelos(self, metricas_por_modelo):
 - **Modelo mais confiável** (maior taxa de sucesso)
 - **Análise de correlações** entre métricas acadêmicas e Evidently AI
 - **Comparação Open Source vs Proprietários**
+- **Insights executivos** automáticos
 
 ### Relatórios Avançados
-- **Rankings em Markdown** com tabelas formatadas
+- **Rankings em Markdown** com tabelas formatadas e emojis
 - **Métricas normalizadas em JSON** para reprodutibilidade
 - **Scripts de geração** para reproduzir análises
 - **Análise de outliers** e distribuições estatísticas
+- **Formatação visual** melhorada com descrições e contexto
+
+### Benchmarks Acadêmicos
+- **MMLU** - Avaliação de conhecimento geral
+- **HellaSwag** - Avaliação de raciocínio de senso comum
+- **Extração automática** de respostas A, B, C, D
+- **Validação robusta** de respostas de múltipla escolha
 
 ## 🐛 Troubleshooting
 
@@ -358,6 +417,14 @@ def _calcular_ranking_modelos(self, metricas_por_modelo):
    - Instale: `pip install evidently[llm]`
    - Verifique se há dados suficientes para análise
 
+7. **Problemas com ROUGE-2**
+   - Sistema corrigido automaticamente
+   - Verifique logs para debugging
+
+8. **Modelos com alta taxa de erro**
+   - Sistema detecta automaticamente
+   - Modelos problemáticos são excluídos da análise principal
+
 ## 📝 Logs e Debug
 
 O sistema gera logs detalhados em:
@@ -372,8 +439,11 @@ O sistema gera logs detalhados em:
 - **Dados normalizados** em `normalized_metrics.json`
 - **Rankings reproduzíveis** com scripts Python
 - **Métricas acadêmicas** padronizadas (BLEU, ROUGE, BERTScore)
+- **Benchmarks acadêmicos** (MMLU, HellaSwag)
 - **Análise estatística** com Evidently AI
+- **Análise de correlações** entre métricas
 - **Relatórios detalhados** para documentação
+- **Documentação TCC** completa em `docs/`
 
 ### Reproduzibilidade
 - Scripts de geração automática de rankings

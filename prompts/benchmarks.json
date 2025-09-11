@@ -1,0 +1,106 @@
+{
+  "version": "1.0",
+  "description": "Prompts de benchmarks padronizados para avaliação de modelos LLM",
+  "benchmarks": {
+    "mmlu": {
+      "name": "MMLU",
+      "description": "Massive Multitask Language Understanding",
+      "subjects": {
+        "abstract_algebra": [
+          {
+            "id": "mmlu_001",
+            "question": "Which of the following is a group?",
+            "choices": [
+              "A) The set of all integers under addition",
+              "B) The set of all real numbers under multiplication",
+              "C) The set of all positive integers under subtraction",
+              "D) The set of all rational numbers under division"
+            ],
+            "answer": "A",
+            "subject": "abstract_algebra"
+          },
+          {
+            "id": "mmlu_002",
+            "question": "What is the order of the group Z/6Z?",
+            "choices": [
+              "A) 3",
+              "B) 6",
+              "C) 12",
+              "D) 36"
+            ],
+            "answer": "B",
+            "subject": "abstract_algebra"
+          }
+        ],
+        "anatomy": [
+          {
+            "id": "mmlu_003",
+            "question": "Which organ is responsible for filtering blood and removing waste products?",
+            "choices": [
+              "A) Liver",
+              "B) Kidney",
+              "C) Heart",
+              "D) Lungs"
+            ],
+            "answer": "B",
+            "subject": "anatomy"
+          },
+          {
+            "id": "mmlu_004",
+            "question": "What is the largest organ in the human body?",
+            "choices": [
+              "A) Brain",
+              "B) Liver",
+              "C) Skin",
+              "D) Lungs"
+            ],
+            "answer": "C",
+            "subject": "anatomy"
+          }
+        ]
+      }
+    },
+    "hellaswag": {
+      "name": "HellaSwag",
+      "description": "Commonsense Reasoning",
+      "questions": [
+        {
+          "id": "hellaswag_001",
+          "context": "A man is sitting in a chair reading a book. The book is very interesting and he is completely absorbed in it.",
+          "question": "What happens next?",
+          "choices": [
+            "A) He continues reading the book",
+            "B) He gets up and walks away",
+            "C) He falls asleep",
+            "D) He throws the book away"
+          ],
+          "answer": "A"
+        },
+        {
+          "id": "hellaswag_002",
+          "context": "A woman is cooking dinner in the kitchen. She is preparing pasta and the water is boiling on the stove.",
+          "question": "What happens next?",
+          "choices": [
+            "A) She adds the pasta to the boiling water",
+            "B) She turns off the stove",
+            "C) She leaves the kitchen",
+            "D) She starts eating"
+          ],
+          "answer": "A"
+        },
+        {
+          "id": "hellaswag_003",
+          "context": "A child is playing with a ball in the backyard. The ball rolls under a bush and the child can't reach it.",
+          "question": "What happens next?",
+          "choices": [
+            "A) The child tries to get the ball from under the bush",
+            "B) The child gives up and goes inside",
+            "C) The child starts crying",
+            "D) The child finds another toy"
+          ],
+          "answer": "A"
+        }
+      ]
+    }
+  }
+}

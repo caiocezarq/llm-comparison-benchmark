@@ -69,8 +69,12 @@ resultado_*/
 results/
 docs/
 *.csv
-*.json
 analise_consolidada_*/
+
+# Arquivos JSON específicos (manter prompts/)
+metricas_consolidadas.json
+normalized_metrics.json
+resultados_*.json
 
 # Arquivos de backup
 *.bak

@@ -15,18 +15,32 @@ warnings.filterwarnings("ignore")
 logging.getLogger("groq").setLevel(logging.ERROR)
 
 from .models import ModelRunner, AVAILABLE_MODELS
-from .utils import save_results_csv, save_results_json, load_prompts, get_next_result_folder, generate_final_report
+from .utils import save_results_csv, save_results_json, load_prompts, load_benchmark_prompts, get_next_result_folder, generate_final_report
 from .config import get_config
 
 # Carregar configurações
 config = get_config()
 
 
-def run_pipeline(api_key=None, model_keys=None):
+def run_pipeline(api_key=None, model_keys=None, include_benchmarks=False):
     """
     Executa prompts em todos os modelos especificados e retorna DataFrame com resultados.
+    
+    Args:
+        api_key: Chave da API (opcional)
+        model_keys: Lista de modelos para testar (opcional)
+        include_benchmarks: Se True, inclui prompts de benchmarks padronizados
     """
+    # Carregar prompts padrão
     prompts, references = load_prompts()
+    benchmark_info = []
+    
+    # Adicionar prompts de benchmarks se solicitado
+    if include_benchmarks:
+        benchmark_prompts, benchmark_refs, benchmark_info = load_benchmark_prompts()
+        prompts = prompts + benchmark_prompts
+        references = references + benchmark_refs
+    
     all_results = []
     if model_keys is None:
         model_keys = list(AVAILABLE_MODELS.keys())
@@ -64,7 +78,8 @@ def run_pipeline(api_key=None, model_keys=None):
                 print(f"    ❌ Exceção: {e}")
             
             elapsed = time.time() - start
-            all_results.append({
+            # Adicionar informações de benchmark se disponível
+            result = {
                 "model": model_key,
                 "prompt": prompt,
                 "reference": reference,
@@ -74,7 +89,17 @@ def run_pipeline(api_key=None, model_keys=None):
                 "prompt_length": len(prompt),
                 "response_length": len(prediction),
                 "is_error": prediction.startswith('[ERRO]')
-            })
+            }
+            
+            # Adicionar informações de benchmark se disponível
+            if i < len(benchmark_info):
+                result.update(benchmark_info[i])
+            else:
+                result['benchmark'] = None
+                result['subject'] = None
+                result['question_id'] = None
+            
+            all_results.append(result)
             
             # Timeout entre perguntas (exceto na última pergunta do modelo)
             if i < len(prompts) - 1 and config.TIMEOUT_ENTRE_PERGUNTAS > 0:

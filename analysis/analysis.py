@@ -16,6 +16,18 @@ import json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.config import get_config
 
+# Imports para benchmarks - compatibilidade com chamada direta e via main
+try:
+    # Tentar import relativo (quando chamado via main.py)
+    from .benchmarks import BaseBenchmark
+    from .mmlu import MMLUBenchmark
+    from .hellaswag import HellaSwagBenchmark
+except ImportError:
+    # Fallback para import absoluto (quando executado diretamente)
+    from benchmarks import BaseBenchmark
+    from mmlu import MMLUBenchmark
+    from hellaswag import HellaSwagBenchmark
+
 class AnalysisSystem:
     """Sistema principal de análise consolidada."""
     
@@ -24,6 +36,16 @@ class AnalysisSystem:
         self.pasta_analysis = "analysis"
         self.pasta_resultados = self.config.PASTA_RESULTADOS
         self.prefixo_execucao = self.config.PREFIXO_EXECUCAO
+        
+        # Inicializar benchmarks
+        try:
+            self.benchmarks = {
+                'mmlu': MMLUBenchmark(),
+                'hellaswag': HellaSwagBenchmark()
+            }
+        except Exception as e:
+            print(f"⚠️ Erro ao inicializar benchmarks: {e}")
+            self.benchmarks = {}
     
     def encontrar_execucoes(self) -> List[str]:
         """Encontra todas as execuções disponíveis na pasta de resultados."""
@@ -186,6 +208,33 @@ class AnalysisSystem:
         
         return metricas_evidently
     
+    def _eh_modelo_problematico(self, df: pd.DataFrame, modelo: str) -> bool:
+        """
+        Verifica se um modelo tem alta taxa de erro e deve ser excluído da análise principal.
+        
+        Args:
+            df: DataFrame com dados
+            modelo: Nome do modelo
+            
+        Returns:
+            True se o modelo deve ser excluído
+        """
+        df_modelo = df[df['model'] == modelo]
+        
+        if len(df_modelo) == 0:
+            return True
+        
+        # Verificar taxa de erro
+        if 'is_error' in df.columns:
+            taxa_erro = df_modelo['is_error'].mean()
+        else:
+            # Estimar taxa de erro baseado em respostas inválidas
+            respostas_invalidas = df_modelo['prediction'].apply(self._eh_resposta_invalida)
+            taxa_erro = respostas_invalidas.mean()
+        
+        # Excluir modelos com taxa de erro > 40%
+        return taxa_erro > 0.4
+    
     def _calcular_metricas_agregadas(self, df: pd.DataFrame) -> Dict:
         """Calcula métricas agregadas por modelo."""
         if 'model' not in df.columns:
@@ -194,6 +243,10 @@ class AnalysisSystem:
         metricas_agregadas = {}
 
         for modelo in df['model'].unique():
+            # Filtrar modelos com alta taxa de erro (ex: Gemini 1.5 Flash)
+            if self._eh_modelo_problematico(df, modelo):
+                print(f"⚠️ Modelo {modelo} tem alta taxa de erro - excluindo da análise principal")
+                continue
             df_modelo = df[df['model'] == modelo]
             
             # Filtrar apenas respostas válidas - usar campo is_error se disponível
@@ -501,13 +554,79 @@ class AnalysisSystem:
         
         return any(padrao in resposta_str for padrao in padroes_erro)
     
+    def calcular_metricas_benchmarks(self, df: pd.DataFrame) -> Dict:
+        """
+        Calcula métricas de benchmarks (MMLU, HellaSwag) para cada modelo.
+        
+        Args:
+            df: DataFrame com resultados dos modelos
+            
+        Returns:
+            Dicionário com métricas de benchmarks por modelo
+        """
+        print("🏆 Calculando métricas de benchmarks...")
+        
+        metricas_benchmarks = {}
+        
+        # Verificar se há benchmarks disponíveis
+        if not self.benchmarks:
+            print("⚠️ Nenhum benchmark disponível")
+            return {}
+        
+        # Verificar se há coluna benchmark no DataFrame
+        if 'benchmark' not in df.columns:
+            print("⚠️ Coluna 'benchmark' não encontrada no DataFrame")
+            return {}
+        
+        # Filtrar apenas linhas com benchmarks
+        df_benchmarks = df[df['benchmark'].notna()].copy()
+        
+        if df_benchmarks.empty:
+            print("⚠️ Nenhum dado de benchmark encontrado")
+            return {}
+        
+        # Agrupar por modelo e benchmark
+        for model in df_benchmarks['model'].unique():
+            metricas_benchmarks[model] = {}
+            
+            for benchmark_name, benchmark_calc in self.benchmarks.items():
+                try:
+                    # Filtrar dados do benchmark específico
+                    df_benchmark = df_benchmarks[
+                        (df_benchmarks['model'] == model) & 
+                        (df_benchmarks['benchmark'] == benchmark_name)
+                    ]
+                    
+                    if not df_benchmark.empty:
+                        predictions = df_benchmark['prediction'].tolist()
+                        references = df_benchmark['reference'].tolist()
+                        
+                        # Calcular métricas do benchmark
+                        metrics = benchmark_calc.calculate_metrics(predictions, references)
+                        metricas_benchmarks[model][benchmark_name] = metrics
+                    else:
+                        metricas_benchmarks[model][benchmark_name] = {
+                            "accuracy": 0.0,
+                            "total_questions": 0,
+                            "correct_answers": 0
+                        }
+                except Exception as e:
+                    print(f"⚠️ Erro ao calcular métricas do benchmark {benchmark_name} para {model}: {e}")
+                    metricas_benchmarks[model][benchmark_name] = {
+                        "accuracy": 0.0,
+                        "total_questions": 0,
+                        "correct_answers": 0
+                    }
+        
+        return metricas_benchmarks
+    
     def _usar_campo_is_error(self, df: pd.DataFrame) -> bool:
         """Verifica se o DataFrame tem o campo is_error (nova versão da pipeline)."""
         return 'is_error' in df.columns
     
     def gerar_relatorio_por_modelo(self, modelo: str, df: pd.DataFrame, 
                                  metricas_academicas: Dict, metricas_evidently: Dict,
-                                 pasta_destino: str) -> str:
+                                 metricas_benchmarks: Dict, pasta_destino: str) -> str:
         """Gera relatório individual por modelo."""
         relatorio = []
         relatorio.append(f"# 🤖 Análise do Modelo: {modelo}")
@@ -526,6 +645,35 @@ class AnalysisSystem:
         relatorio.append(f"- **ROUGE-L**: {metricas_academicas.get('rougeL_medio', 0):.4f}")
         relatorio.append(f"- **BERTScore**: {metricas_academicas.get('bertscore_f1_medio', 0):.4f}")
         relatorio.append("")
+        
+        # Métricas de Benchmarks
+        if metricas_benchmarks and modelo in metricas_benchmarks:
+            relatorio.append("## 🏆 Métricas de Benchmarks")
+            relatorio.append("")
+            
+            # MMLU
+            if 'mmlu' in metricas_benchmarks[modelo]:
+                mmlu_data = metricas_benchmarks[modelo]['mmlu']
+                relatorio.append("### MMLU (Massive Multitask Language Understanding)")
+                relatorio.append(f"- **Accuracy**: {mmlu_data.get('accuracy', 0):.4f}")
+                relatorio.append(f"- **Total de Questões**: {mmlu_data.get('total_questions', 0)}")
+                relatorio.append(f"- **Respostas Corretas**: {mmlu_data.get('correct_answers', 0)}")
+                
+                # Subjects específicos se disponível
+                if 'subjects' in mmlu_data and mmlu_data['subjects']:
+                    relatorio.append("- **Accuracy por Subject**:")
+                    for subject, accuracy in mmlu_data['subjects'].items():
+                        relatorio.append(f"  - {subject}: {accuracy:.4f}")
+                relatorio.append("")
+            
+            # HellaSwag
+            if 'hellaswag' in metricas_benchmarks[modelo]:
+                hellaswag_data = metricas_benchmarks[modelo]['hellaswag']
+                relatorio.append("### HellaSwag (Commonsense Reasoning)")
+                relatorio.append(f"- **Accuracy**: {hellaswag_data.get('accuracy', 0):.4f}")
+                relatorio.append(f"- **Total de Questões**: {hellaswag_data.get('total_questions', 0)}")
+                relatorio.append(f"- **Respostas Corretas**: {hellaswag_data.get('correct_answers', 0)}")
+                relatorio.append("")
         
         # Métricas Evidently AI
         relatorio.append("## 📈 Métricas Evidently AI")
@@ -586,10 +734,26 @@ class AnalysisSystem:
         for df in dados_por_modelo.values():
             execucoes_unicas.update(df['execucao'].unique())
         
-        relatorio.append(f"**Total de Respostas**: {total_respostas}")
-        relatorio.append(f"**Modelos Avaliados**: {total_modelos}")
-        relatorio.append(f"**Execuções Analisadas**: {len(execucoes_unicas)}")
-        relatorio.append(f"**Execuções**: {', '.join(sorted(execucoes_unicas))}")
+        # Calcular estatísticas de qualidade
+        respostas_validas = 0
+        for df in dados_por_modelo.values():
+            if 'is_error' in df.columns:
+                respostas_validas += (~df['is_error']).sum()
+            else:
+                respostas_validas += len(df)
+        
+        taxa_sucesso = (respostas_validas / total_respostas) * 100 if total_respostas > 0 else 0
+        
+        relatorio.append("## 📊 Informações da Análise")
+        relatorio.append("")
+        relatorio.append("| Métrica | Valor |")
+        relatorio.append("|:--------|------:|")
+        relatorio.append(f"| **Total de Respostas** | {total_respostas:,} |")
+        relatorio.append(f"| **Modelos Avaliados** | {total_modelos} |")
+        relatorio.append(f"| **Execuções Analisadas** | {len(execucoes_unicas)} |")
+        relatorio.append(f"| **Respostas Válidas** | {respostas_validas:,} |")
+        relatorio.append(f"| **Taxa de Sucesso** | {taxa_sucesso:.1f}% |")
+        relatorio.append("")
         
         # Informações sobre metadados disponíveis
         primeiro_df = next(iter(dados_por_modelo.values()))
@@ -607,8 +771,9 @@ class AnalysisSystem:
                            for modelo in dados_por_modelo.keys())
         taxa_geral = total_validas / total_respostas if total_respostas > 0 else 0
         
-        relatorio.append(f"- **Respostas Válidas**: {total_validas}")
-        relatorio.append(f"- **Taxa de Sucesso Geral**: {taxa_geral:.1%}")
+        # Gerar insights automáticos
+        insights = self._gerar_insights_executivos(metricas_por_modelo, taxa_geral * 100)
+        relatorio.extend(insights)
         relatorio.append("")
         
         # Gerar rankings detalhados
@@ -644,6 +809,22 @@ class AnalysisSystem:
             relatorio.append(f"- **Comprimento Médio**: {metricas_ev.get('comprimento_medio', 0):.1f} ± {metricas_ev.get('comprimento_std', 0):.1f} caracteres")
             relatorio.append(f"- **Palavras Médias**: {metricas_ev.get('palavras_medias', 0):.1f} ± {metricas_ev.get('palavras_std', 0):.1f}")
             relatorio.append("")
+            
+            # Métricas de Benchmarks
+            if 'benchmarks' in metricas_por_modelo[modelo]:
+                metricas_bench = metricas_por_modelo[modelo]['benchmarks']
+                relatorio.append("**Métricas de Benchmarks:**")
+                
+                if 'mmlu' in metricas_bench:
+                    mmlu_data = metricas_bench['mmlu']
+                    relatorio.append(f"- **MMLU Accuracy**: {mmlu_data.get('accuracy', 0):.4f} ({mmlu_data.get('correct_answers', 0)}/{mmlu_data.get('total_questions', 0)})")
+                
+                if 'hellaswag' in metricas_bench:
+                    hellaswag_data = metricas_bench['hellaswag']
+                    relatorio.append(f"- **HellaSwag Accuracy**: {hellaswag_data.get('accuracy', 0):.4f} ({hellaswag_data.get('correct_answers', 0)}/{hellaswag_data.get('total_questions', 0)})")
+                
+                relatorio.append("")
+            
             relatorio.append("---")
             relatorio.append("")
         
@@ -701,6 +882,197 @@ class AnalysisSystem:
         
         return "\n".join(relatorio)
     
+    def _analisar_correlacoes_metricas(self, metricas_por_modelo: Dict[str, Dict]) -> str:
+        """
+        Analisa correlações entre diferentes métricas para identificar consistência.
+        
+        Args:
+            metricas_por_modelo: Dicionário com métricas por modelo
+            
+        Returns:
+            String com análise de correlações
+        """
+        import numpy as np
+        
+        # Preparar dados para análise de correlação
+        modelos = []
+        bleu_scores = []
+        rouge1_scores = []
+        rouge2_scores = []
+        rougeL_scores = []
+        bertscore_scores = []
+        
+        for modelo, metricas in metricas_por_modelo.items():
+            metricas_acad = metricas['academicas']
+            modelos.append(modelo)
+            bleu_scores.append(metricas_acad.get('bleu_medio', 0))
+            rouge1_scores.append(metricas_acad.get('rouge1_medio', 0))
+            rouge2_scores.append(metricas_acad.get('rouge2_medio', 0))
+            rougeL_scores.append(metricas_acad.get('rougeL_medio', 0))
+            bertscore_scores.append(metricas_acad.get('bertscore_f1_medio', 0))
+        
+        # Calcular correlações
+        correlacoes = []
+        
+        # ROUGE-1 vs BERTScore (deveria ter alta correlação)
+        corr_rouge1_bert = np.corrcoef(rouge1_scores, bertscore_scores)[0, 1]
+        correlacoes.append(f"- **ROUGE-1 vs BERTScore**: {corr_rouge1_bert:.3f}")
+        
+        # ROUGE-2 vs ROUGE-L (deveria ter alta correlação)
+        corr_rouge2_rougeL = np.corrcoef(rouge2_scores, rougeL_scores)[0, 1]
+        correlacoes.append(f"- **ROUGE-2 vs ROUGE-L**: {corr_rouge2_rougeL:.3f}")
+        
+        # BLEU vs ROUGE-1 (correlação moderada esperada)
+        corr_bleu_rouge1 = np.corrcoef(bleu_scores, rouge1_scores)[0, 1]
+        correlacoes.append(f"- **BLEU vs ROUGE-1**: {corr_bleu_rouge1:.3f}")
+        
+        # Análise de consistência
+        analise = []
+        analise.append("## 📊 Análise de Correlações entre Métricas")
+        analise.append("")
+        analise.append("### Correlações Calculadas:")
+        analise.extend(correlacoes)
+        analise.append("")
+        
+        # Interpretação
+        analise.append("### Interpretação:")
+        if corr_rouge1_bert > 0.7:
+            analise.append("✅ **ROUGE-1 e BERTScore** têm alta correlação (consistência boa)")
+        elif corr_rouge1_bert > 0.4:
+            analise.append("⚠️ **ROUGE-1 e BERTScore** têm correlação moderada")
+        else:
+            analise.append("❌ **ROUGE-1 e BERTScore** têm baixa correlação (inconsistência)")
+        
+        if corr_rouge2_rougeL > 0.7:
+            analise.append("✅ **ROUGE-2 e ROUGE-L** têm alta correlação (consistência boa)")
+        elif corr_rouge2_rougeL > 0.4:
+            analise.append("⚠️ **ROUGE-2 e ROUGE-L** têm correlação moderada")
+        else:
+            analise.append("❌ **ROUGE-2 e ROUGE-L** têm baixa correlação (inconsistência)")
+        
+        analise.append("")
+        return "\n".join(analise)
+    
+    def _obter_descricao_metrica(self, metrica: str) -> str:
+        """
+        Retorna descrição amigável da métrica.
+        
+        Args:
+            metrica: Nome da métrica
+            
+        Returns:
+            Descrição da métrica
+        """
+        descricoes = {
+            'BLEU': 'Mede a similaridade entre texto gerado e referência (0-1, maior é melhor)',
+            'ROUGE-1': 'Mede sobreposição de palavras individuais (0-1, maior é melhor)',
+            'ROUGE-2': 'Mede sobreposição de bigramas (0-1, maior é melhor)',
+            'ROUGE-L': 'Mede sobreposição de subsequências mais longas (0-1, maior é melhor)',
+            'BERTScore': 'Mede similaridade semântica usando embeddings BERT (0-1, maior é melhor)',
+            'Taxa de Validade': 'Percentual de respostas válidas (0-1, maior é melhor)',
+            'Comprimento Médio': 'Comprimento médio das respostas em caracteres',
+            'Palavras Médias': 'Número médio de palavras por resposta',
+            'Consistência de Comprimento': 'Consistência no tamanho das respostas (menor desvio é melhor)'
+        }
+        return descricoes.get(metrica, '')
+    
+    def _obter_descricao_categoria(self, categoria: str) -> str:
+        """
+        Retorna descrição amigável da categoria.
+        
+        Args:
+            categoria: Nome da categoria
+            
+        Returns:
+            Descrição da categoria
+        """
+        descricoes = {
+            'Score Acadêmico': 'Combinação de métricas de qualidade de texto (BLEU, ROUGE, BERTScore)',
+            'Score Evidently AI': 'Métricas de qualidade e consistência das respostas',
+            'Score Geral': 'Score final combinando todas as métricas com pesos balanceados'
+        }
+        return descricoes.get(categoria, '')
+    
+    def _gerar_insights_executivos(self, metricas_por_modelo: Dict[str, Dict], taxa_sucesso: float) -> List[str]:
+        """
+        Gera insights executivos baseados nas métricas.
+        
+        Args:
+            metricas_por_modelo: Dicionário com métricas por modelo
+            taxa_sucesso: Taxa de sucesso geral
+            
+        Returns:
+            Lista de insights
+        """
+        insights = []
+        
+        # Insight sobre taxa de sucesso
+        if taxa_sucesso >= 90:
+            insights.append("✅ **Excelente taxa de sucesso**: {:.1f}% das respostas são válidas".format(taxa_sucesso))
+        elif taxa_sucesso >= 80:
+            insights.append("⚠️ **Boa taxa de sucesso**: {:.1f}% das respostas são válidas".format(taxa_sucesso))
+        else:
+            insights.append("❌ **Taxa de sucesso baixa**: {:.1f}% das respostas são válidas".format(taxa_sucesso))
+        
+        # Identificar melhor modelo por categoria
+        melhor_academico = None
+        melhor_evidently = None
+        melhor_geral = None
+        
+        for modelo, metricas in metricas_por_modelo.items():
+            if 'academicas' in metricas:
+                score_acad = metricas['academicas'].get('score_composto', 0)
+                if melhor_academico is None or score_acad > melhor_academico[1]:
+                    melhor_academico = (modelo, score_acad)
+            
+            if 'evidently' in metricas:
+                score_ev = metricas['evidently'].get('taxa_validas', 0)
+                if melhor_evidently is None or score_ev > melhor_evidently[1]:
+                    melhor_evidently = (modelo, score_ev)
+        
+        if melhor_academico:
+            insights.append("🏆 **Melhor modelo acadêmico**: {} (score: {:.3f})".format(
+                melhor_academico[0], melhor_academico[1]))
+        
+        if melhor_evidently:
+            insights.append("📊 **Melhor modelo em consistência**: {} (taxa: {:.1%})".format(
+                melhor_evidently[0], melhor_evidently[1]))
+        
+        # Identificar modelos problemáticos
+        modelos_problematicos = []
+        for modelo, metricas in metricas_por_modelo.items():
+            if 'evidently' in metricas:
+                taxa_validas = metricas['evidently'].get('taxa_validas', 1)
+                if taxa_validas < 0.5:  # Menos de 50% de respostas válidas
+                    modelos_problematicos.append((modelo, taxa_validas))
+        
+        if modelos_problematicos:
+            insights.append("⚠️ **Modelos com problemas**: {}".format(
+                ", ".join([f"{m[0]} ({m[1]:.1%})" for m in modelos_problematicos])))
+        
+        return insights
+    
+    def _obter_emoji_rank(self, rank: int) -> str:
+        """
+        Retorna emoji baseado no rank.
+        
+        Args:
+            rank: Posição no ranking
+            
+        Returns:
+            Emoji correspondente
+        """
+        if rank == 1:
+            return '🥇'
+        elif rank == 2:
+            return '🥈'
+        elif rank == 3:
+            return '🥉'
+        elif rank <= 5:
+            return '🏅'
+        else:
+            return '📊'
+    
     def _calcular_ranking_modelos(self, metricas_por_modelo: Dict[str, Dict]) -> List[tuple]:
         """Calcula ranking dos modelos baseado em score composto."""
         rankings = []
@@ -722,14 +1094,15 @@ class AnalysisSystem:
             # Penalizar modelos com poucas respostas válidas
             fator_confiabilidade = min(1.0, respostas_validas / 10.0)  # Penaliza se < 10 respostas válidas
             
-            # Score composto com penalização por baixa confiabilidade
+            # Score composto com pesos balanceados para maior consistência
+            # ROUGE-1 e BERTScore têm pesos maiores por serem mais confiáveis
             score_composto = (
-                bleu * 0.15 +
-                rouge1 * 0.20 +
-                rouge2 * 0.15 +
-                rougeL * 0.15 +
-                bertscore * 0.25 +
-                taxa_validas * 0.10
+                bleu * 0.10 +           # Reduzido: pode ser muito baixo
+                rouge1 * 0.25 +         # Aumentado: mais confiável
+                rouge2 * 0.20 +         # Aumentado: agora corrigido
+                rougeL * 0.15 +         # Mantido
+                bertscore * 0.25 +      # Mantido: muito confiável
+                taxa_validas * 0.05     # Reduzido: não deve dominar
             ) * fator_confiabilidade
             
             # Penalização adicional para modelos com muito poucas respostas válidas
@@ -792,12 +1165,27 @@ class AnalysisSystem:
         for metrica, ranking in rankings_individuais.items():
             relatorio.append(f"### {metrica}")
             relatorio.append("")
-            relatorio.append("| Modelo | Score Normalizado | Rank |")
-            relatorio.append("|--------|------------------|------|")
+            
+            # Adicionar descrição da métrica
+            descricao_metrica = self._obter_descricao_metrica(metrica)
+            if descricao_metrica:
+                relatorio.append(f"*{descricao_metrica}*")
+                relatorio.append("")
+            
+            # Tabela com formatação melhorada
+            relatorio.append("| 🏆 | Modelo | Score | Rank |")
+            relatorio.append("|:---:|:-------|------:|:----:|")
             
             for _, row in ranking.iterrows():
-                relatorio.append(f"| {row['Modelo']} | {row[f'Normalized {metrica}']:.4f} | {row['Rank']} |")
+                # Emoji baseado no rank
+                emoji_rank = self._obter_emoji_rank(row['Rank'])
+                score = row[f'Normalized {metrica}']
+                relatorio.append(f"| {emoji_rank} | **{row['Modelo']}** | {score:.4f} | {row['Rank']} |")
             relatorio.append("")
+        
+        # Análise de correlações
+        relatorio.append(self._analisar_correlacoes_metricas(metricas_por_modelo))
+        relatorio.append("")
         
         # Rankings consolidados
         relatorio.append("## 📊 Rankings Consolidados por Categoria")
@@ -806,11 +1194,21 @@ class AnalysisSystem:
         for categoria, ranking in rankings_consolidados.items():
             relatorio.append(f"### {categoria}")
             relatorio.append("")
-            relatorio.append("| Modelo | Score | Rank |")
-            relatorio.append("|--------|-------|------|")
+            
+            # Adicionar descrição da categoria
+            descricao_categoria = self._obter_descricao_categoria(categoria)
+            if descricao_categoria:
+                relatorio.append(f"*{descricao_categoria}*")
+                relatorio.append("")
+            
+            # Tabela com formatação melhorada
+            relatorio.append("| 🏆 | Modelo | Score | Rank |")
+            relatorio.append("|:---:|:-------|------:|:----:|")
             
             for _, row in ranking.iterrows():
-                relatorio.append(f"| {row['Modelo']} | {row[categoria]:.4f} | {row['Rank']} |")
+                emoji_rank = self._obter_emoji_rank(row['Rank'])
+                score = row[categoria]
+                relatorio.append(f"| {emoji_rank} | **{row['Modelo']}** | {score:.4f} | {row['Rank']} |")
             relatorio.append("")
         
         # Análise qualitativa
@@ -842,15 +1240,30 @@ class AnalysisSystem:
         
         for coluna in academic_metrics + evidently_metrics:
             if coluna in df.columns:
-                max_val = df[coluna].max()
-                min_val = df[coluna].min()
+                # Filtrar valores válidos (não nulos e não infinitos)
+                valores_validos = df[coluna].replace([np.inf, -np.inf], np.nan).dropna()
+                
+                if len(valores_validos) == 0:
+                    # Se não há valores válidos, usar 0
+                    df_normalizado[f"Normalized {coluna}"] = 0.0
+                    continue
+                
+                max_val = valores_validos.max()
+                min_val = valores_validos.min()
                 
                 if max_val > min_val:
                     # Normalização min-max
                     df_normalizado[f"Normalized {coluna}"] = (df[coluna] - min_val) / (max_val - min_val)
+                    # Garantir que valores inválidos sejam 0
+                    df_normalizado[f"Normalized {coluna}"] = df_normalizado[f"Normalized {coluna}"].fillna(0.0)
+                    df_normalizado[f"Normalized {coluna}"] = df_normalizado[f"Normalized {coluna}"].replace([np.inf, -np.inf], 0.0)
                 else:
-                    # Se todos os valores são iguais, usar 1.0
-                    df_normalizado[f"Normalized {coluna}"] = 1.0
+                    # Se todos os valores são iguais e não zero, usar 1.0
+                    # Se todos são zero, usar 0.0
+                    if max_val > 0:
+                        df_normalizado[f"Normalized {coluna}"] = 1.0
+                    else:
+                        df_normalizado[f"Normalized {coluna}"] = 0.0
         
         return df_normalizado
     
@@ -1202,6 +1615,9 @@ print("Rankings gerados e salvos em rankings.md")
             # Calcular métricas Evidently AI
             metricas_evidently = self.calcular_metricas_evidently(df_com_metricas)
             
+            # Calcular métricas de benchmarks
+            metricas_benchmarks = self.calcular_metricas_benchmarks(df_com_metricas)
+            
             # Gerar relatórios Evidently AI
             try:
                 # Tentar import relativo (quando chamado via main.py)
@@ -1221,7 +1637,8 @@ print("Rankings gerados e salvos em rankings.md")
             
             # Gerar relatório individual do modelo
             relatorio_modelo = self.gerar_relatorio_por_modelo(modelo, df_com_metricas, 
-                                                              metricas_academicas, metricas_evidently, pasta_modelo)
+                                                              metricas_academicas, metricas_evidently, 
+                                                              metricas_benchmarks, pasta_modelo)
             
             # Adicionar relatório Evidently AI
             if relatorio_evidently:
@@ -1249,7 +1666,8 @@ print("Rankings gerados e salvos em rankings.md")
             # Armazenar métricas
             metricas_por_modelo[modelo] = {
                 'academicas': metricas_academicas,
-                'evidently': metricas_evidently
+                'evidently': metricas_evidently,
+                'benchmarks': metricas_benchmarks.get(modelo, {})
             }
             
             print(f"✅ {modelo}: Relatório salvo em {arquivo_relatorio_modelo}")
@@ -1280,4 +1698,17 @@ def executar_analise():
     return analyzer.executar_analise_completa()
 
 if __name__ == "__main__":
-    executar_analise()
+    print("🚀 Executando análise consolidada diretamente...")
+    print("=" * 60)
+    
+    try:
+        resultado = executar_analise()
+        if resultado:
+            print(f"\n✅ Análise concluída com sucesso!")
+            print(f"📄 Relatório salvo em: {resultado}")
+        else:
+            print("\n❌ Análise não pôde ser concluída")
+    except Exception as e:
+        print(f"\n❌ Erro durante a execução: {e}")
+        import traceback
+        traceback.print_exc()

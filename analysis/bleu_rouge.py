@@ -60,16 +60,22 @@ class BleuRougeCalculator:
             
             # Verificar se é resposta inválida
             if self._eh_resposta_invalida(resposta_modelo):
+                if idx < 5:  # Debug para as primeiras 5 linhas
+                    print(f"⚠️ Linha {idx} marcada como inválida: {resposta_modelo[:50]}...")
                 bleu_scores.append(0.0)
                 rouge1_scores.append(0.0)
                 rouge2_scores.append(0.0)
                 rougeL_scores.append(0.0)
                 continue
             
+            # Para métricas de texto (BLEU/ROUGE), usar resposta completa
+            # Não extrair A, B, C, D - isso é apenas para benchmarks de múltipla escolha
+            resposta_final = resposta_modelo
+            
             # Calcular BLEU
             try:
                 reference = [resposta_esperada.split()]
-                candidate = resposta_modelo.split()
+                candidate = resposta_final.split()
                 bleu_score = sentence_bleu(reference, candidate, smoothing_function=smoothing)
                 bleu_scores.append(bleu_score)
             except Exception as e:
@@ -78,10 +84,18 @@ class BleuRougeCalculator:
             
             # Calcular ROUGE
             try:
-                rouge_scores = rouge_scorer_instance.score(resposta_esperada, resposta_modelo)
-                rouge1_scores.append(rouge_scores['rouge1'].fmeasure)
-                rouge2_scores.append(rouge_scores['rouge2'].fmeasure)
-                rougeL_scores.append(rouge_scores['rougeL'].fmeasure)
+                rouge_scores = rouge_scorer_instance.score(resposta_esperada, resposta_final)
+                rouge1_score = rouge_scores['rouge1'].fmeasure
+                rouge2_score = rouge_scores['rouge2'].fmeasure
+                rougeL_score = rouge_scores['rougeL'].fmeasure
+                
+                # Debug para as primeiras 5 linhas
+                if idx < 5:
+                    print(f"✅ Linha {idx} ROUGE calculado - R1: {rouge1_score:.4f}, R2: {rouge2_score:.4f}, RL: {rougeL_score:.4f}")
+                
+                rouge1_scores.append(rouge1_score)
+                rouge2_scores.append(rouge2_score)
+                rougeL_scores.append(rougeL_score)
             except Exception as e:
                 print(f"⚠️ Erro ROUGE linha {idx}: {e}")
                 rouge1_scores.append(0.0)
@@ -94,7 +108,11 @@ class BleuRougeCalculator:
         df_result['rouge2_score'] = rouge2_scores
         df_result['rougeL_score'] = rougeL_scores
         
+        # Debug: verificar se ROUGE-2 foi salvo corretamente
+        rouge2_unique = df_result['rouge2_score'].unique()
         print(f"✅ Métricas BLEU e ROUGE calculadas para {len(df)} respostas")
+        print(f"🔍 ROUGE-2 valores únicos: {rouge2_unique[:10]}...")  # Mostrar apenas os primeiros 10
+        print(f"🔍 ROUGE-2 max: {df_result['rouge2_score'].max():.4f}, min: {df_result['rouge2_score'].min():.4f}")
         
         return df_result
     
@@ -169,6 +187,8 @@ class BleuRougeCalculator:
             'error',
             'timeout',
             'rate limit',
+            'quota excedida',
+            'quota exceeded',
             'api key',
             'authentication',
             'connection',
@@ -178,10 +198,12 @@ class BleuRougeCalculator:
             'traceback',
             'null',
             'none',
-            'undefined'
+            'undefined',
+            'gemini_1_5_flash'  # Erro específico do Gemini
         ]
         
         return any(padrao in resposta_str for padrao in padroes_erro)
+    
     
     def gerar_relatorio_bleu_rouge(self, metricas_por_modelo: Dict[str, Dict]) -> str:
         """

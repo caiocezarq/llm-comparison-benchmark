@@ -42,6 +42,12 @@ class RankingSystem:
             "Palavras Médias",
             "Consistência de Comprimento"
         ]
+        
+        # Métricas de Benchmarks
+        self.benchmark_metrics = [
+            "MMLU Accuracy",
+            "HellaSwag Accuracy"
+        ]
     
     def extrair_metricas_de_relatorios(self, pasta_analise: str) -> Dict[str, Dict]:
         """
@@ -78,6 +84,54 @@ class RankingSystem:
                     print(f"❌ {modelo}: Relatório não encontrado")
         
         return metricas_por_modelo
+    
+    def extrair_metricas_benchmarks(self, pasta_analise: str) -> Dict[str, Dict]:
+        """
+        Extrai métricas de benchmarks dos arquivos JSON.
+        
+        Args:
+            pasta_analise: Caminho da pasta de análise
+            
+        Returns:
+            Dicionário com métricas de benchmarks por modelo
+        """
+        metricas_benchmarks = {}
+        
+        # Procurar arquivo de métricas consolidadas
+        arquivo_metricas = os.path.join(pasta_analise, "metricas_consolidadas.json")
+        
+        if not os.path.exists(arquivo_metricas):
+            print(f"⚠️ Arquivo {arquivo_metricas} não encontrado")
+            return {}
+        
+        try:
+            with open(arquivo_metricas, 'r', encoding='utf-8') as f:
+                dados = json.load(f)
+            
+            # Extrair métricas de benchmarks
+            for modelo, metricas in dados.items():
+                if 'benchmarks' in metricas:
+                    metricas_benchmarks[modelo] = {}
+                    
+                    # MMLU
+                    if 'mmlu' in metricas['benchmarks']:
+                        mmlu_data = metricas['benchmarks']['mmlu']
+                        metricas_benchmarks[modelo]['MMLU Accuracy'] = mmlu_data.get('accuracy', 0.0)
+                        metricas_benchmarks[modelo]['MMLU Total Questions'] = mmlu_data.get('total_questions', 0)
+                        metricas_benchmarks[modelo]['MMLU Correct Answers'] = mmlu_data.get('correct_answers', 0)
+                    
+                    # HellaSwag
+                    if 'hellaswag' in metricas['benchmarks']:
+                        hellaswag_data = metricas['benchmarks']['hellaswag']
+                        metricas_benchmarks[modelo]['HellaSwag Accuracy'] = hellaswag_data.get('accuracy', 0.0)
+                        metricas_benchmarks[modelo]['HellaSwag Total Questions'] = hellaswag_data.get('total_questions', 0)
+                        metricas_benchmarks[modelo]['HellaSwag Correct Answers'] = hellaswag_data.get('correct_answers', 0)
+        
+        except Exception as e:
+            print(f"❌ Erro ao extrair métricas de benchmarks: {e}")
+            return {}
+        
+        return metricas_benchmarks
     
     def _extrair_metricas_do_relatorio(self, arquivo_relatorio: str) -> Dict[str, float]:
         """
@@ -174,16 +228,31 @@ class RankingSystem:
         
         # Normalizar métricas (quanto maior melhor)
         for coluna in df.columns:
-            if coluna in self.academic_metrics + self.evidently_metrics:
-                max_val = df[coluna].max()
-                min_val = df[coluna].min()
+            if coluna in self.academic_metrics + self.evidently_metrics + self.benchmark_metrics:
+                # Filtrar valores válidos (não nulos e não infinitos)
+                valores_validos = df[coluna].replace([np.inf, -np.inf], np.nan).dropna()
+                
+                if len(valores_validos) == 0:
+                    # Se não há valores válidos, usar 0
+                    df[f"Normalized {coluna}"] = 0.0
+                    continue
+                
+                max_val = valores_validos.max()
+                min_val = valores_validos.min()
                 
                 if max_val > min_val:
                     # Normalização min-max
                     df[f"Normalized {coluna}"] = (df[coluna] - min_val) / (max_val - min_val)
+                    # Garantir que valores inválidos sejam 0
+                    df[f"Normalized {coluna}"] = df[f"Normalized {coluna}"].fillna(0.0)
+                    df[f"Normalized {coluna}"] = df[f"Normalized {coluna}"].replace([np.inf, -np.inf], 0.0)
                 else:
-                    # Se todos os valores são iguais, usar 1.0
-                    df[f"Normalized {coluna}"] = 1.0
+                    # Se todos os valores são iguais e não zero, usar 1.0
+                    # Se todos são zero, usar 0.0
+                    if max_val > 0:
+                        df[f"Normalized {coluna}"] = 1.0
+                    else:
+                        df[f"Normalized {coluna}"] = 0.0
         
         return df
     
@@ -548,12 +617,22 @@ print("Rankings gerados e salvos em rankings.md")
         # Extrair métricas dos relatórios
         metricas_por_modelo = self.extrair_metricas_de_relatorios(pasta_analise)
         
+        # Extrair métricas de benchmarks
+        metricas_benchmarks = self.extrair_metricas_benchmarks(pasta_analise)
+        
         if not metricas_por_modelo:
             print("❌ Nenhuma métrica extraída dos relatórios")
             return None
         
+        # Combinar métricas acadêmicas e benchmarks
+        metricas_combinadas = {}
+        for modelo in metricas_por_modelo:
+            metricas_combinadas[modelo] = metricas_por_modelo[modelo].copy()
+            if modelo in metricas_benchmarks:
+                metricas_combinadas[modelo].update(metricas_benchmarks[modelo])
+        
         # Normalizar métricas
-        df_normalizado = self.normalizar_metricas(metricas_por_modelo)
+        df_normalizado = self.normalizar_metricas(metricas_combinadas)
         
         # Gerar rankings individuais
         rankings_individuais = self.gerar_rankings_individuais(df_normalizado)

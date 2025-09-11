@@ -48,7 +48,10 @@ class BertScoreCalculator:
         for idx, row in df.iterrows():
             resposta_modelo = str(row.get('prediction', ''))
             if not self._eh_resposta_invalida(resposta_modelo):
-                respostas_validas.append(resposta_modelo)
+                # Para métricas de texto (BERTScore), usar resposta completa
+                # Não extrair A, B, C, D - isso é apenas para benchmarks de múltipla escolha
+                resposta_final = resposta_modelo
+                respostas_validas.append(resposta_final)
                 indices_validos.append(idx)
         
         if len(respostas_validas) == 0:
@@ -164,6 +167,8 @@ class BertScoreCalculator:
             'error',
             'timeout',
             'rate limit',
+            'quota excedida',
+            'quota exceeded',
             'api key',
             'authentication',
             'connection',
@@ -173,10 +178,12 @@ class BertScoreCalculator:
             'traceback',
             'null',
             'none',
-            'undefined'
+            'undefined',
+            'gemini_1_5_flash'  # Erro específico do Gemini
         ]
         
         return any(padrao in resposta_str for padrao in padroes_erro)
+    
     
     def gerar_relatorio_bertscore(self, metricas_por_modelo: Dict[str, Dict]) -> str:
         """

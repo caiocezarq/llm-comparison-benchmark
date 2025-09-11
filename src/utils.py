@@ -319,71 +319,103 @@ def generate_final_report(df, metricas, relatorios, execution_time, folder_path)
 
 def load_prompts():
     """
-    Retorna lista de prompts e referências/gabaritos para avaliação dos modelos.
-    Prompts diversificados em português e inglês para análise abrangente.
+    Carrega prompts e referências do arquivo JSON.
+    Retorna lista de prompts e lista de referências.
     """
-    prompts = [
-        # Prompts em Português - Tecnologia e IA (melhorados)
-        "O que é inteligência artificial e como ela está transformando o mundo? Forneça uma explicação detalhada com exemplos práticos.",
-        "Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para cada abordagem.",
-        "Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de treinamento.",
-        "Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.",
-        "Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.",
+    try:
+        # Carregar prompts do arquivo JSON
+        prompts_file = os.path.join(config.PROMPTS_FOLDER, config.PROMPTS_FILE)
+        with open(prompts_file, 'r', encoding='utf-8') as f:
+            prompts_data = json.load(f)
         
-        # Prompts em Português - Ciência e Meio Ambiente (melhorados)
-        "Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espécies afetadas.",
-        "Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o processo químico.",
-        "Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptação.",
-        "Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.",
-        "Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivamente.",
+        # Verificar se é o novo formato estruturado (v2.0)
+        if prompts_data.get('version') == '2.0':
+            prompts_list = prompts_data.get('prompts', [])
+            references = prompts_data.get('references', [])
+            
+            # Extrair apenas o texto do prompt do formato estruturado
+            prompts = []
+            for prompt_item in prompts_list:
+                if isinstance(prompt_item, dict):
+                    prompts.append(prompt_item.get('prompt', ''))
+                else:
+                    prompts.append(prompt_item)
+        else:
+            # Formato antigo (v1.0)
+            prompts = prompts_data.get('prompts', [])
+            references = prompts_data.get('references', [])
         
-        # Prompts em Inglês - Business e Inovação (melhorados)
-        "What are the key factors for successful digital transformation? Provide a comprehensive framework with real-world examples.",
-        "Explain the concept of disruptive innovation in business, including historical examples and current trends.",
-        "How does artificial intelligence impact customer experience? Discuss specific applications and measurable benefits.",
-        "What are the main challenges of remote work management? Provide strategies and tools for effective remote leadership.",
-        "Describe the future of e-commerce and online retail, including emerging technologies and consumer behavior trends.",
+        # Garantir que temos o mesmo número de prompts e referências
+        if len(references) != len(prompts):
+            # Se não temos referências suficientes, preencher com strings vazias
+            references = references + [""] * (len(prompts) - len(references))
         
-        # Prompts em Inglês - Ciência e Tecnologia (melhorados)
-        "Explain the principles of quantum computing and its potential applications in cryptography, optimization, and simulation.",
-        "How do neural networks process and learn from data? Describe the mathematical foundations and learning algorithms.",
-        "What are the latest developments in renewable energy technology? Focus on breakthrough innovations and scalability.",
-        "Describe the impact of 5G technology on modern communication, including benefits for IoT and smart cities.",
-        "How does blockchain technology ensure data security and transparency? Explain consensus mechanisms and use cases."
-    ]
+        return prompts, references
+    except FileNotFoundError:
+        print(f"⚠️ Arquivo {config.PROMPTS_FILE} não encontrado, usando prompts padrão")
+        # Fallback para prompts básicos
+        prompts = [
+            "O que é inteligência artificial?",
+            "Explique machine learning.",
+            "Como funciona deep learning?",
+            "Quais são os desafios da IA?",
+            "Descreva computação quântica."
+        ]
+        references = [""] * len(prompts)
+        return prompts, references
+
+def load_benchmark_prompts():
+    """
+    Carrega prompts de benchmarks padronizados (MMLU, HellaSwag) do arquivo JSON.
+    Retorna lista de prompts, referências e informações de benchmark.
+    """
+    prompts = []
+    references = []
+    benchmark_info = []
     
-    references = [
-        # Referências em Português - Tecnologia e IA (melhoradas e mais longas)
-        "A inteligência artificial (IA) é um campo interdisciplinar da ciência da computação que visa criar sistemas capazes de realizar tarefas que tradicionalmente exigiriam inteligência humana. Estes sistemas utilizam algoritmos de aprendizado de máquina, processamento de linguagem natural e visão computacional para analisar dados, reconhecer padrões e tomar decisões autônomas. A IA está transformando diversos setores: na saúde, auxilia no diagnóstico médico e descoberta de medicamentos; na indústria, otimiza processos de produção e controle de qualidade; no transporte, desenvolve veículos autônomos; e na educação, personaliza o aprendizado. Exemplos práticos incluem assistentes virtuais como Siri e Alexa, sistemas de recomendação da Netflix e Amazon, carros autônomos da Tesla, e ferramentas de tradução automática. A IA também está revolucionando a pesquisa científica, acelerando descobertas em áreas como genética, física e química através da análise de grandes volumes de dados.",
+    try:
+        benchmarks_file = os.path.join(config.BENCHMARKS_FOLDER, config.BENCHMARKS_FILE)
+        with open(benchmarks_file, 'r', encoding='utf-8') as f:
+            benchmarks_data = json.load(f)
         
-        "Machine learning (ML) é um subconjunto da inteligência artificial que permite aos sistemas aprenderem e melhorarem automaticamente através da experiência, sem serem explicitamente programados para cada tarefa. Utiliza algoritmos estatísticos para identificar padrões em dados e fazer previsões ou decisões. Deep learning, por sua vez, é uma subcategoria do machine learning que emprega redes neurais artificiais com múltiplas camadas (daí o termo 'deep') para processar dados de forma hierárquica. Enquanto o ML tradicional funciona bem com dados estruturados e características pré-definidas, o deep learning pode processar dados não estruturados como imagens, texto e áudio, extraindo características automaticamente. Casos de uso do ML incluem sistemas de recomendação, detecção de fraudes, análise de sentimentos e previsão de demanda. O deep learning é especialmente eficaz em reconhecimento de imagens (como em diagnósticos médicos), processamento de linguagem natural (tradução, chatbots), e sistemas de reconhecimento de voz.",
-        
-        "Os modelos de linguagem como GPT (Generative Pre-trained Transformer) e LLaMA (Large Language Model Meta AI) são baseados na arquitetura Transformer, introduzida em 2017. Esta arquitetura utiliza mecanismos de atenção para processar sequências de texto, permitindo que o modelo compreenda relações contextuais entre palavras distantes. O processo de treinamento ocorre em duas fases: pré-treinamento e fine-tuning. Na fase de pré-treinamento, o modelo é exposto a vastas quantidades de texto da internet para aprender padrões linguísticos, gramática e conhecimento factual. Na fase de fine-tuning, o modelo é ajustado para tarefas específicas usando datasets menores e mais focados. O GPT utiliza uma abordagem de decodificação autoregressiva, gerando texto token por token, enquanto o LLaMA emprega uma arquitetura similar mas com otimizações específicas. Estes modelos são capazes de gerar texto coerente, responder perguntas, traduzir idiomas e realizar raciocínio complexo, representando um avanço significativo na capacidade de processamento de linguagem natural.",
-        
-        "Os principais desafios éticos da IA incluem múltiplas dimensões que requerem atenção cuidadosa. O viés algorítmico surge quando modelos de IA perpetuam ou amplificam preconceitos presentes nos dados de treinamento, resultando em discriminação contra grupos minoritários em áreas como contratação, empréstimos e justiça criminal. A privacidade de dados representa outro desafio crítico, pois sistemas de IA frequentemente requerem acesso a informações pessoais sensíveis, criando riscos de vazamento ou uso indevido. A automação de empregos gera preocupações sobre desemprego em massa, especialmente em setores que dependem de tarefas repetitivas. A transparência e explicabilidade dos sistemas de IA são essenciais para garantir que decisões automatizadas possam ser compreendidas e contestadas. Questões de responsabilidade legal surgem quando sistemas de IA causam danos, criando incertezas sobre quem deve ser responsabilizado. A segurança cibernética representa outro desafio, pois sistemas de IA podem ser vulneráveis a ataques adversariais. Soluções incluem desenvolvimento de frameworks éticos, regulamentação governamental, auditoria de algoritmos e investimento em educação para preparar a força de trabalho para a era da IA.",
-        
-        "A computação quântica representa uma revolução paradigmática na forma como processamos informações, utilizando princípios da mecânica quântica como superposição, emaranhamento e interferência quântica. Diferentemente dos bits clássicos que existem em estados binários (0 ou 1), os qubits quânticos podem existir em superposição, permitindo processamento paralelo massivo. Aplicações práticas atuais incluem simulação molecular para descoberta de medicamentos, otimização de portfólios financeiros, e criptografia quântica para comunicações seguras. No futuro, a computação quântica promete revolucionar áreas como inteligência artificial, modelagem climática, e resolução de problemas de otimização complexos. Empresas como IBM, Google e Microsoft já oferecem acesso a computadores quânticos através de serviços em nuvem. No entanto, desafios significativos permanecem, incluindo a necessidade de temperaturas extremamente baixas, correção de erros quânticos, e escalabilidade. A computação quântica não substituirá completamente a computação clássica, mas complementará em problemas específicos onde sua vantagem quântica seja significativa.",
-        
-        # Referências em Português - Ciência e Meio Ambiente
-        "As mudanças climáticas afetam habitats naturais, causando extinção de espécies, alterações nos padrões migratórios e desequilíbrios nos ecossistemas terrestres e marinhos.",
-        "A fotossíntese é o processo pelo qual plantas convertem luz solar, CO2 e água em oxigênio e glicose, sendo fundamental para a vida na Terra e o ciclo do carbono.",
-        "A evolução das espécies ocorre através de seleção natural, mutações genéticas e adaptação ao ambiente, resultando na diversidade biológica observada.",
-        "As principais fontes incluem energia solar, eólica, hidrelétrica, biomassa e geotérmica, oferecendo alternativas sustentáveis aos combustíveis fósseis.",
-        "A sustentabilidade corporativa integra práticas ambientais, sociais e de governança (ESG) nas operações empresariais para criar valor a longo prazo.",
-        
-        # Referências em Inglês - Business e Inovação
-        "Key factors include strong leadership commitment, employee training, technology infrastructure, change management processes, and continuous improvement culture.",
-        "Disruptive innovation creates new markets by offering simpler, more affordable alternatives that eventually displace established products and services.",
-        "AI enhances customer experience through personalization, predictive analytics, chatbots, and automated customer service, improving satisfaction and loyalty.",
-        "Main challenges include communication barriers, team collaboration, work-life balance, technology infrastructure, and maintaining company culture remotely.",
-        "The future includes AI-powered personalization, augmented reality shopping, voice commerce, social commerce, and seamless omnichannel experiences.",
-        
-        # Referências em Inglês - Ciência e Tecnologia
-        "Quantum computing uses quantum mechanical phenomena like superposition and entanglement to process information, potentially solving complex problems in cryptography and optimization.",
-        "Neural networks process data through interconnected nodes that learn patterns by adjusting weights based on training data and error feedback.",
-        "Latest developments include advanced solar panels, offshore wind farms, hydrogen fuel cells, and energy storage solutions like next-generation batteries.",
-        "5G technology provides faster data transmission, lower latency, and greater connectivity, enabling IoT, autonomous vehicles, and smart city applications.",
-        "Blockchain ensures security through cryptographic hashing, distributed ledger technology, and consensus mechanisms that prevent tampering and ensure transparency."
-    ]
+        for benchmark_name, benchmark_data in benchmarks_data['benchmarks'].items():
+            if benchmark_name == 'mmlu':
+                for subject, questions in benchmark_data['subjects'].items():
+                    for q in questions:
+                        prompt = format_mmlu_prompt(q)
+                        prompts.append(prompt)
+                        references.append(q['answer'])
+                        benchmark_info.append({
+                            'benchmark': 'mmlu',
+                            'subject': subject,
+                            'question_id': q['id']
+                        })
+            
+            elif benchmark_name == 'hellaswag':
+                for q in benchmark_data['questions']:
+                    prompt = format_hellaswag_prompt(q)
+                    prompts.append(prompt)
+                    references.append(q['answer'])
+                    benchmark_info.append({
+                        'benchmark': 'hellaswag',
+                        'question_id': q['id']
+                    })
     
-    return prompts, references 
+    except FileNotFoundError:
+        print(f"⚠️ Arquivo {config.BENCHMARKS_FILE} não encontrado")
+    
+    return prompts, references, benchmark_info
+
+def format_mmlu_prompt(question_data):
+    """
+    Formata prompt para MMLU (Massive Multitask Language Understanding).
+    """
+    choices = "\n".join([f"{choice}" for choice in question_data['choices']])
+    return f"Question: {question_data['question']}\n\nChoices:\n{choices}\n\nAnswer:"
+
+def format_hellaswag_prompt(question_data):
+    """
+    Formata prompt para HellaSwag (Commonsense Reasoning).
+    """
+    choices = "\n".join([f"{choice}" for choice in question_data['choices']])
+    return f"Context: {question_data['context']}\n\nQuestion: {question_data['question']}\n\nChoices:\n{choices}\n\nAnswer:" 
