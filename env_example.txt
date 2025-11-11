@@ -2,7 +2,7 @@
 # Renomeie este arquivo para .env e adicione suas API keys
 # Nunca suba o arquivo .env para repositórios públicos!
 
-# API Key do Groq (para modelos LLaMA, GPT-OSS, Qwen, DeepSeek)
+# API Key do Groq (para modelos LLaMA, GPT-OSS, Qwen)
 # Obtenha em: https://console.groq.com/keys
 GROQ_API_KEY=sua_api_key_groq_aqui
 

@@ -1394,7 +1394,7 @@ class AnalysisSystem:
             analise.append("")
         
         # Análise de modelos open source vs proprietários
-        modelos_open_source = [m for m in df['Modelo'] if any(oss in m.lower() for oss in ['llama', 'gpt_oss', 'qwen', 'deepseek'])]
+        modelos_open_source = [m for m in df['Modelo'] if any(oss in m.lower() for oss in ['llama', 'gpt_oss', 'qwen'])]
         modelos_proprietarios = [m for m in df['Modelo'] if any(prop in m.lower() for prop in ['gemini'])]
         
         if modelos_open_source and modelos_proprietarios and "Score Geral" in df.columns:

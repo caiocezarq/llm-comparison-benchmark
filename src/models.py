@@ -23,14 +23,13 @@ GROQ_MODELS = {
     "llama3_70b": "llama-3.3-70b-versatile", 
     "gpt_oss_20b": "openai/gpt-oss-20b",
     "gpt_oss_120b": "openai/gpt-oss-120b",
-    "qwen_32b": "qwen/qwen3-32b",
-    "deepseek_70b": "deepseek-r1-distill-llama-70b"
+    "qwen_32b": "qwen/qwen3-32b"
 }
 
 # Modelos disponíveis no Google Gemini (apenas os 2 funcionais)
 GEMINI_MODELS = {
     "gemini_2_5_flash_lite": "models/gemini-2.5-flash-lite",
-    "gemini_1_5_flash": "models/gemini-1.5-flash"
+    "gemini-2.0-flash-lite": "models/gemini-2.0-flash-lite"
     # Nota: gemini_2_5_flash e gemini_2_5_pro estão sendo bloqueados por filtros de segurança
     # Nota: gemini_1_5_pro tem quota limitada, não incluído por enquanto
 }

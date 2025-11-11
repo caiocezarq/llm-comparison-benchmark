@@ -160,7 +160,6 @@ BENCHMARKS_FILE = "benchmarks.json"
 - **llama3_8b** - `llama-3.1-8b-instant`
 - **llama3_70b** - `llama-3.3-70b-versatile`
 - **qwen_32b** - `qwen/qwen3-32b`
-- **deepseek_70b** - `deepseek-r1-distill-llama-70b`
 
 ### Modelos Open Source (Groq)
 - **gpt_oss_20b** - `openai/gpt-oss-20b`
@@ -270,8 +269,8 @@ python -m analysis.ranking_system
 ## 🏆 Ranking dos Modelos
 
 1. **qwen_32b** - Score: 8.45
-2. **deepseek_70b** - Score: 8.32
-3. **llama3_70b** - Score: 8.18
+2. **llama3_70b** - Score: 8.18
+3. **gpt_oss_120b** - Score: 8.10
 ...
 
 ## 📊 Métricas por Modelo
@@ -293,7 +292,7 @@ python -m analysis.ranking_system
 | Modelo | Score Normalizado | Rank |
 |--------|------------------|------|
 | qwen_32b | 0.8500 | 1 |
-| deepseek_70b | 0.8200 | 2 |
+| llama3_70b | 0.8200 | 2 |
 ...
 
 ## Rankings Consolidados por Categoria
@@ -302,7 +301,7 @@ python -m analysis.ranking_system
 | Modelo | Score | Rank |
 |--------|-------|------|
 | qwen_32b | 0.8450 | 1 |
-| deepseek_70b | 0.8200 | 2 |
+| llama3_70b | 0.8200 | 2 |
 ...
 ```
 
