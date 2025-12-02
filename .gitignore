@@ -64,6 +64,17 @@ logs/
 temp/
 tmp/
 
+# Arquivos de resultados
+resultado_*/
+results/
+docs/
+*.csv
+analise_consolidada_*/
+
+# Arquivos JSON específicos (manter prompts/)
+metricas_consolidadas.json
+normalized_metrics.json
+resultados_*.json
 
 # Arquivos de backup
 *.bak
