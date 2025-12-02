@@ -1,0 +1,66 @@
+================================================================================
+RELATÓRIO DA PIPELINE - COLETA DE RESPOSTAS DAS APIs
+================================================================================
+
+Data da Execução: 2025-11-11 21:20:22
+Tempo de Execução: 708.72s
+Total de Respostas: 189
+Respostas Válidas: 178
+Taxa de Erro: 5.8%
+Modelos Testados: 7
+Prompts Executados: 27
+
+ESTATÍSTICAS POR MODELO:
+--------------------------------------------------
+
+llama3_8b:
+  Total de Respostas: 27
+  Respostas Válidas: 27
+  Taxa de Sucesso: 100.0%
+  Tempo Médio: 0.46s
+  Comprimento Médio: 974 chars
+
+llama3_70b:
+  Total de Respostas: 27
+  Respostas Válidas: 27
+  Taxa de Sucesso: 100.0%
+  Tempo Médio: 0.77s
+  Comprimento Médio: 977 chars
+
+gpt_oss_20b:
+  Total de Respostas: 27
+  Respostas Válidas: 18
+  Taxa de Sucesso: 66.7%
+  Tempo Médio: 0.42s
+  Comprimento Médio: 354 chars
+
+gpt_oss_120b:
+  Total de Respostas: 27
+  Respostas Válidas: 27
+  Taxa de Sucesso: 100.0%
+  Tempo Médio: 0.64s
+  Comprimento Médio: 428 chars
+
+qwen_32b:
+  Total de Respostas: 27
+  Respostas Válidas: 27
+  Taxa de Sucesso: 100.0%
+  Tempo Médio: 0.75s
+  Comprimento Médio: 1250 chars
+
+gemini_2_5_flash_lite:
+  Total de Respostas: 27
+  Respostas Válidas: 27
+  Taxa de Sucesso: 100.0%
+  Tempo Médio: 1.28s
+  Comprimento Médio: 1094 chars
+
+gemini-2.0-flash-lite:
+  Total de Respostas: 27
+  Respostas Válidas: 25
+  Taxa de Sucesso: 92.6%
+  Tempo Médio: 1.66s
+  Comprimento Médio: 940 chars
+
+OBSERVAÇÃO:
+Métricas acadêmicas (BLEU, ROUGE, BERTScore, EvidentlyAI) são calculadas na análise detalhada

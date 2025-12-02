@@ -1,0 +1,86 @@
+================================================================================
+RELATÓRIO DE ERROS - PIPELINE DE COMPARAÇÃO DE MODELOS
+================================================================================
+
+Data da Análise: 2025-11-11 21:20:22
+Total de Erros: 11
+Total de Respostas: 189
+Taxa de Erro: 5.82%
+
+ERROS POR MODELO:
+--------------------------------------------------
+
+gpt_oss_20b:
+  - Other Error: 9
+
+gemini-2.0-flash-lite:
+  - Other Error: 2
+
+DETALHES DOS ERROS:
+--------------------------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de trei...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.53s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.53s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o pr...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.46s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: What are the key factors for successful digital transformation? Provide a comprehensive framework wi...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: What are the main challenges of remote work management? Provide strategies and tools for effective r...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.42s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Describe the future of e-commerce and online retail, including emerging technologies and consumer be...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: How do neural networks process and learn from data? Describe the mathematical foundations and learni...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.44s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.30s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Describe the impact of 5G technology on modern communication, including benefits for IoT and smart c...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.29s
+------------------------------

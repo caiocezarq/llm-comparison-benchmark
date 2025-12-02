@@ -1,0 +1,246 @@
+================================================================================
+RELATÓRIO DE ERROS - PIPELINE DE COMPARAÇÃO DE MODELOS
+================================================================================
+
+Data da Análise: 2025-11-11 21:08:03
+Total de Erros: 34
+Total de Respostas: 189
+Taxa de Erro: 17.99%
+
+ERROS POR MODELO:
+--------------------------------------------------
+
+gpt_oss_20b:
+  - Other Error: 9
+
+gemini-2.0-flash-lite:
+  - Other Error: 25
+
+DETALHES DOS ERROS:
+--------------------------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de trei...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.45s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: What are the key factors for successful digital transformation? Provide a comprehensive framework wi...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.42s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: Explain the concept of disruptive innovation in business, including historical examples and current ...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.44s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: What are the main challenges of remote work management? Provide strategies and tools for effective r...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.44s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: How do neural networks process and learn from data? Describe the mathematical foundations and learni...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.45s
+------------------------------
+
+Modelo: gpt_oss_20b
+Prompt: What are the latest developments in renewable energy technology? Focus on breakthrough innovations a...
+Erro: [ERRO]: Resposta vazia do modelo gpt_oss_20b
+Tempo: 0.43s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: O que é inteligência artificial e como ela está transformando o mundo? Forneça uma explicação detalh...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.38s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.29s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de trei...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.29s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.27s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.26s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.26s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o pr...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.27s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptaçã...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.26s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.29s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.28s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: What are the key factors for successful digital transformation? Provide a comprehensive framework wi...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.28s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Explain the concept of disruptive innovation in business, including historical examples and current ...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.28s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: How does artificial intelligence impact customer experience? Discuss specific applications and measu...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.28s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: What are the main challenges of remote work management? Provide strategies and tools for effective r...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.28s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Describe the future of e-commerce and online retail, including emerging technologies and consumer be...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.25s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: How do neural networks process and learn from data? Describe the mathematical foundations and learni...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.27s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: What are the latest developments in renewable energy technology? Focus on breakthrough innovations a...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.27s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: How does blockchain technology ensure data security and transparency? Explain consensus mechanisms a...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.27s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Question: Which of the following is a group?
+
+Choices:
+A) The set of all integers under addition
+B) ...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.25s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Question: What is the order of the group Z/6Z?
+
+Choices:
+A) 3
+B) 6
+C) 12
+D) 36
+
+Answer:
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.28s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Question: Which organ is responsible for filtering blood and removing waste products?
+
+Choices:
+A) L...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.29s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Question: What is the largest organ in the human body?
+
+Choices:
+A) Brain
+B) Liver
+C) Skin
+D) Lungs
+...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.26s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Context: A man is sitting in a chair reading a book. The book is very interesting and he is complete...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.27s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Context: A woman is cooking dinner in the kitchen. She is preparing pasta and the water is boiling o...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.27s
+------------------------------
+
+Modelo: gemini-2.0-flash-lite
+Prompt: Context: A child is playing with a ball in the backyard. The ball rolls under a bush and the child c...
+Erro: [ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)
+Tempo: 0.26s
+------------------------------
