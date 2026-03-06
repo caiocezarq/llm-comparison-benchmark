@@ -1,7 +1,7 @@
 {
   "resumo": {
-    "data_execucao": "2026-03-05 21:59:07",
-    "tempo_execucao": 2814.15487575531,
+    "data_execucao": "2026-03-06 18:34:04",
+    "tempo_execucao": 2758.4616193771362,
     "total_respostas": 189,
     "modelos_testados": 7,
     "prompts_executados": 27,
@@ -13,49 +13,49 @@
       "total_respostas": 27,
       "respostas_validas": 27,
       "taxa_sucesso": 100.0,
-      "tempo_medio": 0.5380006366305881,
-      "comprimento_medio": 995.8888888888889
+      "tempo_medio": 0.5597119596269395,
+      "comprimento_medio": 996.7777777777778
     },
     "llama3_70b": {
       "total_respostas": 27,
       "respostas_validas": 27,
       "taxa_sucesso": 100.0,
-      "tempo_medio": 0.847923234657005,
-      "comprimento_medio": 1017.6666666666666
+      "tempo_medio": 0.8503453290020978,
+      "comprimento_medio": 1012.5185185185185
     },
     "gpt_oss_20b": {
       "total_respostas": 27,
       "respostas_validas": 20,
       "taxa_sucesso": 74.07407407407408,
-      "tempo_medio": 0.451880172446922,
-      "comprimento_medio": 333.5
+      "tempo_medio": 0.46486092496801307,
+      "comprimento_medio": 270.75
     },
     "gpt_oss_120b": {
       "total_respostas": 27,
-      "respostas_validas": 26,
-      "taxa_sucesso": 96.29629629629629,
-      "tempo_medio": 0.797064463297526,
-      "comprimento_medio": 456.61538461538464
+      "respostas_validas": 25,
+      "taxa_sucesso": 92.5925925925926,
+      "tempo_medio": 0.6729467003433792,
+      "comprimento_medio": 436.44
     },
     "qwen_32b": {
       "total_respostas": 27,
       "respostas_validas": 27,
       "taxa_sucesso": 100.0,
-      "tempo_medio": 0.8833137176654957,
-      "comprimento_medio": 1272.148148148148
+      "tempo_medio": 0.8135412445774785,
+      "comprimento_medio": 1271.9259259259259
     },
     "gemini_2_5_flash_lite": {
       "total_respostas": 27,
-      "respostas_validas": 2,
-      "taxa_sucesso": 7.4074074074074066,
-      "tempo_medio": 35.264159511636805,
-      "comprimento_medio": 1130.0
+      "respostas_validas": 3,
+      "taxa_sucesso": 11.11111111111111,
+      "tempo_medio": 33.429515485410334,
+      "comprimento_medio": 1164.6666666666667
     },
-    "gemini-2.0-flash-lite": {
+    "gemini_3_flash_preview": {
       "total_respostas": 27,
       "respostas_validas": 0,
       "taxa_sucesso": 0.0,
-      "tempo_medio": 37.4658523135715,
+      "tempo_medio": 37.43570634170815,
       "comprimento_medio": 0
     }
   },

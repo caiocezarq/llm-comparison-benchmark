@@ -2,8 +2,8 @@
 RELATÓRIO DA PIPELINE - COLETA DE RESPOSTAS DAS APIs
 ================================================================================
 
-Data da Execução: 2026-03-05 21:59:07
-Tempo de Execução: 2814.15s
+Data da Execução: 2026-03-06 18:34:04
+Tempo de Execução: 2758.46s
 Total de Respostas: 189
 Respostas Válidas: 129
 Taxa de Erro: 31.7%
@@ -17,49 +17,49 @@ llama3_8b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
-  Tempo Médio: 0.54s
-  Comprimento Médio: 996 chars
+  Tempo Médio: 0.56s
+  Comprimento Médio: 997 chars
 
 llama3_70b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
   Tempo Médio: 0.85s
-  Comprimento Médio: 1018 chars
+  Comprimento Médio: 1013 chars
 
 gpt_oss_20b:
   Total de Respostas: 27
   Respostas Válidas: 20
   Taxa de Sucesso: 74.1%
-  Tempo Médio: 0.45s
-  Comprimento Médio: 334 chars
+  Tempo Médio: 0.46s
+  Comprimento Médio: 271 chars
 
 gpt_oss_120b:
   Total de Respostas: 27
-  Respostas Válidas: 26
-  Taxa de Sucesso: 96.3%
-  Tempo Médio: 0.80s
-  Comprimento Médio: 457 chars
+  Respostas Válidas: 25
+  Taxa de Sucesso: 92.6%
+  Tempo Médio: 0.67s
+  Comprimento Médio: 436 chars
 
 qwen_32b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
-  Tempo Médio: 0.88s
+  Tempo Médio: 0.81s
   Comprimento Médio: 1272 chars
 
 gemini_2_5_flash_lite:
   Total de Respostas: 27
-  Respostas Válidas: 2
-  Taxa de Sucesso: 7.4%
-  Tempo Médio: 35.26s
-  Comprimento Médio: 1130 chars
+  Respostas Válidas: 3
+  Taxa de Sucesso: 11.1%
+  Tempo Médio: 33.43s
+  Comprimento Médio: 1165 chars
 
-gemini-2.0-flash-lite:
+gemini_3_flash_preview:
   Total de Respostas: 27
   Respostas Válidas: 0
   Taxa de Sucesso: 0.0%
-  Tempo Médio: 37.47s
+  Tempo Médio: 37.44s
   Comprimento Médio: 0 chars
 
 OBSERVAÇÃO:

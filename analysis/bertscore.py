@@ -47,7 +47,9 @@ class BertScoreCalculator:
         
         for idx, row in df.iterrows():
             resposta_modelo = str(row.get('prediction', ''))
-            if not self._eh_resposta_invalida(resposta_modelo):
+            is_error_flag = bool(row.get('is_error', False)) if 'is_error' in df.columns else None
+            resposta_invalida = is_error_flag if is_error_flag is not None else self._eh_resposta_invalida(resposta_modelo)
+            if not resposta_invalida:
                 # Para métricas de texto (BERTScore), usar resposta completa
                 # Não extrair A, B, C, D - isso é apenas para benchmarks de múltipla escolha
                 resposta_final = resposta_modelo
@@ -121,7 +123,10 @@ class BertScoreCalculator:
             df_modelo = df[df['model'] == modelo]
             
             # Filtrar apenas respostas válidas
-            df_validas = df_modelo[~df_modelo['prediction'].apply(self._eh_resposta_invalida)]
+            if 'is_error' in df_modelo.columns:
+                df_validas = df_modelo[~df_modelo['is_error']]
+            else:
+                df_validas = df_modelo[~df_modelo['prediction'].apply(self._eh_resposta_invalida)]
             
             if len(df_validas) == 0:
                 metricas_por_modelo[modelo] = {

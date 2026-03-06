@@ -1,62 +1,62 @@
 {
   "resumo": {
-    "data_execucao": "2026-03-05 22:46:53",
-    "tempo_execucao": 2835.6003093719482,
+    "data_execucao": "2026-03-06 19:21:51",
+    "tempo_execucao": 2837.0858442783356,
     "total_respostas": 189,
     "modelos_testados": 7,
     "prompts_executados": 27,
-    "respostas_validas": 126,
-    "taxa_erro": 33.33333333333333
+    "respostas_validas": 133,
+    "taxa_erro": 29.629629629629626
   },
   "modelos": {
     "llama3_8b": {
       "total_respostas": 27,
       "respostas_validas": 27,
       "taxa_sucesso": 100.0,
-      "tempo_medio": 0.5379724502563477,
-      "comprimento_medio": 1028.6296296296296
+      "tempo_medio": 0.577672145984791,
+      "comprimento_medio": 1004.2592592592592
     },
     "llama3_70b": {
       "total_respostas": 27,
       "respostas_validas": 27,
       "taxa_sucesso": 100.0,
-      "tempo_medio": 0.8744558758205838,
-      "comprimento_medio": 1016.5185185185185
+      "tempo_medio": 0.8707210929305466,
+      "comprimento_medio": 1013.074074074074
     },
     "gpt_oss_20b": {
       "total_respostas": 27,
-      "respostas_validas": 18,
-      "taxa_sucesso": 66.66666666666666,
-      "tempo_medio": 0.4469165537092421,
-      "comprimento_medio": 302.3333333333333
+      "respostas_validas": 25,
+      "taxa_sucesso": 92.5925925925926,
+      "tempo_medio": 0.5438188093679922,
+      "comprimento_medio": 378.28
     },
     "gpt_oss_120b": {
       "total_respostas": 27,
       "respostas_validas": 26,
       "taxa_sucesso": 96.29629629629629,
-      "tempo_medio": 0.7208569844563802,
-      "comprimento_medio": 427.7692307692308
+      "tempo_medio": 0.6513942259329336,
+      "comprimento_medio": 425.84615384615387
     },
     "qwen_32b": {
       "total_respostas": 27,
       "respostas_validas": 27,
       "taxa_sucesso": 100.0,
-      "tempo_medio": 0.8028634300938359,
-      "comprimento_medio": 1273.8148148148148
+      "tempo_medio": 0.8070599679593686,
+      "comprimento_medio": 1276.7037037037037
     },
     "gemini_2_5_flash_lite": {
       "total_respostas": 27,
-      "respostas_validas": 1,
-      "taxa_sucesso": 3.7037037037037033,
-      "tempo_medio": 36.050039273721204,
-      "comprimento_medio": 1164.0
-    },
-    "gemini-2.0-flash-lite": {
-      "total_respostas": 27,
       "respostas_validas": 0,
       "taxa_sucesso": 0.0,
-      "tempo_medio": 37.607115533616806,
+      "tempo_medio": 37.3057036223235,
       "comprimento_medio": 0
+    },
+    "gemini_3_flash_preview": {
+      "total_respostas": 27,
+      "respostas_validas": 1,
+      "taxa_sucesso": 3.7037037037037033,
+      "tempo_medio": 36.38291441952741,
+      "comprimento_medio": 66.0
     }
   },
   "observacao": "Métricas acadêmicas (BLEU, ROUGE, BERTScore, EvidentlyAI) são calculadas na análise detalhada"

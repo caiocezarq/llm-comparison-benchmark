@@ -2,11 +2,11 @@
 RELATÓRIO DA PIPELINE - COLETA DE RESPOSTAS DAS APIs
 ================================================================================
 
-Data da Execução: 2026-03-05 22:46:53
-Tempo de Execução: 2835.60s
+Data da Execução: 2026-03-06 19:21:51
+Tempo de Execução: 2837.09s
 Total de Respostas: 189
-Respostas Válidas: 126
-Taxa de Erro: 33.3%
+Respostas Válidas: 133
+Taxa de Erro: 29.6%
 Modelos Testados: 7
 Prompts Executados: 27
 
@@ -17,50 +17,50 @@ llama3_8b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
-  Tempo Médio: 0.54s
-  Comprimento Médio: 1029 chars
+  Tempo Médio: 0.58s
+  Comprimento Médio: 1004 chars
 
 llama3_70b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
   Tempo Médio: 0.87s
-  Comprimento Médio: 1017 chars
+  Comprimento Médio: 1013 chars
 
 gpt_oss_20b:
   Total de Respostas: 27
-  Respostas Válidas: 18
-  Taxa de Sucesso: 66.7%
-  Tempo Médio: 0.45s
-  Comprimento Médio: 302 chars
+  Respostas Válidas: 25
+  Taxa de Sucesso: 92.6%
+  Tempo Médio: 0.54s
+  Comprimento Médio: 378 chars
 
 gpt_oss_120b:
   Total de Respostas: 27
   Respostas Válidas: 26
   Taxa de Sucesso: 96.3%
-  Tempo Médio: 0.72s
-  Comprimento Médio: 428 chars
+  Tempo Médio: 0.65s
+  Comprimento Médio: 426 chars
 
 qwen_32b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
-  Tempo Médio: 0.80s
-  Comprimento Médio: 1274 chars
+  Tempo Médio: 0.81s
+  Comprimento Médio: 1277 chars
 
 gemini_2_5_flash_lite:
   Total de Respostas: 27
-  Respostas Válidas: 1
-  Taxa de Sucesso: 3.7%
-  Tempo Médio: 36.05s
-  Comprimento Médio: 1164 chars
-
-gemini-2.0-flash-lite:
-  Total de Respostas: 27
   Respostas Válidas: 0
   Taxa de Sucesso: 0.0%
-  Tempo Médio: 37.61s
+  Tempo Médio: 37.31s
   Comprimento Médio: 0 chars
+
+gemini_3_flash_preview:
+  Total de Respostas: 27
+  Respostas Válidas: 1
+  Taxa de Sucesso: 3.7%
+  Tempo Médio: 36.38s
+  Comprimento Médio: 66 chars
 
 OBSERVAÇÃO:
 Métricas acadêmicas (BLEU, ROUGE, BERTScore, EvidentlyAI) são calculadas na análise detalhada

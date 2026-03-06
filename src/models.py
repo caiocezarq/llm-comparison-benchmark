@@ -1,7 +1,7 @@
-# models.py
+﻿# models.py
 """
-M?dulo para carregar e executar modelos do Groq e Google Gemini via API.
-Suporta m?ltiplos modelos facilmente.
+Módulo para carregar e executar modelos do Groq e Google Gemini via API.
+Suporta múltiplos modelos facilmente.
 """
 import warnings
 import logging
@@ -12,14 +12,14 @@ from groq import Groq
 import google.generativeai as genai
 from .config import get_config
 
-# Suprimir avisos desnecess?rios
+# Suprimir avisos desnecessários
 warnings.filterwarnings("ignore")
 logging.getLogger("groq").setLevel(logging.ERROR)
 
-# Carregar configura??es
+# Carregar configurações
 config = get_config()
 
-# Modelos dispon?veis no Groq
+# Modelos disponíveis no Groq
 GROQ_MODELS = {
     "llama3_8b": "llama-3.1-8b-instant",
     "llama3_70b": "llama-3.3-70b-versatile",
@@ -28,13 +28,13 @@ GROQ_MODELS = {
     "qwen_32b": "qwen/qwen3-32b"
 }
 
-# Modelos dispon?veis no Google Gemini
+# Modelos disponíveis no Google Gemini
 GEMINI_MODELS = {
     "gemini_2_5_flash_lite": "models/gemini-2.5-flash-lite",
-    "gemini-2.0-flash-lite": "models/gemini-2.0-flash-lite"
+    "gemini_3_flash_preview": "models/gemini-3-flash-preview"
 }
 
-# Dicion?rio unificado de todos os modelos
+# Dicionário unificado de todos os modelos
 AVAILABLE_MODELS = {**GROQ_MODELS, **GEMINI_MODELS}
 
 
@@ -49,14 +49,14 @@ class ModelRunner:
 
         if not self.model_id:
             raise ValueError(
-                f"Modelo '{model_name}' n?o encontrado. Modelos dispon?veis: {list(AVAILABLE_MODELS.keys())}"
+                f"Modelo '{model_name}' não encontrado. Modelos disponíveis: {list(AVAILABLE_MODELS.keys())}"
             )
 
         if model_name in GROQ_MODELS:
             self.provider = "groq"
             self.api_key = api_key or os.getenv("GROQ_API_KEY")
             if not self.api_key:
-                raise ValueError("API key do Groq n?o encontrada. Configure GROQ_API_KEY no .env")
+                raise ValueError("API key do Groq não encontrada. Configure GROQ_API_KEY no .env")
             try:
                 self.client = Groq(api_key=self.api_key)
             except Exception as e:
@@ -66,17 +66,17 @@ class ModelRunner:
             self.provider = "gemini"
             self.api_key = api_key or os.getenv("GEMINI_API_KEY")
             if not self.api_key:
-                raise ValueError("API key do Gemini n?o encontrada. Configure GEMINI_API_KEY no .env")
+                raise ValueError("API key do Gemini não encontrada. Configure GEMINI_API_KEY no .env")
             try:
                 genai.configure(api_key=self.api_key)
                 self.model = genai.GenerativeModel(self.model_id)
             except Exception as e:
                 raise ValueError(f"Erro ao inicializar cliente Gemini: {e}")
         else:
-            raise ValueError(f"Provedor n?o suportado para modelo '{model_name}'")
+            raise ValueError(f"Provedor não suportado para modelo '{model_name}'")
 
     def _is_retryable_error(self, message: str) -> bool:
-        """Define erros transit?rios pass?veis de retry."""
+        """Define erros transitórios passíveis de retry."""
         if not message:
             return False
         msg = message.lower()
@@ -101,23 +101,23 @@ class ModelRunner:
         if "rate_limit" in msg or "rate limit" in msg or "quota" in msg:
             return f"[ERRO]: Rate limit ou quota excedida para {self.model_name}"
         if "authentication" in msg or "unauthorized" in msg:
-            return f"[ERRO]: Problema de autentica??o para {self.model_name}"
+            return f"[ERRO]: Problema de autenticação para {self.model_name}"
         if "not_found" in msg or "404" in msg:
-            return f"[ERRO]: Modelo n?o encontrado: {self.model_name}"
+            return f"[ERRO]: Modelo não encontrado: {self.model_name}"
         if "timeout" in msg:
-            return f"[ERRO]: Timeout na requisi??o para {self.model_name}"
+            return f"[ERRO]: Timeout na requisição para {self.model_name}"
         if "context_length" in msg or "token" in msg:
             return f"[ERRO]: Prompt muito longo para {self.model_name}"
         if "safety" in msg or "blocked" in msg:
-            return f"[ERRO]: Conte?do bloqueado por filtros de seguran?a para {self.model_name}"
+            return f"[ERRO]: Conteúdo bloqueado por filtros de segurança para {self.model_name}"
         if "permission" in msg:
-            return f"[ERRO]: Sem permiss?o para acessar {self.model_name}"
+            return f"[ERRO]: Sem permissão para acessar {self.model_name}"
         if not (error_msg or "").strip():
             return f"[ERRO]: Erro desconhecido com {self.model_name}"
         return f"[ERRO]: {error_msg} (modelo: {self.model_name})"
 
     def _generate_once(self, prompt, **kwargs):
-        """Realiza uma tentativa ?nica de gera??o."""
+        """Realiza uma tentativa única de geração."""
         default_params = config.get_model_params()
         default_params.update(kwargs)
 
@@ -157,9 +157,9 @@ class ModelRunner:
                     if response.candidates:
                         candidate = response.candidates[0]
                         if candidate.finish_reason == 2:
-                            return f"[ERRO]: Conte?do bloqueado por filtros de seguran?a para {self.model_name}"
+                            return f"[ERRO]: Conteúdo bloqueado por filtros de segurança para {self.model_name}"
                         if candidate.finish_reason == 3:
-                            return f"[ERRO]: Conte?do bloqueado por recita??o para {self.model_name}"
+                            return f"[ERRO]: Conteúdo bloqueado por recitação para {self.model_name}"
                         if candidate.finish_reason == 4:
                             return f"[ERRO]: Resposta bloqueada por outros motivos para {self.model_name}"
                         return f"[ERRO]: Resposta vazia do modelo {self.model_name} (finish_reason: {candidate.finish_reason})"
@@ -168,21 +168,21 @@ class ModelRunner:
                     if response.candidates:
                         candidate = response.candidates[0]
                         if candidate.finish_reason == 2:
-                            return f"[ERRO]: Conte?do bloqueado por filtros de seguran?a para {self.model_name}"
+                            return f"[ERRO]: Conteúdo bloqueado por filtros de segurança para {self.model_name}"
                         if candidate.finish_reason == 3:
-                            return f"[ERRO]: Conte?do bloqueado por recita??o para {self.model_name}"
+                            return f"[ERRO]: Conteúdo bloqueado por recitação para {self.model_name}"
                         if candidate.finish_reason == 4:
                             return f"[ERRO]: Resposta bloqueada por outros motivos para {self.model_name}"
                         return f"[ERRO]: Resposta vazia do modelo {self.model_name} (finish_reason: {candidate.finish_reason})"
                     return f"[ERRO]: Erro ao acessar resposta do modelo {self.model_name}: {str(text_error)}"
 
-            return f"[ERRO]: Provedor n?o suportado para {self.model_name}"
+            return f"[ERRO]: Provedor não suportado para {self.model_name}"
 
         except Exception as e:
             return self._format_error(str(e))
 
     def generate(self, prompt, **kwargs):
-        """Gera resposta com retry/backoff para erros transit?rios."""
+        """Gera resposta com retry/backoff para erros transitórios."""
         max_retries = int(getattr(config, "MAX_RETRIES", 0))
         retry_delay = float(getattr(config, "RETRY_DELAY", 1))
         last_result = None
@@ -203,7 +203,7 @@ class ModelRunner:
         return last_result or f"[ERRO]: Falha desconhecida em {self.model_name}"
 
     def get_model_info(self):
-        """Retorna informa??es sobre o modelo atual."""
+        """Retorna informações sobre o modelo atual."""
         try:
             if self.provider == "groq":
                 models_response = self.client.models.list()
@@ -216,7 +216,7 @@ class ModelRunner:
                             "owned_by": model.owned_by,
                             "provider": "groq",
                         }
-                return {"id": self.model_id, "status": "Modelo n?o encontrado na lista", "provider": "groq"}
+                return {"id": self.model_id, "status": "Modelo não encontrado na lista", "provider": "groq"}
 
             if self.provider == "gemini":
                 return {
@@ -227,7 +227,7 @@ class ModelRunner:
                     "provider": "gemini",
                 }
 
-            return {"id": self.model_id, "status": "Provedor n?o suportado", "provider": "unknown"}
+            return {"id": self.model_id, "status": "Provedor não suportado", "provider": "unknown"}
 
         except Exception as e:
             return {"id": self.model_id, "error": str(e), "provider": self.provider}

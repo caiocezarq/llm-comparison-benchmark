@@ -1,94 +1,89 @@
 ﻿model,prompt,reference,prediction,time,timestamp,prompt_length,response_length,is_error,benchmark,subject,question_id
 gemini_2_5_flash_lite,O que é inteligência artificial e como ela está transformando o mundo? Forneça uma explicação detalhada com exemplos práticos.,"A inteligência artificial (IA) é um campo interdisciplinar da ciência da computação que visa criar sistemas capazes de realizar tarefas que tradicionalmente exigiriam inteligência humana. Estes sistemas utilizam algoritmos de aprendizado de máquina, processamento de linguagem natural e visão computacional para analisar dados, reconhecer padrões e tomar decisões autônomas. A IA está transformando diversos setores: na saúde, auxilia no diagnóstico médico e descoberta de medicamentos; na indústria, otimiza processos de produção e controle de qualidade; no transporte, desenvolve veículos autônomos; e na educação, personaliza o aprendizado. Exemplos práticos incluem assistentes virtuais como Siri e Alexa, sistemas de recomendação da Netflix e Amazon, carros autônomos da Tesla, e ferramentas de tradução automática. A IA também está revolucionando a pesquisa científica, acelerando descobertas em áreas como genética, física e química através da análise de grandes volumes de dados.","## Inteligência Artificial: Uma Revolução em Curso
 
-A Inteligência Artificial (IA) é um campo da ciência da computação dedicado à criação de sistemas capazes de realizar tarefas que normalmente exigiriam inteligência humana. Em essência, a IA busca replicar ou simular a capacidade de raciocínio, aprendizado, resolução de problemas e tomada de decisões em máquinas.
+A Inteligência Artificial (IA) é um campo da ciência da computação que se dedica a criar sistemas capazes de realizar tarefas que, tradicionalmente, exigiriam inteligência humana. Em essência, a IA busca replicar ou simular a capacidade de raciocínio, aprendizado, percepção, resolução de problemas e tomada de decisão em máquinas.
 
-**Como a IA Funciona?**
+**Como a IA funciona?**
 
-A IA não é uma tecnologia única, mas sim um conjunto de técnicas e abordagens que permitem que máquinas aprendam e ajam de forma inteligente. As principais áreas que compõem a IA incluem:
+A IA não é uma tecnologia única, mas sim um conjunto de técnicas e abordagens que permitem que sistemas aprendam com dados, identifiquem padrões, façam previsões e ajam de forma autônoma. As principais áreas que compõem a IA incluem:
 
-* **Machine Learning (Aprendizado de Máquina):** É a espinha dorsal da IA moderna. Em vez de serem explicitamente programados para cada tarefa, os algoritmos de Machine Learning aprendem com dados. Eles identificam padrões, fazem previsões e melhoram seu desempenho à medida que são expostos a mais informações.
-    * **Aprendizado Supervisionado:** O algoritmo é treinado com dados rotulados (entradas e saídas corretas). Ex: Classificar e-mails como spam ou não spam, com base em exemplos anteriores.
-    * **Aprendizado Não Supervisionado:** O algoritmo encontra padrões",1.817730188369751,2026-03-05T20:41:52.541846,126,1155,False,,,
+* **Machine Learning (Aprendizado de Máquina):** É a espinha dorsal de muitas aplicações de IA. O Machine Learning permite que os sistemas aprendam com dados sem serem explicitamente programados. Em vez de seguir um conjunto rígido de instruções, os algoritmos de Machine Learning identificam padrões em grandes volumes de dados e usam esses padrões para fazer previsões ou tomar decisões.
+    * **Aprendizado Supervisionado:** O modelo é treinado com dados rotulados, onde a entrada e a saída desejada são",1.4455785751342773,2026-03-06T17:28:19.103483,126,1151,False,,,
 gemini_2_5_flash_lite,"Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para cada abordagem.","Machine learning (ML) é um subconjunto da inteligência artificial que permite aos sistemas aprenderem e melhorarem automaticamente através da experiência, sem serem explicitamente programados para cada tarefa. Utiliza algoritmos estatísticos para identificar padrões em dados e fazer previsões ou decisões. Deep learning, por sua vez, é uma subcategoria do machine learning que emprega redes neurais artificiais com múltiplas camadas (daí o termo 'deep') para processar dados de forma hierárquica. Enquanto o ML tradicional funciona bem com dados estruturados e características pré-definidas, o deep learning pode processar dados não estruturados como imagens, texto e áudio, extraindo características automaticamente. Casos de uso do ML incluem sistemas de recomendação, detecção de fraudes, análise de sentimentos e previsão de demanda. O deep learning é especialmente eficaz em reconhecimento de imagens (como em diagnósticos médicos), processamento de linguagem natural (tradução, chatbots), e sistemas de reconhecimento de voz.","## Machine Learning vs. Deep Learning: Uma Explicação Detalhada
 
-Machine Learning (ML) e Deep Learning (DL) são subcampos da Inteligência Artificial (IA) que permitem que sistemas aprendam com dados e tomem decisões ou façam previsões sem serem explicitamente programados para cada tarefa. Embora ambos compartilhem o objetivo de aprendizado a partir de dados, eles diferem significativamente em sua abordagem, complexidade e capacidade.
-
-Vamos detalhar as diferenças:
+Machine learning (ML) e deep learning (DL) são subcampos da inteligência artificial (IA) que permitem que sistemas aprendam com dados e tomem decisões sem serem explicitamente programados. Embora ambos compartilhem o objetivo de aprender com dados, eles diferem significativamente em sua abordagem, complexidade e capacidade de lidar com diferentes tipos de problemas.
 
 ### Machine Learning (ML)
 
-O Machine Learning é um campo mais amplo que se concentra em desenvolver algoritmos que permitem que computadores aprendam com dados, identifiquem padrões e tomem decisões com mínima intervenção humana. A ideia central é que, em vez de programar regras explícitas, o sistema ""aprende"" essas regras a partir de exemplos.
+O Machine Learning é um campo mais amplo que engloba diversas técnicas e algoritmos que permitem que computadores aprendam padrões a partir de dados. A ideia central é que, em vez de escrever regras explícitas para cada tarefa, o sistema aprende essas regras observando exemplos.
 
 **Como funciona:**
 
-*   **Extração de Features Manual:** Uma característica fundamental do ML tradicional é que, na maioria dos casos, a extração de características relevantes dos dados é feita manualmente por especialistas no domínio. Por exemplo, para reconhecer imagens de gatos, um engenheiro pode precisar definir características como ""presença de orelhas pontudas"", ""formato dos olhos"", ""pres",1.4676241874694824,2026-03-05T20:42:01.015893,116,1216,False,,,
+* **Extração de Features (Características):** Em ML tradicional, a extração de características relevantes dos dados é frequentemente um processo manual e requer conhecimento especializado do domínio. Por exemplo, para reconhecer imagens de gatos, um engenheiro pode precisar definir características como ""presença de orelhas pontudas"", ""formato dos olhos"" ou ""textura do pelo"".
+* **Algoritmos de Aprendizado:** Uma vez que as características são extraídas, algoritmos de ML",1.4836432933807373,2026-03-06T17:28:27.607979,116,1236,False,,,
 gemini_2_5_flash_lite,Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de treinamento.,"Os modelos de linguagem como GPT (Generative Pre-trained Transformer) e LLaMA (Large Language Model Meta AI) são baseados na arquitetura Transformer, introduzida em 2017. Esta arquitetura utiliza mecanismos de atenção para processar sequências de texto, permitindo que o modelo compreenda relações contextuais entre palavras distantes. O processo de treinamento ocorre em duas fases: pré-treinamento e fine-tuning. Na fase de pré-treinamento, o modelo é exposto a vastas quantidades de texto da internet para aprender padrões linguísticos, gramática e conhecimento factual. Na fase de fine-tuning, o modelo é ajustado para tarefas específicas usando datasets menores e mais focados. O GPT utiliza uma abordagem de decodificação autoregressiva, gerando texto token por token, enquanto o LLaMA emprega uma arquitetura similar mas com otimizações específicas. Estes modelos são capazes de gerar texto coerente, responder perguntas, traduzir idiomas e realizar raciocínio complexo, representando um avanço significativo na capacidade de processamento de linguagem natural.","## Como Funcionam Modelos de Linguagem como GPT e LLaMA: Uma Visão Detalhada
 
-Modelos de linguagem como o GPT (Generative Pre-trained Transformer) e o LLaMA (Large Language Model Meta AI) representam um avanço significativo na área de inteligência artificial, permitindo que máquinas compreendam, gerem e interajam com a linguagem humana de maneiras cada vez mais sofisticadas. A base de seu funcionamento reside em arquiteturas complexas e em um processo de treinamento massivo.
+Modelos de linguagem como o GPT (Generative Pre-trained Transformer) e o LLaMA (Large Language Model Meta AI) representam um avanço significativo na área de inteligência artificial, permitindo que máquinas compreendam, gerem e interajam com a linguagem humana de maneiras cada vez mais sofisticadas. A base para essa capacidade reside em suas arquiteturas complexas e em processos de treinamento extensivos.
 
 ### Arquitetura: A Base do Transformer
 
-A arquitetura fundamental por trás de GPT e LLaMA é o **Transformer**. Desenvolvido em 2017 pelo Google, o Transformer revolucionou o processamento de linguagem natural (PLN) ao abandonar as arquiteturas recorrentes (RNNs) e convolucionais (CNNs) que eram predominantes até então. A chave para o sucesso do Transformer é o mecanismo de **atenção (attention)**.
+Tanto o GPT quanto o LLaMA são construídos sobre a arquitetura **Transformer**, introduzida em 2017 no artigo ""Attention Is All You Need"". Essa arquitetura revolucionou o processamento de linguagem natural (PNL) ao abandonar as redes neurais recorrentes (RNNs) e convolucionais (CNNs) tradicionais, que tinham dificuldades em lidar com dependências de longo alcance em sequências de texto.
 
-Vamos detalhar os componentes principais da arquitetura Transformer:
+A arquitetura Transformer é composta por dois componentes principais:
 
-*   **Embeddings de Entrada (Input Embeddings):**
-    *   **Word Embeddings:** As palavras são convertidas em vetores numéricos de alta dimensão. Cada",1.364588975906372,2026-03-05T20:42:09.395585,108,1103,False,,,
-gemini_2_5_flash_lite,Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.,"Os principais desafios éticos da IA incluem múltiplas dimensões que requerem atenção cuidadosa. O viés algorítmico surge quando modelos de IA perpetuam ou amplificam preconceitos presentes nos dados de treinamento, resultando em discriminação contra grupos minoritários em áreas como contratação, empréstimos e justiça criminal. A privacidade de dados representa outro desafio crítico, pois sistemas de IA frequentemente requerem acesso a informações pessoais sensíveis, criando riscos de vazamento ou uso indevido. A automação de empregos gera preocupações sobre desemprego em massa, especialmente em setores que dependem de tarefas repetitivas. A transparência e explicabilidade dos sistemas de IA são essenciais para garantir que decisões automatizadas possam ser compreendidas e contestadas. Questões de responsabilidade legal surgem quando sistemas de IA causam danos, criando incertezas sobre quem deve ser responsabilizado. A segurança cibernética representa outro desafio, pois sistemas de IA podem ser vulneráveis a ataques adversariais. Soluções incluem desenvolvimento de frameworks éticos, regulamentação governamental, auditoria de algoritmos e investimento em educação para preparar a força de trabalho para a era da IA.","A Inteligência Artificial (IA) está revolucionando o mundo em um ritmo acelerado, trazendo consigo um potencial imenso para o progresso humano. No entanto, essa revolução não está isenta de desafios éticos significativos, que exigem atenção e reflexão cuidadosa para garantir que a IA seja desenvolvida e utilizada de forma responsável e benéfica para a sociedade.
+1.  **Encoder:** Responsável por processar a sequência de entrada (por exemplo, uma frase) e gerar uma representação contextualizada de cada palavra.",1.3522109985351562,2026-03-06T17:28:35.979242,108,1138,False,,,
+gemini_2_5_flash_lite,Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.,"Os principais desafios éticos da IA incluem múltiplas dimensões que requerem atenção cuidadosa. O viés algorítmico surge quando modelos de IA perpetuam ou amplificam preconceitos presentes nos dados de treinamento, resultando em discriminação contra grupos minoritários em áreas como contratação, empréstimos e justiça criminal. A privacidade de dados representa outro desafio crítico, pois sistemas de IA frequentemente requerem acesso a informações pessoais sensíveis, criando riscos de vazamento ou uso indevido. A automação de empregos gera preocupações sobre desemprego em massa, especialmente em setores que dependem de tarefas repetitivas. A transparência e explicabilidade dos sistemas de IA são essenciais para garantir que decisões automatizadas possam ser compreendidas e contestadas. Questões de responsabilidade legal surgem quando sistemas de IA causam danos, criando incertezas sobre quem deve ser responsabilizado. A segurança cibernética representa outro desafio, pois sistemas de IA podem ser vulneráveis a ataques adversariais. Soluções incluem desenvolvimento de frameworks éticos, regulamentação governamental, auditoria de algoritmos e investimento em educação para preparar a força de trabalho para a era da IA.","A Inteligência Artificial (IA) é uma tecnologia transformadora com o potencial de revolucionar muitos aspectos de nossas vidas. No entanto, seu rápido desenvolvimento e adoção também levantam uma série de desafios éticos complexos, com profundas implicações sociais. Abordar esses desafios de forma proativa é crucial para garantir que a IA seja desenvolvida e utilizada de maneira responsável e benéfica para a sociedade.
 
 ## Principais Desafios Éticos da IA:
 
-Os desafios éticos da IA podem ser agrupados em diversas categorias interligadas:
-
 **1. Viés e Discriminação:**
 
-*   **O que é:** Algoritmos de IA aprendem com dados. Se esses dados refletem preconceitos e desigualdades existentes na sociedade (racismo, sexismo, etc.), a IA pode perpetuar e até amplificar essas discriminações.
-*   **Exemplos:** Sistemas de recrutamento que desfavorecem mulheres, algoritmos de reconhecimento facial com menor precisão para pessoas de pele escura, sistemas de crédito que discriminam minorias.
-*   **Implicações Sociais:** Reforço de desigualdades sociais, exclusão de grupos minoritários, perda de oportunidades, erosão da confiança em sistemas automatizados.",1.636653184890747,2026-03-05T20:42:18.037240,96,1099,False,,,
-gemini_2_5_flash_lite,Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.,"A computação quântica representa uma revolução paradigmática na forma como processamos informações, utilizando princípios da mecânica quântica como superposição, emaranhamento e interferência quântica. Diferentemente dos bits clássicos que existem em estados binários (0 ou 1), os qubits quânticos podem existir em superposição, permitindo processamento paralelo massivo. Aplicações práticas atuais incluem simulação molecular para descoberta de medicamentos, otimização de portfólios financeiros, e criptografia quântica para comunicações seguras. No futuro, a computação quântica promete revolucionar áreas como inteligência artificial, modelagem climática, e resolução de problemas de otimização complexos. Empresas como IBM, Google e Microsoft já oferecem acesso a computadores quânticos através de serviços em nuvem. No entanto, desafios significativos permanecem, incluindo a necessidade de temperaturas extremamente baixas, correção de erros quânticos, e escalabilidade. A computação quântica não substituirá completamente a computação clássica, mas complementará em problemas específicos onde sua vantagem quântica seja significativa.","## Computação Quântica: Uma Revolução em Potencial
+*   **O que é:** Os algoritmos de IA aprendem com dados. Se esses dados refletirem preconceitos existentes na sociedade (racismo, sexismo, etc.), a IA pode perpetuar e até amplificar essa discriminação. Isso pode levar a decisões injustas em áreas como contratação, concessão de crédito, justiça criminal e até mesmo diagnósticos médicos.
+*   **Implicações Sociais:** Aprofundamento de desigualdades sociais, exclusão de grupos minoritários, perda de confiança na tecnologia e erosão da justiça.
+*   **Exemplos:** Sistemas de reconhecimento facial que funcionam pior para pessoas de pele escura, algoritmos de recrutamento que desfavorecem",1.3256537914276123,2026-03-06T17:28:44.324456,96,1131,False,,,
+gemini_2_5_flash_lite,Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.,"A computação quântica representa uma revolução paradigmática na forma como processamos informações, utilizando princípios da mecânica quântica como superposição, emaranhamento e interferência quântica. Diferentemente dos bits clássicos que existem em estados binários (0 ou 1), os qubits quânticos podem existir em superposição, permitindo processamento paralelo massivo. Aplicações práticas atuais incluem simulação molecular para descoberta de medicamentos, otimização de portfólios financeiros, e criptografia quântica para comunicações seguras. No futuro, a computação quântica promete revolucionar áreas como inteligência artificial, modelagem climática, e resolução de problemas de otimização complexos. Empresas como IBM, Google e Microsoft já oferecem acesso a computadores quânticos através de serviços em nuvem. No entanto, desafios significativos permanecem, incluindo a necessidade de temperaturas extremamente baixas, correção de erros quânticos, e escalabilidade. A computação quântica não substituirá completamente a computação clássica, mas complementará em problemas específicos onde sua vantagem quântica seja significativa.","## Computação Quântica: Uma Nova Era de Processamento
 
-A computação quântica representa um salto paradigmático na forma como processamos informações. Ao invés de se basear nos bits clássicos que representam 0 ou 1, a computação quântica utiliza **qubits**. A magia dos qubits reside em sua capacidade de existir em uma **superposição** de 0 e 1 simultaneamente. Essa propriedade, juntamente com outros fenômenos quânticos como o **emaranhamento**, permite que computadores quânticos explorem um número exponencialmente maior de possibilidades em comparação com computadores clássicos.
+A computação quântica representa uma revolução na forma como processamos informações, explorando os princípios da mecânica quântica para resolver problemas que são intratáveis para os computadores clássicos. Em vez de usar bits que representam 0 ou 1, os computadores quânticos utilizam **qubits**, que podem existir em múltiplos estados simultaneamente, graças aos fenômenos de **superposição** e **entrelaçamento**.
 
-**Conceitos Fundamentais:**
+### Conceitos Fundamentais:
 
-* **Qubits:** A unidade básica de informação quântica. Um qubit pode ser 0, 1, ou uma combinação linear de ambos (superposição).
-* **Superposição:** A capacidade de um qubit existir em múltiplos estados ao mesmo tempo. Imagine uma moeda girando no ar antes de cair: ela não é cara nem coroa, mas uma mistura de ambos.
-* **Emaranhamento:** Um fenômeno onde dois ou mais qubits se tornam interligados de tal forma que o estado de um influencia instantaneamente o estado dos",1.5564491748809814,2026-03-05T20:42:26.604035,87,1083,False,,,
+* **Superposição:** Um qubit pode representar 0, 1 ou uma combinação de ambos ao mesmo tempo. Isso permite que um computador quântico explore um número exponencialmente maior de possibilidades em comparação com um computador clássico. Imagine uma moeda girando no ar: ela não é nem cara nem coroa até cair. Um qubit é semelhante a essa moeda em rotação.
+
+* **Entrelaçamento:** Dois ou mais qubits podem se tornar ""entrelaçados"", de forma que o estado de um qubit esteja intrinsecamente ligado ao estado de outro, independentemente da distância que os separa. Ao medir o estado de um qubit entrelaçado, você instantaneamente sabe o estado do",1.4162297248840332,2026-03-06T17:28:52.750752,87,1143,False,,,
 gemini_2_5_flash_lite,"Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espécies afetadas.","As mudanças climáticas afetam habitats naturais, causando extinção de espécies, alterações nos padrões migratórios e desequilíbrios nos ecossistemas terrestres e marinhos. Exemplos específicos incluem o declínio dos ursos polares devido ao derretimento do gelo ártico, a extinção de anfíbios como o sapo dourado da Costa Rica, e a migração forçada de aves como o pinguim-imperador. Os recifes de coral estão sofrendo branqueamento em massa devido ao aumento da temperatura dos oceanos, afetando toda a cadeia alimentar marinha. Na terra, espécies como o tigre de Bengala e o elefante africano enfrentam perda de habitat devido a secas prolongadas e mudanças nos padrões de vegetação.","## O Impacto das Mudanças Climáticas na Biodiversidade: Uma Ameaça Crescente
 
-As mudanças climáticas, impulsionadas principalmente pela atividade humana, representam uma das maiores ameaças à biodiversidade do planeta. O aumento da temperatura global, a alteração dos padrões de chuva, a acidificação dos oceanos e a elevação do nível do mar desencadeiam uma cascata de efeitos que impactam diretamente a vida em todos os seus níveis, desde microrganismos até grandes mamíferos.
+As mudanças climáticas, impulsionadas principalmente pela emissão de gases de efeito estufa, representam uma das maiores ameaças à biodiversidade do planeta. O aumento da temperatura global, a alteração dos padrões de chuva, a acidificação dos oceanos e a elevação do nível do mar desencadeiam uma série de impactos que afetam diretamente a vida em todos os seus níveis, desde microrganismos até grandes mamíferos.
 
-**Mecanismos de Impacto:**
+**Como as Mudanças Climáticas Afetam a Biodiversidade:**
 
-As mudanças climáticas afetam a biodiversidade de diversas maneiras interligadas:
-
-* **Alteração de Habitats:** O aumento da temperatura e a mudança nos regimes de chuva podem tornar habitats inabitáveis para muitas espécies. Por exemplo, o derretimento de geleiras e calotas polares reduz o espaço vital para animais adaptados ao frio, como ursos polares e focas. A desertificação em algumas regiões força espécies a migrarem ou perecerem.
-* **Mudanças na Distribuição Geográfica:** Com o aquecimento global, muitas espécies buscam refúgio em áreas mais frias, migrando para altitudes mais elevadas ou latitudes mais distantes",1.1648805141448975,2026-03-05T20:42:34.773158,114,1135,False,,,
+* **Alteração de Habitats:** O aquecimento global causa a expansão de desertos, o derretimento de geleiras e a inundação de áreas costeiras, destruindo habitats essenciais para a sobrevivência de muitas espécies. A mudança na temperatura e na disponibilidade de água pode tornar um ambiente inabitável para organismos que evoluíram para condições específicas.
+* **Mudanças nos Ciclos de Vida:** As alterações climáticas podem desincronizar os ciclos de vida de espécies interdependentes. Por exemplo, o florescimento de plantas pode ocorrer antes do surgimento dos insetos polinizadores, ou a eclos",1.400120496749878,2026-03-06T17:29:01.156787,114,1150,False,,,
 gemini_2_5_flash_lite,Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o processo químico.,"A fotossíntese é o processo pelo qual plantas convertem luz solar, CO2 e água em oxigênio e glicose, sendo fundamental para a vida na Terra e o ciclo do carbono. O processo ocorre em duas fases: a fase clara (fotodependente) e a fase escura (independente de luz). Na fase clara, a clorofila captura a energia luminosa e a converte em energia química (ATP e NADPH). Na fase escura, o CO2 é fixado e convertido em glicose através do ciclo de Calvin. Este processo é essencial para a produção de oxigênio atmosférico, a remoção de CO2 da atmosfera, e a base da cadeia alimentar terrestre.","## A Fotossíntese: A Fábrica de Energia da Vida na Terra
 
-A fotossíntese é um processo bioquímico fundamental que sustenta a vida em nosso planeta. É a maneira pela qual as plantas, algas e algumas bactérias convertem a energia luminosa do sol em energia química, na forma de açúcares, utilizando dióxido de carbono e água como matérias-primas. Essa energia armazenada é então utilizada para o crescimento e desenvolvimento desses organismos, e serve como base para a cadeia alimentar, alimentando direta ou indiretamente a maioria dos seres vivos.
+A fotossíntese é um processo bioquímico fundamental que ocorre em plantas, algas e algumas bactérias, permitindo a conversão da energia luminosa em energia química, na forma de glicose. Essa energia é a base da cadeia alimentar e sustenta a vida em nosso planeta.
 
 ### Como Funciona a Fotossíntese: Um Processo em Duas Etapas
 
-A fotossíntese ocorre principalmente nas folhas das plantas, dentro de organelas especializadas chamadas **cloroplastos**. Os cloroplastos contêm um pigmento verde chamado **clorofila**, que é crucial para a absorção da luz solar. O processo pode ser dividido em duas etapas principais:
+A fotossíntese é dividida em duas fases principais:
 
-**1. Fase Luminosa (ou Reações Dependentes de Luz):**
+**1. Fase Luminosa (Reações Dependentes de Luz):**
 
-Esta fase ocorre nas membranas dos **tilacoides**, que são estruturas em forma de disco dentro dos cloroplastos. A energia luminosa é capturada",1.4614496231079102,2026-03-05T20:42:43.251741,115,1098,False,,,
-gemini_2_5_flash_lite,"Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptação.","A evolução das espécies ocorre através de seleção natural, mutações genéticas e adaptação ao ambiente, resultando na diversidade biológica observada. A seleção natural favorece características que aumentam a sobrevivência e reprodução. Mutações genéticas fornecem a variação necessária para a evolução. A adaptação permite que organismos se ajustem a mudanças ambientais. Exemplos incluem a evolução da resistência a antibióticos em bactérias, a adaptação dos tentilhões de Darwin nas Ilhas Galápagos, e a evolução da visão noturna em animais noturnos.","## A Evolução das Espécies: Uma Jornada de Transformação Contínua
+* **Localização:** Ocorre nas membranas dos tilacoides, estruturas dentro dos cloroplastos (organelas presentes nas células vegetais e de algas).
+* **Ingredientes:** Luz solar, água (H₂O) e pigmentos como a clorofila.
+* **Processo:**
+    * **Absorção de Luz:** A clorofila e outros pigmentos absorvem a energia luminosa, principalmente nas faixas azul e vermelha do espectro visível. Essa energia excita elétrons nos pigmentos.
+    * **Fotólise da Água:** A energia luminosa",1.2796266078948975,2026-03-06T17:29:09.441479,115,964,False,,,
+gemini_2_5_flash_lite,"Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptação.","A evolução das espécies ocorre através de seleção natural, mutações genéticas e adaptação ao ambiente, resultando na diversidade biológica observada. A seleção natural favorece características que aumentam a sobrevivência e reprodução. Mutações genéticas fornecem a variação necessária para a evolução. A adaptação permite que organismos se ajustem a mudanças ambientais. Exemplos incluem a evolução da resistência a antibióticos em bactérias, a adaptação dos tentilhões de Darwin nas Ilhas Galápagos, e a evolução da visão noturna em animais noturnos.","## A Evolução das Espécies: Uma Jornada de Transformação
 
-A evolução das espécies é um processo fascinante e fundamental para a compreensão da vida na Terra. Ela descreve a mudança gradual das características hereditárias das populações de organismos ao longo de gerações. Essa transformação não é aleatória, mas sim guiada por mecanismos poderosos, sendo a **seleção natural** o principal motor.
+A evolução das espécies é um processo fascinante e contínuo que molda a diversidade da vida na Terra. Ela se refere à mudança nas características hereditárias de populações de organismos ao longo de gerações. Essa transformação não é aleatória, mas sim impulsionada por mecanismos naturais que favorecem a sobrevivência e reprodução dos indivíduos mais bem adaptados ao seu ambiente.
 
-### A Base da Evolução: Variação e Hereditariedade
+Os dois pilares fundamentais da evolução são a **seleção natural** e a **adaptação**. Vamos desvendá-los:
 
-Para que a evolução ocorra, dois elementos são cruciais:
+### 1. Seleção Natural: O Filtro da Natureza
 
-* **Variação:** Dentro de qualquer população de uma espécie, os indivíduos não são idênticos. Existem diferenças em suas características físicas, fisiológicas e comportamentais. Essa variação surge principalmente através de:
-    * **Mutações:** Alterações aleatórias no material genético (DNA). As mutações podem ser benéficas, prejudiciais ou neutras.
-    * **Recombinação Genética:** Durante a reprodução sexuada, os genes dos pais se misturam de novas maneiras, criando combinações únicas de características nos descendentes.
+A seleção natural, proposta por Charles Darwin e Alfred Russel Wallace, é o principal motor da evolução. Ela se baseia em alguns princípios observáveis na natureza:
 
-* **Hereditariedade:** As características que variam entre os indivíduos devem ser transmissíveis de",1.4609122276306152,2026-03-05T20:42:51.714511,102,1147,False,,,
+*   **Variação:** Dentro de qualquer população de organismos, existem diferenças individuais em suas características. Essas variações podem ser em tamanho, cor, resistência a doenças, velocidade, comportamento, etc. A fonte primária dessa variação é a **mutação genética**, que são alterações aleatórias no DNA. A reprodução sexuada também contribui para a variação, recombinando genes de diferentes indivíduos.",1.5346121788024902,2026-03-06T17:29:17.981831,102,1173,False,,,
 gemini_2_5_flash_lite,Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.,"As principais fontes de energia renovável incluem energia solar (painéis fotovoltaicos e térmicos), energia eólica (turbinas terrestres e offshore), energia hidrelétrica (represas e pequenas centrais), energia de biomassa (resíduos orgânicos e cultivos energéticos), e energia geotérmica (calor do subsolo). Vantagens incluem sustentabilidade, redução de emissões, e independência energética. Desvantagens incluem intermitência (solar/eólica), alto custo inicial, dependência de condições climáticas, e impacto ambiental em alguns casos (hidrelétricas).","As principais fontes de energia renovável são aquelas que se regeneram naturalmente em um curto período de tempo, sendo consideradas inesgotáveis em escala humana. Elas desempenham um papel crucial na transição energética, visando reduzir a dependência de combustíveis fósseis e mitigar as mudanças climáticas.
 
 Aqui estão as principais fontes de energia renovável, com suas vantagens e desvantagens:
@@ -101,48 +96,54 @@ A energia solar aproveita a radiação do sol para gerar eletricidade (fotovolta
 
 *   **Abundante e Gratuita:** O sol é uma fonte de energia praticamente inesgotável e gratuita.
 *   **Baixo Impacto Ambiental:** Durante a operação, não emite gases de efeito estufa ou poluentes.
-*   **Versatilidade:** Pode ser instalada em telhados de residências, edifícios comerciais, grandes usinas solares e até mesmo em dispositivos portáteis.
-*   **Redução na Conta de Energia:** Permite a autossuficiência energética e a redução significativa ou eliminação das contas de eletricidade.
-*   **Manutenção Relativamente",1.5064387321472168,2026-03-05T20:43:00.225857,98,1066,False,,,
-gemini_2_5_flash_lite,Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivamente.,"A sustentabilidade corporativa integra práticas ambientais, sociais e de governança (ESG) nas operações empresariais para criar valor a longo prazo. As empresas podem implementá-la através de redução de emissões de carbono, uso eficiente de recursos, programas de diversidade e inclusão, transparência na governança, investimento em comunidades locais, e desenvolvimento de produtos sustentáveis. Exemplos incluem a adoção de energia renovável, programas de reciclagem, políticas de trabalho justo, e relatórios de sustentabilidade transparentes.","## Sustentabilidade Corporativa: Um Guia Completo para Implementação Efetiva
+*   **Versatilidade:** Pode ser instalada em telhados de residências, edifícios comerciais, grandes usinas solares e até mesmo em áreas remotas.
+*   **Redução na Conta de Energia:** Permite a autossuficiência energética e a redução significativa nos custos de eletricidade.
+*   **Manutenção Relativamente Baixa:** Os",1.2279980182647705,2026-03-06T17:29:26.215455,98,1055,False,,,
+gemini_2_5_flash_lite,Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivamente.,"A sustentabilidade corporativa integra práticas ambientais, sociais e de governança (ESG) nas operações empresariais para criar valor a longo prazo. As empresas podem implementá-la através de redução de emissões de carbono, uso eficiente de recursos, programas de diversidade e inclusão, transparência na governança, investimento em comunidades locais, e desenvolvimento de produtos sustentáveis. Exemplos incluem a adoção de energia renovável, programas de reciclagem, políticas de trabalho justo, e relatórios de sustentabilidade transparentes.","## Sustentabilidade Corporativa: Um Guia Completo
 
-A sustentabilidade corporativa, também conhecida como responsabilidade social corporativa (RSC) ou ESG (Environmental, Social, and Governance), é um conceito fundamental para o sucesso e a longevidade das empresas no século XXI. Ela transcende a mera busca por lucro, integrando preocupações ambientais, sociais e de governança em todas as operações e estratégias de uma organização.
+A sustentabilidade corporativa, também conhecida como Responsabilidade Social Corporativa (RSC) ou ESG (Environmental, Social, and Governance), é um conceito que vai além do lucro financeiro. Trata-se de um modelo de gestão que busca integrar as preocupações ambientais, sociais e de governança nas estratégias e operações de uma empresa, visando um desenvolvimento equilibrado e duradouro.
 
 **O que é Sustentabilidade Corporativa?**
 
-Em sua essência, a sustentabilidade corporativa significa que uma empresa opera de forma a **minimizar seu impacto negativo no meio ambiente e na sociedade, ao mesmo tempo em que maximiza seu impacto positivo e garante sua viabilidade econômica a longo prazo.** Isso envolve um compromisso com:
+Em sua essência, a sustentabilidade corporativa significa que uma empresa opera de forma a minimizar seu impacto negativo no meio ambiente e na sociedade, ao mesmo tempo em que maximiza seu impacto positivo. Isso envolve a consideração de três pilares interconectados:
 
-* **Meio Ambiente (Environmental):** Reduzir a pegada de carbono, gerenciar resíduos de forma eficiente, conservar recursos naturais, proteger a biodiversidade, promover o uso de energias renováveis e adotar práticas de produção mais limpas.
-* **Social (Social):** Garantir condições de trabalho justas e seguras, promover a diversidade e inclusão, respeitar os direitos humanos, contribuir",1.3240230083465576,2026-03-05T20:43:08.558887,104,1192,False,,,
-gemini_2_5_flash_lite,What are the key factors for successful digital transformation? Provide a comprehensive framework with real-world examples.,"Key factors for successful digital transformation include strong leadership commitment, comprehensive employee training, robust technology infrastructure, effective change management processes, and a culture of continuous improvement. Real-world examples include Amazon's customer-centric approach, Netflix's data-driven content strategy, and Microsoft's cloud-first transformation. Success requires aligning technology investments with business objectives, fostering innovation, and ensuring organizational readiness for change.","Digital transformation is a profound and multifaceted undertaking that involves leveraging digital technologies to fundamentally change how an organization operates and delivers value to its customers. Success is not guaranteed and hinges on a strategic and holistic approach. Here are the key factors for successful digital transformation, presented within a comprehensive framework, along with real-world examples.
+* **Ambiental:** Refere-se à gestão dos recursos naturais, redução da poluição, conservação da biodiversidade, combate às mudanças climáticas e uso eficiente de energia e água.
+* **Social:** Abrange o bem-estar dos funcionários, a segurança no trabalho, a diversidade e inclusão, o respeito aos direitos humanos, o envolvimento com a comunidade e a contribuição para o desenvolvimento social.
+* **Governança:** Diz",1.3646495342254639,2026-03-06T17:29:34.586192,104,1170,False,,,
+gemini_2_5_flash_lite,What are the key factors for successful digital transformation? Provide a comprehensive framework with real-world examples.,"Key factors for successful digital transformation include strong leadership commitment, comprehensive employee training, robust technology infrastructure, effective change management processes, and a culture of continuous improvement. Real-world examples include Amazon's customer-centric approach, Netflix's data-driven content strategy, and Microsoft's cloud-first transformation. Success requires aligning technology investments with business objectives, fostering innovation, and ensuring organizational readiness for change.","Digital transformation is a complex and multifaceted journey that involves fundamentally changing how an organization operates and delivers value to its customers through the adoption of digital technologies. Success hinges on a holistic approach that addresses various interconnected factors.
+
+Here's a comprehensive framework for successful digital transformation, along with real-world examples:
 
 ## Comprehensive Framework for Successful Digital Transformation
 
-This framework is structured around four interconnected pillars: **Strategy & Vision, People & Culture, Technology & Data, and Process & Operations.** Each pillar has specific key factors that contribute to overall success.
+This framework can be visualized as a layered approach, with foundational elements supporting strategic initiatives and ultimately driving tangible outcomes.
 
 ---
 
-### Pillar 1: Strategy & Vision
+### **Layer 1: Vision & Strategy (The ""Why"" and ""What"")**
 
-This pillar focuses on defining the ""why"" and ""what"" of digital transformation. It's about aligning digital initiatives with overarching business goals and creating a clear roadmap.
+This layer defines the overarching purpose and direction of the transformation.
 
-**Key Factors:**
-
-1.  **Clear Vision and Compelling Purpose:**
-    *   **Description:** A well-defined vision that articulates the desired future state and the compelling reasons for transformation. This vision should be inspiring and resonate with all stakeholders.
-    *   **Real-world Example:** **Netflix's** transformation from a DVD-by-mail service to a streaming giant was driven by a clear vision of making entertainment accessible anytime, anywhere. Their purpose was",1.612438440322876,2026-03-05T20:43:17.173910,123,1406,False,,,
+*   **1. Clear Vision and Purpose:**
+    *   **Description:** A compelling and well-articulated vision that outlines the desired future state, the ""why"" behind the transformation, and the value it aims to create for customers, employees, and stakeholders.
+    *   **Key Elements:** Customer-centricity, competitive advantage, operational efficiency, innovation, employee empowerment.
+    *   **Real-World Example:** **Netflix's** vision shifted from a DVD rental service to a global streaming entertainment giant. Their purpose was to ""entertain the world"" by providing a seamless, on-demand viewing experience, which",1.7491397857666016,2026-03-06T17:29:43.340374,123,1387,False,,,
 gemini_2_5_flash_lite,"Explain the concept of disruptive innovation in business, including historical examples and current trends.","Disruptive innovation creates new markets by offering simpler, more affordable alternatives that eventually displace established products and services. Historical examples include Netflix disrupting Blockbuster, Uber disrupting traditional taxis, and smartphones disrupting feature phones. Current trends include AI disrupting traditional software, electric vehicles disrupting automotive industry, and fintech disrupting traditional banking. The key is identifying underserved markets and creating solutions that are more accessible and cost-effective.","## Disruptive Innovation: Shaking Up Industries
 
-Disruptive innovation is a concept that describes a process where a smaller company, often with fewer resources, can successfully challenge established incumbent businesses. It's not about simply being better or cheaper; it's about offering a **simpler, more convenient, and often more affordable solution** that initially appeals to a niche or overlooked market segment. Over time, this innovation improves and eventually displaces established market-leading firms, products, and alliances.
+Disruptive innovation is a concept that describes a process where a smaller company with fewer resources is able to successfully challenge established incumbent businesses. The key to disruption lies not in offering a superior product to existing customers, but in targeting **overlooked segments of the market** with a simpler, more convenient, and often cheaper offering. Over time, this disruptive product or service improves and eventually displaces the established market-leading firms, products, and alliances.
 
-The term was popularized by **Clayton Christensen**, a Harvard Business School professor, in his 1997 book, *The Innovator's Dilemma*. He distinguished disruptive innovations from **sustaining innovations**, which are improvements to existing products or services that established companies are good at.
+The term was popularized by Harvard Business School professor Clayton Christensen in his 1997 book, ""The Innovator's Dilemma.""
 
-### Key Characteristics of Disruptive Innovation:
+### The Core Mechanics of Disruptive Innovation:
 
-*   **Targets overlooked or underserved markets:** Disruptors often start by serving customers who are either too poor to afford the existing offerings or whose needs are not being met by the current solutions.
-*   **Offers a simpler, more convenient, or more affordable solution:** The initial product or service might not be as sophisticated as the incumbent's, but it excels in other areas that are highly valued by the target market.
-*",1.7090892791748047,2026-03-05T20:43:25.887912,107,1337,False,,,
-gemini_2_5_flash_lite,How does artificial intelligence impact customer experience? Discuss specific applications and measurable benefits.,"AI enhances customer experience through personalization, predictive analytics, chatbots, and automated customer service, improving satisfaction and loyalty. Specific applications include recommendation engines (Netflix, Amazon), virtual assistants (Siri, Alexa), fraud detection, and automated support systems. Measurable benefits include increased conversion rates, reduced response times, improved customer satisfaction scores, and decreased operational costs. Companies like Spotify use AI for music recommendations, while banks use it for fraud prevention.","Artificial intelligence (AI) is revolutionizing customer experience (CX) by enabling businesses to understand, interact with, and serve their customers in more personalized, efficient, and proactive ways. It's moving CX from a reactive, transactional model to a proactive, relationship-driven one.
+Disruptive innovation typically follows a pattern:
+
+1. **Targeting the Underserved or Overlooked:** Disruptors often start by focusing on customers who are either:
+    * **""Low-end"" customers:** Those who are overserved by existing products and are looking for a simpler, cheaper alternative.
+    * **""New-market"" customers:** Those who previously couldn't afford or access the existing products and services.
+
+2. **Simpler, Cheaper, and More Convenient:** The initial disruptive offering is usually not as good as the",1.7199623584747314,2026-03-06T17:29:52.061522,107,1263,False,,,
+gemini_2_5_flash_lite,How does artificial intelligence impact customer experience? Discuss specific applications and measurable benefits.,"AI enhances customer experience through personalization, predictive analytics, chatbots, and automated customer service, improving satisfaction and loyalty. Specific applications include recommendation engines (Netflix, Amazon), virtual assistants (Siri, Alexa), fraud detection, and automated support systems. Measurable benefits include increased conversion rates, reduced response times, improved customer satisfaction scores, and decreased operational costs. Companies like Spotify use AI for music recommendations, while banks use it for fraud prevention.","Artificial intelligence (AI) is revolutionizing customer experience (CX) by enabling businesses to understand, engage with, and serve their customers in more personalized, efficient, and proactive ways. It's shifting CX from a reactive, transactional model to a proactive, relationship-driven one.
 
 Here's a breakdown of how AI impacts CX, with specific applications and measurable benefits:
 
@@ -150,69 +151,62 @@ Here's a breakdown of how AI impacts CX, with specific applications and measurab
 
 AI's impact on CX can be broadly categorized into:
 
-*   **Enhanced Personalization:** AI allows for a deeper understanding of individual customer needs, preferences, and behaviors, leading to tailored interactions and recommendations.
-*   **Increased Efficiency and Speed:** AI automates repetitive tasks, provides instant responses, and streamlines processes, reducing wait times and friction for customers.
-*   **Proactive Problem Solving:** AI can predict potential issues before they arise, allowing businesses to intervene and resolve them before they negatively impact the customer.
-*   **Improved Accessibility and Availability:** AI-powered tools are available 24/7, offering support and information regardless of time or location.
-*   **Data-Driven Insights:** AI analyzes vast amounts of customer data to uncover trends, identify pain points, and inform strategic CX improvements.
+*   **Enhanced Personalization:** AI allows businesses to tailor interactions, recommendations, and offers to individual customer preferences and behaviors.
+*   **Increased Efficiency and Speed:** AI automates repetitive tasks, provides instant responses, and streamlines processes, leading to faster and more convenient customer journeys.
+*   **Proactive Problem Solving:** AI can predict potential issues and address them before they impact the customer, preventing frustration and improving satisfaction.
+*   **Deeper Customer Understanding:** AI analyzes vast amounts of data to uncover insights into customer needs, sentiments, and pain points, enabling businesses to make informed decisions.
+*   **Improved Accessibility and Availability:** AI-powered tools are available 24/7, offering support and information at any time, regardless of location.
 
-## Specific Applications of",1.4483451843261719,2026-03-05T20:43:34.338506,115,1352,False,,,
-gemini_2_5_flash_lite,What are the main challenges of remote work management? Provide strategies and tools for effective remote leadership.,"Main challenges of remote work management include communication barriers, team collaboration difficulties, work-life balance issues, technology infrastructure requirements, and maintaining company culture remotely. Effective strategies include regular virtual meetings, clear communication protocols, project management tools, flexible schedules, and virtual team-building activities. Essential tools include video conferencing platforms (Zoom, Teams), collaboration software (Slack, Microsoft 365), project management tools (Asana, Trello), and time tracking applications.","Remote work, while offering numerous benefits, presents a unique set of challenges for managers and leaders. Successfully navigating these requires a shift in mindset and the adoption of specific strategies and tools.
+## Specific Applications of",1.3067247867584229,2026-03-06T17:30:00.373728,115,1367,False,,,
+gemini_2_5_flash_lite,What are the main challenges of remote work management? Provide strategies and tools for effective remote leadership.,"Main challenges of remote work management include communication barriers, team collaboration difficulties, work-life balance issues, technology infrastructure requirements, and maintaining company culture remotely. Effective strategies include regular virtual meetings, clear communication protocols, project management tools, flexible schedules, and virtual team-building activities. Essential tools include video conferencing platforms (Zoom, Teams), collaboration software (Slack, Microsoft 365), project management tools (Asana, Trello), and time tracking applications.","Remote work, while offering numerous benefits, presents a unique set of challenges for managers. Successfully navigating these requires a shift in mindset and the adoption of specific strategies and tools.
 
 ## Main Challenges of Remote Work Management:
 
-Here are the primary challenges faced by remote work managers:
+Here are the primary hurdles managers face when overseeing remote teams:
 
 **1. Communication Breakdowns and Misunderstandings:**
 *   **Lack of Spontaneous Interaction:** No ""water cooler"" chats or casual hallway conversations to clarify things quickly.
-*   **Information Silos:** Information can get lost or not reach everyone effectively.
-*   **Tone Misinterpretation:** Written communication can lack nuance, leading to misunderstandings about intent or urgency.
-*   **Over-reliance on Asynchronous Communication:** While efficient, it can lead to delays in decision-making and problem-solving.
+*   **Information Silos:** Information can get lost or not reach everyone, leading to confusion and duplicated efforts.
+*   **Tone and Nuance Loss:** Text-based communication can be easily misinterpreted, leading to misunderstandings and conflict.
+*   **Over-reliance on Asynchronous Communication:** While efficient, it can lead to delays in critical decision-making or problem-solving.
 
 **2. Maintaining Team Cohesion and Culture:**
-*   **Reduced Social Connection:** Employees may feel isolated and disconnected from their colleagues.
-*   **Difficulty Building Rapport:** It's harder to foster personal relationships and a sense of camaraderie.
-*   **Onboarding New Employees:** Integrating new team members into the company culture and existing dynamics can be challenging.
-*   **Erosion of Shared Values:** Without regular face-to-face",1.3424110412597656,2026-03-05T20:43:42.683310,117,1305,False,,,
-gemini_2_5_flash_lite,"Describe the future of e-commerce and online retail, including emerging technologies and consumer behavior trends.","The future of e-commerce includes AI-powered personalization, augmented reality shopping experiences, voice commerce, social commerce integration, and seamless omnichannel experiences. Emerging technologies include virtual try-on, AI chatbots, blockchain for supply chain transparency, and IoT for inventory management. Consumer behavior trends show increasing demand for sustainability, instant gratification, mobile-first experiences, and social proof in purchasing decisions.","The future of e-commerce and online retail is a dynamic and exciting landscape, shaped by relentless technological innovation and evolving consumer expectations. It's moving beyond simple online transactions to become an integrated, personalized, and immersive experience. Here's a breakdown of what we can expect:
+*   **Feeling of Isolation and Disconnection:** Remote employees can feel disconnected from their colleagues and the company's mission.
+*   **Difficulty Building Rapport and Trust:** It's harder to foster strong interpersonal relationships and build trust without in-person interactions.
+*   **Erosion of Company Culture:** The shared experiences and informal interactions that build",1.4213783740997314,2026-03-06T17:30:08.800898,117,1325,False,,,
+gemini_2_5_flash_lite,"Describe the future of e-commerce and online retail, including emerging technologies and consumer behavior trends.","The future of e-commerce includes AI-powered personalization, augmented reality shopping experiences, voice commerce, social commerce integration, and seamless omnichannel experiences. Emerging technologies include virtual try-on, AI chatbots, blockchain for supply chain transparency, and IoT for inventory management. Consumer behavior trends show increasing demand for sustainability, instant gratification, mobile-first experiences, and social proof in purchasing decisions.","The future of e-commerce and online retail is a dynamic and exciting landscape, shaped by relentless technological innovation and evolving consumer expectations. It's moving beyond simple online transactions to become an integrated, personalized, and immersive experience. Here's a breakdown of key trends and technologies:
 
 ## Emerging Technologies Driving the Future of E-commerce:
 
 **1. Artificial Intelligence (AI) and Machine Learning (ML):** This is arguably the most transformative force.
-    * **Hyper-Personalization:** AI will analyze vast amounts of data to understand individual preferences, predict needs, and offer tailored product recommendations, content, and even pricing in real-time.
-    * **Intelligent Chatbots and Virtual Assistants:** Beyond basic FAQs, AI-powered chatbots will handle complex customer service inquiries, guide purchasing decisions, and offer personalized styling advice.
-    * **Predictive Analytics:** AI will forecast demand, optimize inventory management, and identify potential supply chain disruptions before they occur.
-    * **Dynamic Pricing:** Prices will adjust dynamically based on demand, competitor pricing, and individual customer behavior.
-    * **Fraud Detection and Security:** AI will become even more sophisticated in identifying and preventing fraudulent transactions.
-
-**2. Augmented Reality (AR) and Virtual Reality (VR):",1.407869815826416,2026-03-05T20:43:51.104606,114,1375,False,,,
+    * **Hyper-Personalization:** AI will analyze vast amounts of data to understand individual preferences, predict needs, and offer tailored product recommendations, content, and even pricing. Think of a virtual stylist that knows your taste better than you do.
+    * **Intelligent Chatbots and Virtual Assistants:** Beyond basic FAQs, AI-powered chatbots will handle complex customer service inquiries, guide purchasing decisions, and even facilitate transactions, offering 24/7 support.
+    * **Predictive Analytics:** AI will forecast demand, optimize inventory, identify potential fraud, and personalize marketing campaigns with unprecedented accuracy.
+    * **Dynamic Pricing:** Prices will adjust in real-time based on demand, competitor pricing, inventory levels, and even individual customer behavior.
+    * **Automated Content Generation:** AI can create",1.5056724548339844,2026-03-06T17:30:17.311897,114,1360,False,,,
 gemini_2_5_flash_lite,"Explain the principles of quantum computing and its potential applications in cryptography, optimization, and simulation.","Quantum computing uses quantum mechanical phenomena like superposition and entanglement to process information in ways that classical computers cannot. Applications in cryptography include quantum key distribution and post-quantum cryptography. In optimization, it can solve complex logistics and financial problems. In simulation, it can model molecular interactions for drug discovery and materials science. Companies like IBM, Google, and Microsoft are developing quantum computers for these applications.","## Quantum Computing: Principles and Potential Applications
 
-Quantum computing represents a paradigm shift in computation, leveraging the bizarre and powerful principles of quantum mechanics to solve problems that are intractable for even the most powerful classical computers. Instead of relying on bits that represent either 0 or 1, quantum computers use **qubits**, which can exist in a superposition of both states simultaneously. This fundamental difference unlocks unprecedented computational power.
+Quantum computing represents a paradigm shift in computation, leveraging the bizarre and powerful principles of quantum mechanics to solve problems that are intractable for even the most powerful classical computers. Instead of relying on bits that represent either 0 or 1, quantum computers use **qubits**, which can exist in a superposition of both states simultaneously. This fundamental difference unlocks a new realm of computational possibilities.
 
 ### Core Principles of Quantum Computing:
 
 1.  **Superposition:**
-    *   **Classical Bit:** A classical bit can be either 0 or 1.
-    *   **Qubit:** A qubit can be 0, 1, or a combination of both 0 and 1 at the same time. This is represented mathematically as a linear combination: $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$, where $\alpha$ and $\beta$ are complex numbers such that $|\alpha|^2 + |\beta|^2 = 1$. $|\alpha|^2$ represents the probability of measuring the qubit as 0, and $|\beta|^2$ represents the probability of measuring it as 1.
-    *   **Implication:** With $n$ qubits, a quantum computer can represent $",17.90650510787964,2026-03-05T20:44:16.024961,121,1137,False,,,
+    *   **Concept:** A qubit can be in a state of 0, 1, or a combination of both at the same time. Imagine a spinning coin that is neither heads nor tails until it lands. This allows a quantum computer to explore multiple possibilities concurrently.
+    *   **Mathematical Representation:** A qubit's state is represented by a vector in a 2-dimensional complex vector space. For example, $|0\rangle$ represents the state 0, $|1\rangle$ represents the state 1, and a superposition state can be written as $\alpha|0\rangle + \beta|1\rangle$, where $\alpha$ and $\beta$ are complex numbers such that $|\alpha|^2 + |\beta|^2 = 1",0.9869730472564697,2026-03-06T17:30:25.304278,121,1206,False,,,
 gemini_2_5_flash_lite,How do neural networks process and learn from data? Describe the mathematical foundations and learning algorithms.,"Neural networks process data through interconnected nodes (neurons) that learn patterns using backpropagation and gradient descent algorithms. The mathematical foundation involves linear algebra, calculus, and probability theory. Learning algorithms include supervised learning (classification, regression), unsupervised learning (clustering, dimensionality reduction), and reinforcement learning (trial and error). The backpropagation algorithm calculates gradients to update network weights, while gradient descent optimizes the loss function to minimize prediction errors.","Neural networks are powerful computational models inspired by the structure and function of the human brain. They excel at learning complex patterns and relationships from data, making them indispensable in fields like image recognition, natural language processing, and predictive modeling.
 
 ## How Neural Networks Process Data: The Forward Pass
 
-At its core, a neural network is a system of interconnected ""neurons"" organized in layers. Data is fed into the network through the **input layer**, processed through one or more **hidden layers**, and finally, a result is produced by the **output layer**.
+The core of neural network processing is the **forward pass**. This is where input data is fed through the network, layer by layer, to produce an output.
 
-Here's a breakdown of the processing steps:
+1.  **Input Layer:** The network begins with an input layer, which receives the raw data. Each node (or neuron) in this layer represents a feature of the input. For example, in an image recognition task, each pixel's intensity might be an input feature.
 
-1.  **Input Layer:** This layer receives the raw data. Each neuron in the input layer represents a feature of the data. For example, in an image recognition task, each neuron might represent a pixel's intensity.
+2.  **Hidden Layers:** The input layer is connected to one or more **hidden layers**. These layers are where the network performs its complex computations. Each neuron in a hidden layer receives input from all neurons in the previous layer.
 
-2.  **Weighted Connections:** Neurons are connected by ""synapses,"" which are represented by **weights**. Each connection has an associated weight, signifying the strength and direction of the influence one neuron has on another.
-
-3.  **Neuron Activation:** For each neuron in a hidden or output layer, the following happens:
-    *   **Weighted Sum:** The neuron receives inputs from the neurons in the previous layer.",1.480217456817627,2026-03-05T20:44:24.514582,114,1281,False,,,
-gemini_2_5_flash_lite,What are the latest developments in renewable energy technology? Focus on breakthrough innovations and scalability.,"Latest developments in renewable energy technology include advanced solar panels with higher efficiency, offshore wind farms with larger turbines, hydrogen fuel cells for energy storage, and next-generation batteries with improved capacity. Breakthrough innovations include perovskite solar cells, floating wind turbines, green hydrogen production, and solid-state batteries. Scalability challenges include grid integration, storage solutions, and cost reduction to compete with fossil fuels.",[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.88383340835571,2026-03-05T20:45:09.400648,115,63,True,,,
-gemini_2_5_flash_lite,"Describe the impact of 5G technology on modern communication, including benefits for IoT and smart cities.","5G technology provides faster data transmission, lower latency, and greater connectivity, enabling IoT, autonomous vehicles, and smart city applications. Benefits for IoT include massive device connectivity, real-time data processing, and energy-efficient communication. For smart cities, 5G enables traffic management, environmental monitoring, and public safety systems. The technology supports up to 1 million devices per square kilometer with latency as low as 1 millisecond.",[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.4412157535553,2026-03-05T20:45:53.845346,106,63,True,,,
-gemini_2_5_flash_lite,How does blockchain technology ensure data security and transparency? Explain consensus mechanisms and use cases.,"Blockchain ensures data security and transparency through cryptographic hashing, distributed ledger technology, and consensus mechanisms that prevent tampering and ensure transparency. Consensus mechanisms include Proof of Work (Bitcoin), Proof of Stake (Ethereum 2.0), and Delegated Proof of Stake. Use cases include cryptocurrency, supply chain tracking, digital identity, smart contracts, and decentralized finance (DeFi). The technology provides immutability, transparency, and decentralization for secure data management.",[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,36.66092610359192,2026-03-05T20:46:37.520722,113,63,True,,,
+3.  **Weights and Biases:** The connections between neurons are associated with **weights**. These weights determine the strength and influence of the signal passing from one neuron to another. Each neuron also has a **bias**, which is an additional value that can shift the activation function's output.",1.449855089187622,2026-03-06T17:30:33.760280,114,1304,False,,,
+gemini_2_5_flash_lite,What are the latest developments in renewable energy technology? Focus on breakthrough innovations and scalability.,"Latest developments in renewable energy technology include advanced solar panels with higher efficiency, offshore wind farms with larger turbines, hydrogen fuel cells for energy storage, and next-generation batteries with improved capacity. Breakthrough innovations include perovskite solar cells, floating wind turbines, green hydrogen production, and solid-state batteries. Scalability challenges include grid integration, storage solutions, and cost reduction to compete with fossil fuels.",[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.52986550331116,2026-03-06T17:31:18.295715,115,63,True,,,
+gemini_2_5_flash_lite,"Describe the impact of 5G technology on modern communication, including benefits for IoT and smart cities.","5G technology provides faster data transmission, lower latency, and greater connectivity, enabling IoT, autonomous vehicles, and smart city applications. Benefits for IoT include massive device connectivity, real-time data processing, and energy-efficient communication. For smart cities, 5G enables traffic management, environmental monitoring, and public safety systems. The technology supports up to 1 million devices per square kilometer with latency as low as 1 millisecond.",[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,38.23924255371094,2026-03-06T17:32:03.542007,106,63,True,,,
+gemini_2_5_flash_lite,How does blockchain technology ensure data security and transparency? Explain consensus mechanisms and use cases.,"Blockchain ensures data security and transparency through cryptographic hashing, distributed ledger technology, and consensus mechanisms that prevent tampering and ensure transparency. Consensus mechanisms include Proof of Work (Bitcoin), Proof of Stake (Ethereum 2.0), and Delegated Proof of Stake. Use cases include cryptocurrency, supply chain tracking, digital identity, smart contracts, and decentralized finance (DeFi). The technology provides immutability, transparency, and decentralization for secure data management.",[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,36.293641090393066,2026-03-06T17:32:46.841683,113,63,True,,,
 gemini_2_5_flash_lite,"Question: Which of the following is a group?
 
 Choices:
@@ -221,17 +215,7 @@ B) The set of all real numbers under multiplication
 C) The set of all positive integers under subtraction
 D) The set of all rational numbers under division
 
-Answer:",A,"To determine which of the given options is a group, we need to check if each option satisfies the four group axioms: closure, associativity, existence of an identity element, and existence of inverse elements.
-
-A) The set of all integers under addition ($\mathbb{Z}$, +)
-1. Closure: For any two integers $a$ and $b$, their sum $a+b$ is also an integer. This holds.
-2. Associativity: For any three integers $a$, $b$, and $c$, $(a+b)+c = a+(b+c)$. This holds.
-3. Identity element: The integer 0 is the additive identity, since $a+0 = 0+a = a$ for all integers $a$. This holds.
-4. Inverse element: For every integer $a$, there exists an integer $-a$ such that $a+(-a) = (-a)+a = 0$. This holds.
-Since all four axioms are satisfied, the set of all integers under addition is a group.
-
-B) The set of all real numbers under multiplication ($\mathbb{R}$, $\times$)
-1. Closure: For any two real numbers $a$ and $b$, their product",38.80536985397339,2026-03-05T20:47:23.336401,261,921,False,mmlu,abstract_algebra,mmlu_001
+Answer:",A,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.62743425369263,2026-03-06T17:33:31.474948,261,63,True,mmlu,abstract_algebra,mmlu_001
 gemini_2_5_flash_lite,"Question: What is the order of the group Z/6Z?
 
 Choices:
@@ -240,7 +224,7 @@ B) 6
 C) 12
 D) 36
 
-Answer:",B,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.38358283042908,2026-03-05T20:48:07.723490,87,63,True,mmlu,abstract_algebra,mmlu_002
+Answer:",B,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.63963794708252,2026-03-06T17:34:16.127403,87,63,True,mmlu,abstract_algebra,mmlu_002
 gemini_2_5_flash_lite,"Question: Which organ is responsible for filtering blood and removing waste products?
 
 Choices:
@@ -249,7 +233,7 @@ B) Kidney
 C) Heart
 D) Lungs
 
-Answer:",B,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.14270257949829,2026-03-05T20:48:51.883462,141,63,True,mmlu,anatomy,mmlu_003
+Answer:",B,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,36.8615026473999,2026-03-06T17:34:59.995284,141,63,True,mmlu,anatomy,mmlu_003
 gemini_2_5_flash_lite,"Question: What is the largest organ in the human body?
 
 Choices:
@@ -258,7 +242,7 @@ B) Liver
 C) Skin
 D) Lungs
 
-Answer:",C,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,36.9931435585022,2026-03-05T20:49:35.880880,108,63,True,mmlu,anatomy,mmlu_004
+Answer:",C,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.4283185005188,2026-03-06T17:35:44.429849,108,63,True,mmlu,anatomy,mmlu_004
 gemini_2_5_flash_lite,"Context: A man is sitting in a chair reading a book. The book is very interesting and he is completely absorbed in it.
 
 Question: What happens next?
@@ -269,7 +253,7 @@ B) He gets up and walks away
 C) He falls asleep
 D) He throws the book away
 
-Answer:",A,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,38.127718925476074,2026-03-05T20:50:21.014672,275,63,True,hellaswag,,hellaswag_001
+Answer:",A,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,38.13833165168762,2026-03-06T17:36:29.574237,275,63,True,hellaswag,,hellaswag_001
 gemini_2_5_flash_lite,"Context: A woman is cooking dinner in the kitchen. She is preparing pasta and the water is boiling on the stove.
 
 Question: What happens next?
@@ -280,7 +264,7 @@ B) She turns off the stove
 C) She leaves the kitchen
 D) She starts eating
 
-Answer:",A,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,36.914079904556274,2026-03-05T20:51:04.933110,278,63,True,hellaswag,,hellaswag_002
+Answer:",A,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,38.054221868515015,2026-03-06T17:37:14.634831,278,63,True,hellaswag,,hellaswag_002
 gemini_2_5_flash_lite,"Context: A child is playing with a ball in the backyard. The ball rolls under a bush and the child can't reach it.
 
 Question: What happens next?
@@ -291,4 +275,4 @@ B) The child gives up and goes inside
 C) The child starts crying
 D) The child finds another toy
 
-Answer:",A,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,37.62517976760864,2026-03-05T20:51:49.561149,314,63,True,hellaswag,,hellaswag_003
+Answer:",A,[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite,38.093040466308594,2026-03-06T17:37:59.733776,314,63,True,hellaswag,,hellaswag_003

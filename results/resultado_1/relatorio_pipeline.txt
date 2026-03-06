@@ -2,11 +2,11 @@
 RELATÓRIO DA PIPELINE - COLETA DE RESPOSTAS DAS APIs
 ================================================================================
 
-Data da Execução: 2026-03-05 21:11:43
-Tempo de Execução: 2274.15s
+Data da Execução: 2026-03-06 17:47:35
+Tempo de Execução: 1638.83s
 Total de Respostas: 189
-Respostas Válidas: 144
-Taxa de Erro: 23.8%
+Respostas Válidas: 166
+Taxa de Erro: 12.2%
 Modelos Testados: 7
 Prompts Executados: 27
 
@@ -17,50 +17,50 @@ llama3_8b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
-  Tempo Médio: 0.54s
-  Comprimento Médio: 981 chars
+  Tempo Médio: 0.53s
+  Comprimento Médio: 1010 chars
 
 llama3_70b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
-  Tempo Médio: 0.87s
-  Comprimento Médio: 1013 chars
+  Tempo Médio: 0.88s
+  Comprimento Médio: 1018 chars
 
 gpt_oss_20b:
   Total de Respostas: 27
-  Respostas Válidas: 20
-  Taxa de Sucesso: 74.1%
-  Tempo Médio: 0.44s
-  Comprimento Médio: 398 chars
+  Respostas Válidas: 24
+  Taxa de Sucesso: 88.9%
+  Tempo Médio: 0.46s
+  Comprimento Médio: 331 chars
 
 gpt_oss_120b:
   Total de Respostas: 27
   Respostas Válidas: 25
   Taxa de Sucesso: 92.6%
-  Tempo Médio: 0.65s
-  Comprimento Médio: 502 chars
+  Tempo Médio: 0.66s
+  Comprimento Médio: 451 chars
 
 qwen_32b:
   Total de Respostas: 27
   Respostas Válidas: 27
   Taxa de Sucesso: 100.0%
-  Tempo Médio: 0.84s
-  Comprimento Médio: 1280 chars
+  Tempo Médio: 0.80s
+  Comprimento Médio: 1275 chars
 
 gemini_2_5_flash_lite:
   Total de Respostas: 27
-  Respostas Válidas: 18
-  Taxa de Sucesso: 66.7%
-  Tempo Médio: 15.43s
-  Comprimento Médio: 1189 chars
+  Respostas Válidas: 17
+  Taxa de Sucesso: 63.0%
+  Tempo Médio: 14.81s
+  Comprimento Médio: 1207 chars
 
-gemini-2.0-flash-lite:
+gemini_3_flash_preview:
   Total de Respostas: 27
-  Respostas Válidas: 0
-  Taxa de Sucesso: 0.0%
-  Tempo Médio: 37.46s
-  Comprimento Médio: 0 chars
+  Respostas Válidas: 19
+  Taxa de Sucesso: 70.4%
+  Tempo Médio: 14.58s
+  Comprimento Médio: 52 chars
 
 OBSERVAÇÃO:
 Métricas acadêmicas (BLEU, ROUGE, BERTScore, EvidentlyAI) são calculadas na análise detalhada

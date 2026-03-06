@@ -3,382 +3,382 @@
     "total_erros": 60,
     "total_respostas": 189,
     "taxa_erro": 31.75,
-    "data_analise": "2026-03-05 21:59:07"
+    "data_analise": "2026-03-06 18:34:04"
   },
   "erros_por_modelo": {
     "gpt_oss_20b": {
       "Other Error": 7
     },
     "gpt_oss_120b": {
-      "Other Error": 1
+      "Other Error": 2
     },
     "gemini_2_5_flash_lite": {
-      "Rate Limit": 25
+      "Rate Limit": 24
     },
-    "gemini-2.0-flash-lite": {
+    "gemini_3_flash_preview": {
       "Rate Limit": 27
     }
   },
   "detalhes_erros": [
     {
       "modelo": "gpt_oss_20b",
-      "prompt": "Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...",
-      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.46610331535339355
-    },
-    {
-      "modelo": "gpt_oss_20b",
       "prompt": "Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de trei...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.43937063217163086
-    },
-    {
-      "modelo": "gpt_oss_20b",
-      "prompt": "Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.",
-      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.4364337921142578
+      "tempo": 0.4797217845916748
     },
     {
       "modelo": "gpt_oss_20b",
       "prompt": "Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.43528270721435547
+      "tempo": 0.636030912399292
     },
     {
       "modelo": "gpt_oss_20b",
-      "prompt": "How does artificial intelligence impact customer experience? Discuss specific applications and measu...",
+      "prompt": "Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o pr...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.4448368549346924
+      "tempo": 0.5442190170288086
+    },
+    {
+      "modelo": "gpt_oss_20b",
+      "prompt": "Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.",
+      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
+      "tempo": 0.46389341354370117
+    },
+    {
+      "modelo": "gpt_oss_20b",
+      "prompt": "What are the key factors for successful digital transformation? Provide a comprehensive framework wi...",
+      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
+      "tempo": 0.4742906093597412
     },
     {
       "modelo": "gpt_oss_20b",
       "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.6653814315795898
+      "tempo": 0.443922758102417
     },
     {
       "modelo": "gpt_oss_20b",
       "prompt": "How do neural networks process and learn from data? Describe the mathematical foundations and learni...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.46306681632995605
+      "tempo": 0.5044710636138916
     },
     {
       "modelo": "gpt_oss_120b",
-      "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
+      "prompt": "What are the latest developments in renewable energy technology? Focus on breakthrough innovations a...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_120b",
-      "tempo": 0.7635493278503418
+      "tempo": 0.7246613502502441
     },
     {
-      "modelo": "gemini_2_5_flash_lite",
-      "prompt": "Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.41930437088013
+      "modelo": "gpt_oss_120b",
+      "prompt": "Question: Which of the following is a group?\n\nChoices:\nA) The set of all integers under addition\nB) ...",
+      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_120b",
+      "tempo": 0.7312572002410889
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 36.9027624130249
+      "tempo": 37.23105716705322
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.51194143295288
+      "tempo": 37.38348197937012
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.58129572868347
+      "tempo": 37.772218227386475
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o pr...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.821489572525024
+      "tempo": 36.67145872116089
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptaçã...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.854066610336304
+      "tempo": 38.12816667556763
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.452200412750244
+      "tempo": 37.711642026901245
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.79466700553894
+      "tempo": 36.75550103187561
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "What are the key factors for successful digital transformation? Provide a comprehensive framework wi...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 38.11225414276123
+      "tempo": 37.64546322822571
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Explain the concept of disruptive innovation in business, including historical examples and current ...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.8660352230072
+      "tempo": 37.0719575881958
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "How does artificial intelligence impact customer experience? Discuss specific applications and measu...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 36.96556997299194
+      "tempo": 37.34794640541077
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.0641713142395
+      "tempo": 37.59947609901428
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Describe the future of e-commerce and online retail, including emerging technologies and consumer be...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 38.345778465270996
+      "tempo": 37.209601640701294
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Explain the principles of quantum computing and its potential applications in cryptography, optimiza...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.42601752281189
+      "tempo": 37.54294013977051
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "How do neural networks process and learn from data? Describe the mathematical foundations and learni...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.24802279472351
+      "tempo": 37.45012950897217
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "What are the latest developments in renewable energy technology? Focus on breakthrough innovations a...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.33035373687744
+      "tempo": 37.224984645843506
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Describe the impact of 5G technology on modern communication, including benefits for IoT and smart c...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.134785175323486
+      "tempo": 38.006351709365845
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "How does blockchain technology ensure data security and transparency? Explain consensus mechanisms a...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.495068311691284
+      "tempo": 37.234580755233765
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Question: Which of the following is a group?\n\nChoices:\nA) The set of all integers under addition\nB) ...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 38.065733671188354
+      "tempo": 37.87386679649353
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Question: What is the order of the group Z/6Z?\n\nChoices:\nA) 3\nB) 6\nC) 12\nD) 36\n\nAnswer:",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.759154081344604
+      "tempo": 37.21209359169006
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Question: Which organ is responsible for filtering blood and removing waste products?\n\nChoices:\nA) L...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.08266735076904
+      "tempo": 37.21133852005005
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Question: What is the largest organ in the human body?\n\nChoices:\nA) Brain\nB) Liver\nC) Skin\nD) Lungs\n...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.14025950431824
+      "tempo": 37.360649824142456
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Context: A man is sitting in a chair reading a book. The book is very interesting and he is complete...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 38.05457425117493
+      "tempo": 37.695648193359375
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Context: A woman is cooking dinner in the kitchen. She is preparing pasta and the water is boiling o...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 36.923083782196045
+      "tempo": 36.34268832206726
     },
     {
       "modelo": "gemini_2_5_flash_lite",
       "prompt": "Context: A child is playing with a ball in the backyard. The ball rolls under a bush and the child c...",
       "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
-      "tempo": 37.28849172592163
+      "tempo": 38.269033670425415
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "O que é inteligência artificial e como ela está transformando o mundo? Forneça uma explicação detalh...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.5239999294281
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.29742884635925
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 41.92762851715088
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.14227366447449
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de trei...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.02358961105347
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.73388743400574
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.655937910079956
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 36.70638394355774
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.87415647506714
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.63886380195618
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.26935815811157
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 38.008747577667236
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o pr...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.438082218170166
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 36.999847173690796
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptaçã...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.66795229911804
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 38.0389564037323
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.75646162033081
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.129070520401
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.578399658203125
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 36.886234283447266
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "What are the key factors for successful digital transformation? Provide a comprehensive framework wi...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.90998411178589
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.9213433265686
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Explain the concept of disruptive innovation in business, including historical examples and current ...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.6424822807312
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 38.4272403717041
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "How does artificial intelligence impact customer experience? Discuss specific applications and measu...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 38.0866322517395
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.80475974082947
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.81507587432861
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.41319155693054
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Describe the future of e-commerce and online retail, including emerging technologies and consumer be...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.18504595756531
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.5712308883667
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Explain the principles of quantum computing and its potential applications in cryptography, optimiza...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.431896686553955
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.47705960273743
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "How do neural networks process and learn from data? Describe the mathematical foundations and learni...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.66043305397034
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 36.79812812805176
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "What are the latest developments in renewable energy technology? Focus on breakthrough innovations a...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.959476709365845
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 38.046802282333374
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Describe the impact of 5G technology on modern communication, including benefits for IoT and smart c...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.504533767700195
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.414685010910034
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "How does blockchain technology ensure data security and transparency? Explain consensus mechanisms a...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.98542404174805
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 36.71717405319214
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Question: Which of the following is a group?\n\nChoices:\nA) The set of all integers under addition\nB) ...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.372780561447144
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.65669560432434
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Question: What is the order of the group Z/6Z?\n\nChoices:\nA) 3\nB) 6\nC) 12\nD) 36\n\nAnswer:",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.45952534675598
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.03120565414429
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Question: Which organ is responsible for filtering blood and removing waste products?\n\nChoices:\nA) L...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.66838550567627
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.438225507736206
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Question: What is the largest organ in the human body?\n\nChoices:\nA) Brain\nB) Liver\nC) Skin\nD) Lungs\n...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 36.990859031677246
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.26305675506592
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Context: A man is sitting in a chair reading a book. The book is very interesting and he is complete...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.124409437179565
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 36.93220400810242
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Context: A woman is cooking dinner in the kitchen. She is preparing pasta and the water is boiling o...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.86145877838135
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 37.192710876464844
     },
     {
-      "modelo": "gemini-2.0-flash-lite",
+      "modelo": "gemini_3_flash_preview",
       "prompt": "Context: A child is playing with a ball in the backyard. The ball rolls under a bush and the child c...",
-      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
-      "tempo": 37.20404267311096
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_3_flash_preview",
+      "tempo": 38.076664209365845
     }
   ]
 }

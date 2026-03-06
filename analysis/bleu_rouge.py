@@ -59,7 +59,9 @@ class BleuRougeCalculator:
             resposta_modelo = str(row.get('prediction', ''))
             
             # Verificar se é resposta inválida
-            if self._eh_resposta_invalida(resposta_modelo):
+            is_error_flag = bool(row.get('is_error', False)) if 'is_error' in df.columns else None
+            resposta_invalida = is_error_flag if is_error_flag is not None else self._eh_resposta_invalida(resposta_modelo)
+            if resposta_invalida:
                 if idx < 5:  # Debug para as primeiras 5 linhas
                     print(f"⚠️ Linha {idx} marcada como inválida: {resposta_modelo[:50]}...")
                 bleu_scores.append(0.0)
@@ -136,7 +138,10 @@ class BleuRougeCalculator:
             df_modelo = df[df['model'] == modelo]
             
             # Filtrar apenas respostas válidas
-            df_validas = df_modelo[~df_modelo['prediction'].apply(self._eh_resposta_invalida)]
+            if 'is_error' in df_modelo.columns:
+                df_validas = df_modelo[~df_modelo['is_error']]
+            else:
+                df_validas = df_modelo[~df_modelo['prediction'].apply(self._eh_resposta_invalida)]
             
             if len(df_validas) == 0:
                 metricas_por_modelo[modelo] = {

@@ -140,6 +140,8 @@ def testar_modelos_llm():
         # Carregar variáveis de ambiente
         load_dotenv()
         
+        total_modelos_configurados = len(AVAILABLE_MODELS)
+
         print("   📋 Modelos disponíveis:")
         print(f"   🔓 Open Source (Groq): {len(GROQ_MODELS)} modelos")
         for modelo in GROQ_MODELS.keys():
@@ -148,6 +150,7 @@ def testar_modelos_llm():
         print(f"   🔒 Proprietários (Gemini): {len(GEMINI_MODELS)} modelos")
         for modelo in GEMINI_MODELS.keys():
             print(f"      - {modelo}")
+        print(f"   📦 Total configurado no projeto: {total_modelos_configurados} modelos")
         
         # Pergunta simples para teste
         pergunta_teste = "What is Python programming language?"
@@ -200,6 +203,11 @@ def testar_modelos_llm():
         print(f"\n   📊 Resultado do teste:")
         print(f"   ✅ Modelos funcionando: {modelos_funcionando}/{modelos_testados}")
         print(f"   📈 Taxa de sucesso: {(modelos_funcionando/modelos_testados)*100:.1f}%")
+
+        if modelos_testados != total_modelos_configurados:
+            print(f"   ⚠️ Atenção: apenas {modelos_testados}/{total_modelos_configurados} modelos foram testados")
+        else:
+            print(f"   ✅ Cobertura de teste: {modelos_testados}/{total_modelos_configurados} modelos")
         
         if modelos_funcionando > 0:
             print("   🎉 Pelo menos um modelo está funcionando!")

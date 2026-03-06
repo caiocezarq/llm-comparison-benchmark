@@ -1,4 +1,4 @@
-# 🤖 Framework de Comparação de Modelos de Linguagem (LLMs)
+﻿# 🤖 Framework de Comparação de Modelos de Linguagem (LLMs)
 
 <p align="center">
   <a href="https://github.com/caiocezarq/llm-comparison-benchmark">
@@ -21,20 +21,19 @@
   </a>
 </p>
 
-Framework desenvolvido para **comparar e avaliar modelos de linguagem (LLMs)** de forma **objetiva**, utilizando **métricas acadêmicas**, **benchmarks padronizados** e **relatórios estruturados**.  
-Ideal para **artigos, dissertações e relatórios técnicos**.
+Framework para comparar e avaliar modelos de linguagem (LLMs) de forma objetiva, com métricas acadêmicas, benchmarks padronizados e relatórios estruturados.
 
 ---
 
 ## 🎯 Principais Recursos
 
-- Execução automatizada de modelos usando prompts padronizados
-- Cálculo de métricas: **BLEU**, **ROUGE**, **BERTScore**
-- Benchmarks: **MMLU** (conhecimento geral) e **HellaSwag** (senso comum)
-- Análise de distribuição e consistência com **EvidentlyAI**
-- Sistema de **ranking comparativo** (normalização min-max)
-- Relatórios **por modelo** + **consolidado final**
-- Estrutura modular com **reprodutibilidade garantida**
+- Execução automatizada de modelos com prompts padronizados
+- Cálculo de métricas: BLEU, ROUGE e BERTScore
+- Benchmarks: MMLU (conhecimento geral) e HellaSwag (senso comum)
+- Análise de qualidade e consistência com EvidentlyAI
+- Sistema de ranking comparativo com normalização min-max
+- Relatórios por modelo e relatório consolidado final
+- Estrutura modular e reprodutível
 
 ---
 
@@ -75,10 +74,10 @@ llm-comparison-benchmark/
 
 | Modelo | API | Categoria |
 |---|---|---|
-| **LLaMA 3.x** | Groq | Open Source |
-| **Qwen 3** | Groq | Open Source |
-| **GPT-OSS 20B / 120B** | Groq | Open Weight |
-| **Gemini Flash / Flash-Lite** | Google Generative AI | Proprietário |
+| LLaMA 3.x | Groq | Open Source |
+| Qwen 3 | Groq | Open Source |
+| GPT-OSS 20B / 120B | Groq | Open Weight |
+| Gemini 2.5 Flash-Lite / Gemini 3 Flash Preview | Google Generative AI | Proprietário |
 
 ---
 
@@ -143,11 +142,11 @@ python -m analysis.ranking_system
 
 | Tipo | Nome | Propósito |
 |---|---|---|
-| Similaridade Léxica | **BLEU / ROUGE** | Avalia proximidade linguística |
-| Similaridade Semântica | **BERTScore** | Mede equivalência de significado |
-| Conhecimento Geral | **MMLU** | Avalia entendimento multitarefa |
-| Raciocínio de Senso Comum | **HellaSwag** | Avalia coerência contextual |
-| Consistência de Texto | **EvidentlyAI** | Distribuição, drift e qualidade |
+| Similaridade Léxica | BLEU / ROUGE | Avalia proximidade linguística |
+| Similaridade Semântica | BERTScore | Mede equivalência de significado |
+| Conhecimento Geral | MMLU | Avalia entendimento multitarefa |
+| Raciocínio de Senso Comum | HellaSwag | Avalia coerência contextual |
+| Consistência de Texto | EvidentlyAI | Distribuição, drift e qualidade |
 
 ---
 
@@ -179,17 +178,17 @@ analysis/
 
 ## 🎓 Uso Acadêmico
 
-✔ Ideal para **artigos, dissertações e relatórios técnicos**  
-✔ Metodologia reprodutível  
-✔ Resultados exportáveis e citáveis  
-✔ Benchmarks amplamente utilizados na literatura
+✅ Ideal para artigos, dissertações e relatórios técnicos  
+✅ Metodologia reprodutível  
+✅ Resultados exportáveis e citáveis  
+✅ Benchmarks amplamente utilizados na literatura
 
 ---
 
 ## 📌 Observações Metodológicas
 
-- As métricas textuais (**BLEU/ROUGE/BERTScore**) são calculadas nos prompts abertos.
-- Os benchmarks (**MMLU/HellaSwag**) são analisados separadamente por acurácia.
+- As métricas textuais (BLEU/ROUGE/BERTScore) são calculadas nos prompts abertos.
+- Os benchmarks (MMLU/HellaSwag) são analisados separadamente por acurácia.
 - Recomenda-se interpretar resultados em múltiplas execuções e considerar logs de erro/rate limit.
 
 ---
@@ -202,10 +201,10 @@ git commit -m "Descrição clara"
 git push origin feature/minha-feature
 ```
 
-Depois é só abrir um **Pull Request**.
+Depois é só abrir um Pull Request.
 
 ---
 
 ## 📄 Licença
 
-Distribuído sob licença **MIT** — uso livre para fins acadêmicos e comerciais.
+Distribuído sob licença MIT, com uso livre para fins acadêmicos e comerciais.
