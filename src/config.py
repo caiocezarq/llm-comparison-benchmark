@@ -24,14 +24,16 @@ class Config:
     
     # Timeout entre perguntas durante a execução da pipeline (em segundos)
     TIMEOUT_ENTRE_PERGUNTAS = 3
+    # Delay adicional para modelos Gemini (reduz falhas por quota/rate limit)
+    TIMEOUT_ENTRE_PERGUNTAS_GEMINI_EXTRA = 4
     
     
     # =============================================================================
     # CONFIGURAÇÕES DE MODELOS
     # =============================================================================
     # Parâmetros padrão para geração de texto
-    MAX_TOKENS = 250
-    TEMPERATURE = 0.7
+    MAX_TOKENS = 256
+    TEMPERATURE = 0.2
     TOP_P = 1.0
     STREAM = False
     
@@ -181,6 +183,9 @@ class ConfigValidator:
         
         if Config.TIMEOUT_ENTRE_EXECUCOES < 0:
             raise ValueError("TIMEOUT_ENTRE_EXECUCOES deve ser >= 0")
+
+        if Config.TIMEOUT_ENTRE_PERGUNTAS_GEMINI_EXTRA < 0:
+            raise ValueError("TIMEOUT_ENTRE_PERGUNTAS_GEMINI_EXTRA deve ser >= 0")
         
     
     @staticmethod
@@ -199,6 +204,7 @@ class ConfigValidator:
         
         if not 0 <= Config.TOP_P <= 1:
             raise ValueError("TOP_P deve estar entre 0 e 1")
+
     
     @staticmethod
     def validate_api_config() -> None:

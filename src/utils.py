@@ -124,10 +124,10 @@ def save_analysis_files(df, metricas, folder_path):
     
     return analysis_path
 
-def generate_final_report(df, metricas, relatorios, execution_time, folder_path):
+def generate_detailed_report(df, metricas, relatorios, execution_time, folder_path):
     """
-    Gera relatório final consolidado com todos os resultados.
-    Relatório formatado para trabalhos acadêmicos.
+    Gera relatório detalhado consolidado com todos os resultados.
+    Mantido para análises acadêmicas complementares fora do fluxo principal da pipeline.
     """
     # Análise por domínio dos prompts
     prompts_pt_tech = df[df['prompt'].str.contains('inteligência artificial|machine learning|GPT|LLaMA|computação quântica', case=False)]
@@ -218,13 +218,13 @@ def generate_final_report(df, metricas, relatorios, execution_time, folder_path)
         ranking_geral = sorted(report["ranking_modelos"]["ranking_geral"].items(), key=lambda x: x[1], reverse=True)
         report["ranking_modelos"]["ranking_geral"] = ranking_geral
     
-    # Salva relatório em JSON
-    report_path = os.path.join(folder_path, "relatorio_final.json")
+    # Salva relatório detalhado em JSON
+    report_path = os.path.join(folder_path, "relatorio_detalhado.json")
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
     
-    # Salva relatório em texto formatado para trabalho acadêmico
-    txt_report_path = os.path.join(folder_path, "relatorio_final.txt")
+    # Salva relatório detalhado em texto formatado para trabalho acadêmico
+    txt_report_path = os.path.join(folder_path, "relatorio_detalhado.txt")
     with open(txt_report_path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
         f.write("RELATÓRIO FINAL - COMPARAÇÃO DE MODELOS DE LINGUAGEM\n")

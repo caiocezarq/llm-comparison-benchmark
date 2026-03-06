@@ -14,13 +14,22 @@ from datetime import datetime
 warnings.filterwarnings("ignore")
 logging.getLogger("groq").setLevel(logging.ERROR)
 
-from .models import ModelRunner, AVAILABLE_MODELS
-from .utils import save_results_csv, save_results_json, load_prompts, load_benchmark_prompts, get_next_result_folder, generate_final_report
+from .models import ModelRunner, AVAILABLE_MODELS, GEMINI_MODELS
+from .utils import save_results_csv, save_results_json, load_prompts, load_benchmark_prompts, get_next_result_folder
 from .config import get_config
 
 # Carregar configurações
 config = get_config()
 
+
+def _get_prompt_delay(model_key: str) -> float:
+    """
+    Delay entre prompts com pacing adicional para Gemini.
+    """
+    delay = float(config.TIMEOUT_ENTRE_PERGUNTAS)
+    if model_key in GEMINI_MODELS:
+        delay += float(getattr(config, "TIMEOUT_ENTRE_PERGUNTAS_GEMINI_EXTRA", 0))
+    return max(0.0, delay)
 
 def run_pipeline(api_key=None, model_keys=None, include_benchmarks=False):
     """
@@ -33,6 +42,7 @@ def run_pipeline(api_key=None, model_keys=None, include_benchmarks=False):
     """
     # Carregar prompts padrão
     prompts, references = load_prompts()
+    regular_prompt_count = len(prompts)
     benchmark_info = []
     
     # Adicionar prompts de benchmarks se solicitado
@@ -91,9 +101,10 @@ def run_pipeline(api_key=None, model_keys=None, include_benchmarks=False):
                 "is_error": prediction.startswith('[ERRO]')
             }
             
-            # Adicionar informações de benchmark se disponível
-            if i < len(benchmark_info):
-                result.update(benchmark_info[i])
+            # Metadados de benchmark aplicam-se apenas aos prompts de benchmark.
+            benchmark_index = i - regular_prompt_count
+            if 0 <= benchmark_index < len(benchmark_info):
+                result.update(benchmark_info[benchmark_index])
             else:
                 result['benchmark'] = None
                 result['subject'] = None
@@ -102,9 +113,10 @@ def run_pipeline(api_key=None, model_keys=None, include_benchmarks=False):
             all_results.append(result)
             
             # Timeout entre perguntas (exceto na última pergunta do modelo)
-            if i < len(prompts) - 1 and config.TIMEOUT_ENTRE_PERGUNTAS > 0:
-                print(f"    ⏳ Aguardando {config.TIMEOUT_ENTRE_PERGUNTAS}s antes da próxima pergunta...")
-                time.sleep(config.TIMEOUT_ENTRE_PERGUNTAS)
+            delay_seconds = _get_prompt_delay(model_key)
+            if i < len(prompts) - 1 and delay_seconds > 0:
+                print(f"    ⏳ Aguardando {delay_seconds}s antes da próxima pergunta...")
+                time.sleep(delay_seconds)
     
     # Criar DataFrame com encoding correto
     df = pd.DataFrame(all_results)
@@ -416,7 +428,7 @@ def main():
     # Avalia e exporta resultados
     metricas = evaluate_and_export(df, result_folder)
     
-    # Gera relatório final consolidado
+    # Gera relatório básico da coleta da pipeline
     report_json, report_txt = generate_final_report(df, metricas, {}, execution_time, result_folder)
     
     print("✅ Pipeline concluído!")
@@ -424,8 +436,8 @@ def main():
     print(f"📊 Arquivos gerados:")
     print(f"   - resultados_todos.csv")
     print(f"   - resultados_todos.json")
-    print(f"   - relatorio_final.json")
-    print(f"   - relatorio_final.txt")
+    print(f"   - relatorio_pipeline.json")
+    print(f"   - relatorio_pipeline.txt")
     for model in df["model"].unique():
         print(f"   - resultados_{model}.csv")
     
@@ -439,8 +451,8 @@ def main():
     print(f"   📊 Análise comparativa: analise_comparativa.csv")
     print(f"   🏆 Ranking dos modelos: ranking_modelos.csv")
     print(f"   📋 Resultados por modelo: resultados_[modelo].csv")
-    print(f"   📄 Relatório completo: relatorio_final.txt")
-    print(f"   🔍 Dados JSON: relatorio_final.json")
+    print(f"   📄 Relatório completo: relatorio_pipeline.txt")
+    print(f"   🔍 Dados JSON: relatorio_pipeline.json")
 
 
 if __name__ == "__main__":

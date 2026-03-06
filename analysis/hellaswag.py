@@ -37,15 +37,26 @@ class HellaSwagBenchmark(BaseBenchmark):
                 "correct_answers": 0
             }
         
-        # Calcular accuracy geral
+        # Accuracy global (inclui inv?lidas como erro)
         accuracy = self.calculate_accuracy(predictions, references)
-        correct_answers = sum(1 for p, r in zip(predictions, references) 
+        correct_answers = sum(1 for p, r in zip(predictions, references)
                              if self.validate_prediction(p, r))
+
+        # Accuracy apenas em respostas v?lidas + cobertura
+        valid_pairs = [(p, r) for p, r in zip(predictions, references) if not self.is_invalid_prediction(p)]
+        valid_answers = len(valid_pairs)
+        correct_valid_answers = sum(1 for p, r in valid_pairs if self.validate_prediction(p, r))
+        accuracy_valid_only = (correct_valid_answers / valid_answers) if valid_answers > 0 else 0.0
+        coverage = (valid_answers / len(predictions)) if len(predictions) > 0 else 0.0
         
         return {
             "accuracy": accuracy,
+            "accuracy_valid_only": accuracy_valid_only,
+            "coverage": coverage,
             "total_questions": len(predictions),
-            "correct_answers": correct_answers
+            "valid_answers": valid_answers,
+            "correct_answers": correct_answers,
+            "correct_valid_answers": correct_valid_answers
         }
     
     def format_prompt(self, question_data: Dict[str, Any]) -> str:
@@ -131,4 +142,4 @@ class HellaSwagBenchmark(BaseBenchmark):
         Returns:
             Lista de strings com nomes das métricas
         """
-        return ["accuracy", "total_questions", "correct_answers"]
+        return ["accuracy", "accuracy_valid_only", "coverage", "total_questions", "valid_answers", "correct_answers", "correct_valid_answers"]

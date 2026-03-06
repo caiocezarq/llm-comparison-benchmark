@@ -1,24 +1,28 @@
 # 🤖 Framework de Comparação de Modelos de Linguagem (LLMs)
 
 <p align="center">
-
-<a>
-  <img src="https://img.shields.io/badge/Status-Ativo-success?style=for-the-badge">
-</a>
-<a>
-  <img src="https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python&logoColor=white">
-</a>
-<a href="https://opensource.org/licenses/MIT">
-  <img src="https://img.shields.io/badge/Licença-MIT-yellow?style=for-the-badge">
-</a>
-<a>
-  <img src="https://img.shields.io/badge/EvidentlyAI-Enabled-purple?style=for-the-badge">
-</a>
-
+  <a href="https://github.com/caiocezarq/llm-comparison-benchmark">
+    <img src="https://img.shields.io/badge/Status-Ativo-success?style=for-the-badge" alt="Status Ativo">
+  </a>
+  <a href="https://www.python.org/downloads/">
+    <img src="https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.9+">
+  </a>
+  <a href="https://console.groq.com/docs/overview">
+    <img src="https://img.shields.io/badge/Groq-API-black?style=for-the-badge" alt="Groq API">
+  </a>
+  <a href="https://ai.google.dev/">
+    <img src="https://img.shields.io/badge/Google%20Generative%20AI-Gemini-orange?style=for-the-badge&logo=google&logoColor=white" alt="Google Generative AI">
+  </a>
+  <a href="https://docs.evidentlyai.com/">
+    <img src="https://img.shields.io/badge/EvidentlyAI-Enabled-purple?style=for-the-badge" alt="EvidentlyAI">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/Licença-MIT-yellow?style=for-the-badge" alt="Licença MIT">
+  </a>
 </p>
 
 Framework desenvolvido para **comparar e avaliar modelos de linguagem (LLMs)** de forma **objetiva**, utilizando **métricas acadêmicas**, **benchmarks padronizados** e **relatórios estruturados**.  
-Ideal para **pesquisa acadêmica**, **análise de performance** e **seleção de modelos para produção**.
+Ideal para **artigos, dissertações e relatórios técnicos**.
 
 ---
 
@@ -29,17 +33,17 @@ Ideal para **pesquisa acadêmica**, **análise de performance** e **seleção de
 - Benchmarks: **MMLU** (conhecimento geral) e **HellaSwag** (senso comum)
 - Análise de distribuição e consistência com **EvidentlyAI**
 - Sistema de **ranking comparativo** (normalização min-max)
-- Relatórios **por modelo** + **Consolidado final**
+- Relatórios **por modelo** + **consolidado final**
 - Estrutura modular com **reprodutibilidade garantida**
 
 ---
 
 ## 🧱 Arquitetura do Projeto
 
-```
+```text
 llm-comparison-benchmark/
 ├── main.py                     # Execução principal
-├── .env.example                # Exemplo de configuração
+├── env_example.txt             # Exemplo de configuração
 ├── requirements.txt            # Dependências
 │
 ├── src/
@@ -73,8 +77,8 @@ llm-comparison-benchmark/
 |---|---|---|
 | **LLaMA 3.x** | Groq | Open Source |
 | **Qwen 3** | Groq | Open Source |
-| **GPT-OSS 20B / 120B** | OpenAI | Open Weight |
-| **Gemini Flash / Flash-Lite** | Google AI | Proprietário |
+| **GPT-OSS 20B / 120B** | Groq | Open Weight |
+| **Gemini Flash / Flash-Lite** | Google Generative AI | Proprietário |
 
 ---
 
@@ -89,20 +93,31 @@ pip install -r requirements.txt
 Configurar chaves:
 
 ```bash
-cp .env.example .env
+cp env_example.txt .env
+```
+
+No Windows (PowerShell):
+
+```powershell
+Copy-Item env_example.txt .env
 ```
 
 Preencha:
 
-```
+```env
 GROQ_API_KEY=
-OPENAI_API_KEY=
-GOOGLE_API_KEY=
+GEMINI_API_KEY=
 ```
 
 ---
 
 ## 🚀 Como Executar
+
+Executar teste rápido do ambiente e modelos:
+
+```bash
+python teste_rapido.py
+```
 
 Executar pipeline completo:
 
@@ -138,25 +153,44 @@ python -m analysis.ranking_system
 
 ## 📁 Saídas do Sistema
 
-```
+```text
 results/
-└── resultado_YYYYMMDD_HHMMSS/
-    ├── respostas.csv
-    ├── metricas_normalizadas.json
-    ├── relatorio_consolidado.md
-    └── modelo_X/
-         ├── relatorio_individual.md
-         └── evidently_reports/*.html
+  resultado_N/
+    resultados_todos.csv
+    resultados_todos.json
+    resultados_[modelo].csv
+    relatorio_pipeline.json
+    relatorio_pipeline.txt
+```
+
+```text
+analysis/
+  analise_consolidada_YYYYMMDD_HHMMSS/
+    relatorio_consolidado.md
+    metricas_consolidadas.json
+    normalized_metrics.json
+    rankings.md
+    modelo_[nome]/
+      relatorio_[nome].md
+      evidently_reports/*.html
 ```
 
 ---
 
 ## 🎓 Uso Acadêmico
 
-✔ Ideal para **TCC, artigos, dissertações e relatórios técnicos**  
+✔ Ideal para **artigos, dissertações e relatórios técnicos**  
 ✔ Metodologia reprodutível  
 ✔ Resultados exportáveis e citáveis  
 ✔ Benchmarks amplamente utilizados na literatura
+
+---
+
+## 📌 Observações Metodológicas
+
+- As métricas textuais (**BLEU/ROUGE/BERTScore**) são calculadas nos prompts abertos.
+- Os benchmarks (**MMLU/HellaSwag**) são analisados separadamente por acurácia.
+- Recomenda-se interpretar resultados em múltiplas execuções e considerar logs de erro/rate limit.
 
 ---
 

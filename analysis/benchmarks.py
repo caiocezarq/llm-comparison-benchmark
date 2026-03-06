@@ -69,6 +69,23 @@ class BaseBenchmark:
         
         return pred_clean == ref_clean
     
+
+    def is_invalid_prediction(self, prediction: str) -> bool:
+        """
+        Identifica predi??o inv?lida por erro de API/conte?do vazio.
+        """
+        if prediction is None:
+            return True
+        pred = str(prediction).strip().lower()
+        if not pred:
+            return True
+        patterns = [
+            '[erro]', 'erro', 'error', 'timeout', 'rate limit', 'quota',
+            'authentication', 'unauthorized', 'not found', 'permission',
+            'blocked', 'safety', 'resposta vazia', 'nenhuma resposta'
+        ]
+        return any(p in pred for p in patterns)
+
     def calculate_accuracy(self, predictions: List[str], references: List[str]) -> float:
         """
         Calcula accuracy geral do benchmark.
@@ -122,4 +139,4 @@ class BaseBenchmark:
         Returns:
             Lista de strings com nomes das métricas
         """
-        return ["accuracy", "total_questions", "correct_answers"]
+        return ["accuracy", "accuracy_valid_only", "coverage", "total_questions", "valid_answers", "correct_answers", "correct_valid_answers"]

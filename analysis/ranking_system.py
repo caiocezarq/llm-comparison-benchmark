@@ -116,14 +116,16 @@ class RankingSystem:
                     # MMLU
                     if 'mmlu' in metricas['benchmarks']:
                         mmlu_data = metricas['benchmarks']['mmlu']
-                        metricas_benchmarks[modelo]['MMLU Accuracy'] = mmlu_data.get('accuracy', 0.0)
+                        metricas_benchmarks[modelo]['MMLU Accuracy'] = mmlu_data.get('accuracy_valid_only', mmlu_data.get('accuracy', 0.0))
+                        metricas_benchmarks[modelo]['MMLU Coverage'] = mmlu_data.get('coverage', 0.0)
                         metricas_benchmarks[modelo]['MMLU Total Questions'] = mmlu_data.get('total_questions', 0)
                         metricas_benchmarks[modelo]['MMLU Correct Answers'] = mmlu_data.get('correct_answers', 0)
                     
                     # HellaSwag
                     if 'hellaswag' in metricas['benchmarks']:
                         hellaswag_data = metricas['benchmarks']['hellaswag']
-                        metricas_benchmarks[modelo]['HellaSwag Accuracy'] = hellaswag_data.get('accuracy', 0.0)
+                        metricas_benchmarks[modelo]['HellaSwag Accuracy'] = hellaswag_data.get('accuracy_valid_only', hellaswag_data.get('accuracy', 0.0))
+                        metricas_benchmarks[modelo]['HellaSwag Coverage'] = hellaswag_data.get('coverage', 0.0)
                         metricas_benchmarks[modelo]['HellaSwag Total Questions'] = hellaswag_data.get('total_questions', 0)
                         metricas_benchmarks[modelo]['HellaSwag Correct Answers'] = hellaswag_data.get('correct_answers', 0)
         

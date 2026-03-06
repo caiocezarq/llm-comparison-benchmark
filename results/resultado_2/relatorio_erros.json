@@ -1,216 +1,384 @@
 {
   "resumo": {
-    "total_erros": 33,
+    "total_erros": 60,
     "total_respostas": 189,
-    "taxa_erro": 17.46,
-    "data_analise": "2025-11-11 21:32:10"
+    "taxa_erro": 31.75,
+    "data_analise": "2026-03-05 21:59:07"
   },
   "erros_por_modelo": {
     "gpt_oss_20b": {
-      "Other Error": 8
+      "Other Error": 7
+    },
+    "gpt_oss_120b": {
+      "Other Error": 1
+    },
+    "gemini_2_5_flash_lite": {
+      "Rate Limit": 25
     },
     "gemini-2.0-flash-lite": {
-      "Other Error": 25
+      "Rate Limit": 27
     }
   },
   "detalhes_erros": [
     {
       "modelo": "gpt_oss_20b",
-      "prompt": "O que é inteligência artificial e como ela está transformando o mundo? Forneça uma explicação detalh...",
+      "prompt": "Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.5029153823852539
+      "tempo": 0.46610331535339355
     },
     {
       "modelo": "gpt_oss_20b",
       "prompt": "Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de trei...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.44651222229003906
-    },
-    {
-      "modelo": "gpt_oss_20b",
-      "prompt": "Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.",
-      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.4328639507293701
+      "tempo": 0.43937063217163086
     },
     {
       "modelo": "gpt_oss_20b",
       "prompt": "Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.4812448024749756
+      "tempo": 0.4364337921142578
     },
     {
       "modelo": "gpt_oss_20b",
-      "prompt": "Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...",
+      "prompt": "Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.42938995361328125
+      "tempo": 0.43528270721435547
     },
     {
       "modelo": "gpt_oss_20b",
-      "prompt": "What are the key factors for successful digital transformation? Provide a comprehensive framework wi...",
+      "prompt": "How does artificial intelligence impact customer experience? Discuss specific applications and measu...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.4923281669616699
+      "tempo": 0.4448368549346924
+    },
+    {
+      "modelo": "gpt_oss_20b",
+      "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
+      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
+      "tempo": 0.6653814315795898
     },
     {
       "modelo": "gpt_oss_20b",
       "prompt": "How do neural networks process and learn from data? Describe the mathematical foundations and learni...",
       "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.42771244049072266
+      "tempo": 0.46306681632995605
     },
     {
-      "modelo": "gpt_oss_20b",
+      "modelo": "gpt_oss_120b",
+      "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
+      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_120b",
+      "tempo": 0.7635493278503418
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.41930437088013
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 36.9027624130249
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.51194143295288
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.58129572868347
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o pr...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.821489572525024
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptaçã...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.854066610336304
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.452200412750244
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.79466700553894
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "What are the key factors for successful digital transformation? Provide a comprehensive framework wi...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 38.11225414276123
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Explain the concept of disruptive innovation in business, including historical examples and current ...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.8660352230072
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "How does artificial intelligence impact customer experience? Discuss specific applications and measu...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 36.96556997299194
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.0641713142395
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Describe the future of e-commerce and online retail, including emerging technologies and consumer be...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 38.345778465270996
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Explain the principles of quantum computing and its potential applications in cryptography, optimiza...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.42601752281189
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "How do neural networks process and learn from data? Describe the mathematical foundations and learni...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.24802279472351
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "What are the latest developments in renewable energy technology? Focus on breakthrough innovations a...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.33035373687744
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Describe the impact of 5G technology on modern communication, including benefits for IoT and smart c...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.134785175323486
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
       "prompt": "How does blockchain technology ensure data security and transparency? Explain consensus mechanisms a...",
-      "erro": "[ERRO]: Resposta vazia do modelo gpt_oss_20b",
-      "tempo": 0.42466163635253906
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.495068311691284
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Question: Which of the following is a group?\n\nChoices:\nA) The set of all integers under addition\nB) ...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 38.065733671188354
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Question: What is the order of the group Z/6Z?\n\nChoices:\nA) 3\nB) 6\nC) 12\nD) 36\n\nAnswer:",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.759154081344604
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Question: Which organ is responsible for filtering blood and removing waste products?\n\nChoices:\nA) L...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.08266735076904
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Question: What is the largest organ in the human body?\n\nChoices:\nA) Brain\nB) Liver\nC) Skin\nD) Lungs\n...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.14025950431824
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Context: A man is sitting in a chair reading a book. The book is very interesting and he is complete...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 38.05457425117493
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Context: A woman is cooking dinner in the kitchen. She is preparing pasta and the water is boiling o...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 36.923083782196045
+    },
+    {
+      "modelo": "gemini_2_5_flash_lite",
+      "prompt": "Context: A child is playing with a ball in the backyard. The ball rolls under a bush and the child c...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini_2_5_flash_lite",
+      "tempo": 37.28849172592163
+    },
+    {
+      "modelo": "gemini-2.0-flash-lite",
+      "prompt": "O que é inteligência artificial e como ela está transformando o mundo? Forneça uma explicação detalh...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.5239999294281
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Explique a diferença entre machine learning e deep learning, incluindo casos de uso específicos para...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.30576181411743164
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 41.92762851715088
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Como funcionam os modelos de linguagem como GPT e LLaMA? Descreva a arquitetura e o processo de trei...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.3077054023742676
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.02358961105347
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Quais são os principais desafios éticos da IA? Discuta implicações sociais e possíveis soluções.",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.30899500846862793
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.655937910079956
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Descreva o conceito de computação quântica e suas aplicações práticas atuais e futuras.",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.29147815704345703
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.87415647506714
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Explique o impacto das mudanças climáticas na biodiversidade, incluindo exemplos específicos de espé...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.3032991886138916
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.26935815811157
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Como funciona a fotossíntese e por que é importante para a vida na Terra? Inclua detalhes sobre o pr...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.28239011764526367
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.438082218170166
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Descreva o processo de evolução das espécies, explicando os mecanismos de seleção natural e adaptaçã...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.2980794906616211
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.66795229911804
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Quais são as principais fontes de energia renovável? Compare vantagens e desvantagens de cada uma.",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.29568004608154297
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.75646162033081
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Explique o conceito de sustentabilidade corporativa e como as empresas podem implementá-la efetivame...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.2788360118865967
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.578399658203125
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "What are the key factors for successful digital transformation? Provide a comprehensive framework wi...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.32659220695495605
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.90998411178589
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Explain the concept of disruptive innovation in business, including historical examples and current ...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.2988893985748291
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.6424822807312
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "How does artificial intelligence impact customer experience? Discuss specific applications and measu...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.289104700088501
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 38.0866322517395
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "What are the main challenges of remote work management? Provide strategies and tools for effective r...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.3065164089202881
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.81507587432861
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Describe the future of e-commerce and online retail, including emerging technologies and consumer be...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.3037419319152832
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.18504595756531
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Explain the principles of quantum computing and its potential applications in cryptography, optimiza...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.31223583221435547
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.431896686553955
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "How do neural networks process and learn from data? Describe the mathematical foundations and learni...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.28874897956848145
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.66043305397034
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "What are the latest developments in renewable energy technology? Focus on breakthrough innovations a...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.30234575271606445
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.959476709365845
+    },
+    {
+      "modelo": "gemini-2.0-flash-lite",
+      "prompt": "Describe the impact of 5G technology on modern communication, including benefits for IoT and smart c...",
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.504533767700195
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "How does blockchain technology ensure data security and transparency? Explain consensus mechanisms a...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.31306910514831543
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.98542404174805
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Question: Which of the following is a group?\n\nChoices:\nA) The set of all integers under addition\nB) ...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.3012733459472656
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.372780561447144
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Question: What is the order of the group Z/6Z?\n\nChoices:\nA) 3\nB) 6\nC) 12\nD) 36\n\nAnswer:",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.279294490814209
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.45952534675598
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Question: Which organ is responsible for filtering blood and removing waste products?\n\nChoices:\nA) L...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.27568507194519043
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.66838550567627
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Question: What is the largest organ in the human body?\n\nChoices:\nA) Brain\nB) Liver\nC) Skin\nD) Lungs\n...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.28598618507385254
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 36.990859031677246
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Context: A man is sitting in a chair reading a book. The book is very interesting and he is complete...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.28154492378234863
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.124409437179565
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Context: A woman is cooking dinner in the kitchen. She is preparing pasta and the water is boiling o...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.2916719913482666
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.86145877838135
     },
     {
       "modelo": "gemini-2.0-flash-lite",
       "prompt": "Context: A child is playing with a ball in the backyard. The ball rolls under a bush and the child c...",
-      "erro": "[ERRO]: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details. (modelo: gemini-2.0-flash-lite)",
-      "tempo": 0.28101682662963867
+      "erro": "[ERRO]: Rate limit ou quota excedida para gemini-2.0-flash-lite",
+      "tempo": 37.20404267311096
     }
   ]
 }

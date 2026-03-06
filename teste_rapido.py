@@ -8,6 +8,12 @@ import sys
 import os
 from pathlib import Path
 
+# Evita erro de encoding no terminal Windows (cp1252) ao imprimir emojis/acentos
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 # Adicionar o diretório atual ao path (já estamos no diretório principal)
 sys.path.append(os.path.dirname(__file__))
 

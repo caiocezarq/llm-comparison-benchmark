@@ -12,6 +12,12 @@ from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 import json
 
+# Evita erro de encoding no terminal Windows (cp1252) ao imprimir emojis/acentos
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 # Adicionar o diretório pai ao path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.config import get_config
@@ -114,10 +120,71 @@ class AnalysisSystem:
                 print(f"✅ {modelo}: {len(dados_consolidados[modelo])} registros consolidados")
         
         return dados_consolidados
+
+    def _inferir_tipo_benchmark(self, prompt: str, reference: str) -> Optional[str]:
+        """
+        Infere o benchmark pelo formato do prompt e referência.
+        """
+        prompt_str = str(prompt or "").strip()
+        reference_str = str(reference or "").strip().upper()
+
+        # Benchmarks locais usam resposta de múltipla escolha (A/B/C/D).
+        if reference_str not in {"A", "B", "C", "D"}:
+            return None
+
+        # Prompt de benchmark sempre contém bloco de choices e termina com "Answer:".
+        has_choices = "Choices:" in prompt_str
+        ends_with_answer = prompt_str.rstrip().endswith("Answer:")
+        if not (has_choices and ends_with_answer):
+            return None
+
+        if prompt_str.startswith("Context:"):
+            return "hellaswag"
+        if prompt_str.startswith("Question:"):
+            return "mmlu"
+        return None
+
+    def _adicionar_contexto_benchmark(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Enriquecimento defensivo para identificar benchmarks mesmo quando o mapeamento
+        da coluna 'benchmark' da coleta estiver incorreto.
+        """
+        df_contexto = df.copy()
+
+        if 'prompt' not in df_contexto.columns:
+            df_contexto['prompt'] = ""
+        if 'reference' not in df_contexto.columns:
+            df_contexto['reference'] = ""
+
+        benchmark_inferido = df_contexto.apply(
+            lambda row: self._inferir_tipo_benchmark(row.get('prompt', ''), row.get('reference', '')),
+            axis=1
+        )
+
+        # Usa apenas inferência por estrutura de prompt para evitar contaminação por
+        # metadados antigos/incorretos na coluna "benchmark".
+        df_contexto['benchmark_final'] = benchmark_inferido
+
+        df_contexto['benchmark_final'] = df_contexto['benchmark_final'].where(
+            df_contexto['benchmark_final'].isin(['mmlu', 'hellaswag']),
+            np.nan
+        )
+        df_contexto['is_benchmark_prompt'] = df_contexto['benchmark_final'].notna()
+
+        return df_contexto
     
     def calcular_metricas_academicas(self, df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict, str]:
         """Calcula todas as métricas acadêmicas (BLEU, ROUGE, BERTScore)."""
         print("📊 Calculando métricas acadêmicas...")
+        df_contexto = self._adicionar_contexto_benchmark(df)
+        df_textual = df_contexto[~df_contexto['is_benchmark_prompt']].copy()
+
+        if df_textual.empty:
+            print("⚠️ Sem prompts textuais válidos para cálculo acadêmico")
+            for col in ['bleu_score', 'rouge1_score', 'rouge2_score', 'rougeL_score',
+                        'bertscore_precision', 'bertscore_recall', 'bertscore_f1']:
+                df_contexto[col] = 0.0
+            return df_contexto, {}, "Sem dados textuais para cálculo de métricas acadêmicas"
         
         # BLEU e ROUGE
         try:
@@ -128,10 +195,10 @@ class AnalysisSystem:
             from bleu_rouge import calcular_bleu_rouge_completo
         
         try:
-            df_bleu_rouge, metricas_bleu_rouge, relatorio_bleu_rouge = calcular_bleu_rouge_completo(df)
+            df_bleu_rouge, metricas_bleu_rouge, relatorio_bleu_rouge = calcular_bleu_rouge_completo(df_textual)
         except Exception as e:
             print(f"❌ Erro ao calcular BLEU/ROUGE: {e}")
-            return df, {}, "Erro ao calcular BLEU/ROUGE"
+            return df_contexto, {}, "Erro ao calcular BLEU/ROUGE"
         
         # BERTScore
         try:
@@ -145,22 +212,42 @@ class AnalysisSystem:
             df_bertscore, metricas_bertscore, relatorio_bertscore = calcular_bertscore_completo(df_bleu_rouge)
         except Exception as e:
             print(f"❌ Erro ao calcular BERTScore: {e}")
-            return df_bleu_rouge, metricas_bleu_rouge, relatorio_bleu_rouge
+            # Fallback: mantém BLEU/ROUGE e zera colunas de BERTScore
+            df_bertscore = df_bleu_rouge.copy()
+            df_bertscore['bertscore_precision'] = 0.0
+            df_bertscore['bertscore_recall'] = 0.0
+            df_bertscore['bertscore_f1'] = 0.0
+            relatorio_bertscore = f"BERTScore indisponível nesta execução: {e}"
+
+        # Reintegrar métricas no DataFrame completo (benchmarks ficam zerados).
+        df_completo = df_contexto.copy()
+        metric_cols = [
+            'bleu_score', 'rouge1_score', 'rouge2_score', 'rougeL_score',
+            'bertscore_precision', 'bertscore_recall', 'bertscore_f1'
+        ]
+        for col in metric_cols:
+            df_completo[col] = 0.0
+            if col in df_bertscore.columns:
+                df_completo.loc[df_bertscore.index, col] = df_bertscore[col].values
         
         # Calcular métricas agregadas por modelo
-        metricas_agregadas_dict = self._calcular_metricas_agregadas(df_bertscore)
+        metricas_agregadas_dict = self._calcular_metricas_agregadas(df_completo, apenas_textual=True)
         
         # Extrair métricas do modelo atual (assumindo que há apenas um modelo no DataFrame)
         if metricas_agregadas_dict:
-            modelo_atual = df_bertscore['model'].iloc[0]
+            modelo_atual = df_completo['model'].iloc[0]
             metricas_agregadas = metricas_agregadas_dict.get(modelo_atual, {})
         else:
             metricas_agregadas = {}
         
         # Combinar relatórios
-        relatorio_completo = f"{relatorio_bleu_rouge}\n\n{relatorio_bertscore}"
+        qtd_bench = int(df_contexto['is_benchmark_prompt'].sum())
+        relatorio_completo = (
+            f"{relatorio_bleu_rouge}\n\n{relatorio_bertscore}\n\n"
+            f"Observação: {qtd_bench} itens de benchmark foram excluídos das métricas textuais."
+        )
         
-        return df_bertscore, metricas_agregadas, relatorio_completo
+        return df_completo, metricas_agregadas, relatorio_completo
     
     def calcular_metricas_evidently(self, df: pd.DataFrame) -> Dict:
         """Calcula métricas do Evidently AI para cada modelo."""
@@ -235,7 +322,7 @@ class AnalysisSystem:
         # Excluir modelos com taxa de erro > 40%
         return taxa_erro > 0.4
     
-    def _calcular_metricas_agregadas(self, df: pd.DataFrame) -> Dict:
+    def _calcular_metricas_agregadas(self, df: pd.DataFrame, apenas_textual: bool = False) -> Dict:
         """Calcula métricas agregadas por modelo."""
         if 'model' not in df.columns:
             return {}
@@ -247,7 +334,23 @@ class AnalysisSystem:
             if self._eh_modelo_problematico(df, modelo):
                 print(f"⚠️ Modelo {modelo} tem alta taxa de erro - excluindo da análise principal")
                 continue
-            df_modelo = df[df['model'] == modelo]
+            df_modelo = df[df['model'] == modelo].copy()
+
+            if apenas_textual and 'is_benchmark_prompt' in df_modelo.columns:
+                df_modelo = df_modelo[~df_modelo['is_benchmark_prompt']]
+            
+            if len(df_modelo) == 0:
+                metricas_agregadas[modelo] = {
+                    'bleu_medio': 0.0,
+                    'rouge1_medio': 0.0,
+                    'rouge2_medio': 0.0,
+                    'rougeL_medio': 0.0,
+                    'bertscore_f1_medio': 0.0,
+                    'total_respostas': 0,
+                    'respostas_validas': 0,
+                    'taxa_validas': 0.0
+                }
+                continue
             
             # Filtrar apenas respostas válidas - usar campo is_error se disponível
             if self._usar_campo_is_error(df):
@@ -572,14 +675,10 @@ class AnalysisSystem:
         if not self.benchmarks:
             print("⚠️ Nenhum benchmark disponível")
             return {}
-        
-        # Verificar se há coluna benchmark no DataFrame
-        if 'benchmark' not in df.columns:
-            print("⚠️ Coluna 'benchmark' não encontrada no DataFrame")
-            return {}
-        
-        # Filtrar apenas linhas com benchmarks
-        df_benchmarks = df[df['benchmark'].notna()].copy()
+
+        # Reclassificação defensiva por formato para evitar erros de mapeamento da coleta.
+        df_contexto = self._adicionar_contexto_benchmark(df)
+        df_benchmarks = df_contexto[df_contexto['is_benchmark_prompt']].copy()
         
         if df_benchmarks.empty:
             print("⚠️ Nenhum dado de benchmark encontrado")
@@ -594,7 +693,7 @@ class AnalysisSystem:
                     # Filtrar dados do benchmark específico
                     df_benchmark = df_benchmarks[
                         (df_benchmarks['model'] == model) & 
-                        (df_benchmarks['benchmark'] == benchmark_name)
+                        (df_benchmarks['benchmark_final'] == benchmark_name)
                     ]
                     
                     if not df_benchmark.empty:
@@ -607,14 +706,20 @@ class AnalysisSystem:
                     else:
                         metricas_benchmarks[model][benchmark_name] = {
                             "accuracy": 0.0,
+                            "accuracy_valid_only": 0.0,
+                            "coverage": 0.0,
                             "total_questions": 0,
+                            "valid_answers": 0,
                             "correct_answers": 0
                         }
                 except Exception as e:
                     print(f"⚠️ Erro ao calcular métricas do benchmark {benchmark_name} para {model}: {e}")
                     metricas_benchmarks[model][benchmark_name] = {
                         "accuracy": 0.0,
+                        "accuracy_valid_only": 0.0,
+                        "coverage": 0.0,
                         "total_questions": 0,
+                        "valid_answers": 0,
                         "correct_answers": 0
                     }
         
@@ -656,7 +761,10 @@ class AnalysisSystem:
                 mmlu_data = metricas_benchmarks[modelo]['mmlu']
                 relatorio.append("### MMLU (Massive Multitask Language Understanding)")
                 relatorio.append(f"- **Accuracy**: {mmlu_data.get('accuracy', 0):.4f}")
+                relatorio.append(f"- **Accuracy (apenas válidas)**: {mmlu_data.get('accuracy_valid_only', mmlu_data.get('accuracy', 0)):.4f}")
+                relatorio.append(f"- **Coverage (respostas válidas)**: {mmlu_data.get('coverage', 0):.1%}")
                 relatorio.append(f"- **Total de Questões**: {mmlu_data.get('total_questions', 0)}")
+                relatorio.append(f"- **Respostas Válidas**: {mmlu_data.get('valid_answers', 0)}")
                 relatorio.append(f"- **Respostas Corretas**: {mmlu_data.get('correct_answers', 0)}")
                 
                 # Subjects específicos se disponível
@@ -671,7 +779,10 @@ class AnalysisSystem:
                 hellaswag_data = metricas_benchmarks[modelo]['hellaswag']
                 relatorio.append("### HellaSwag (Commonsense Reasoning)")
                 relatorio.append(f"- **Accuracy**: {hellaswag_data.get('accuracy', 0):.4f}")
+                relatorio.append(f"- **Accuracy (apenas válidas)**: {hellaswag_data.get('accuracy_valid_only', hellaswag_data.get('accuracy', 0)):.4f}")
+                relatorio.append(f"- **Coverage (respostas válidas)**: {hellaswag_data.get('coverage', 0):.1%}")
                 relatorio.append(f"- **Total de Questões**: {hellaswag_data.get('total_questions', 0)}")
+                relatorio.append(f"- **Respostas Válidas**: {hellaswag_data.get('valid_answers', 0)}")
                 relatorio.append(f"- **Respostas Corretas**: {hellaswag_data.get('correct_answers', 0)}")
                 relatorio.append("")
         
@@ -1015,21 +1126,17 @@ class AnalysisSystem:
             insights.append("❌ **Taxa de sucesso baixa**: {:.1f}% das respostas são válidas".format(taxa_sucesso))
         
         # Identificar melhor modelo por categoria
-        melhor_academico = None
         melhor_evidently = None
-        melhor_geral = None
         
         for modelo, metricas in metricas_por_modelo.items():
-            if 'academicas' in metricas:
-                score_acad = metricas['academicas'].get('score_composto', 0)
-                if melhor_academico is None or score_acad > melhor_academico[1]:
-                    melhor_academico = (modelo, score_acad)
-            
             if 'evidently' in metricas:
                 score_ev = metricas['evidently'].get('taxa_validas', 0)
                 if melhor_evidently is None or score_ev > melhor_evidently[1]:
                     melhor_evidently = (modelo, score_ev)
         
+        ranking_academico = self._calcular_ranking_modelos(metricas_por_modelo)
+        melhor_academico = ranking_academico[0] if ranking_academico else None
+
         if melhor_academico:
             insights.append("🏆 **Melhor modelo acadêmico**: {} (score: {:.3f})".format(
                 melhor_academico[0], melhor_academico[1]))

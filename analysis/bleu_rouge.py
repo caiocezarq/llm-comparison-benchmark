@@ -229,10 +229,10 @@ class BleuRougeCalculator:
         
         for modelo, metricas in modelos_ordenados:
             relatorio.append(f"### 🤖 {modelo}")
-            relatorio.append(f"- **BLEU Score**: {metricas['bleu_medio']:.4f} ± {metricas['bleu_std']:.4f}")
-            relatorio.append(f"- **ROUGE-1**: {metricas['rouge1_medio']:.4f} ± {metricas['rouge1_std']:.4f}")
-            relatorio.append(f"- **ROUGE-2**: {metricas['rouge2_medio']:.4f} ± {metricas['rouge2_std']:.4f}")
-            relatorio.append(f"- **ROUGE-L**: {metricas['rougeL_medio']:.4f} ± {metricas['rougeL_std']:.4f}")
+            relatorio.append(f"- **BLEU Score**: {metricas.get('bleu_medio', 0.0):.4f} ± {metricas.get('bleu_std', 0.0):.4f}")
+            relatorio.append(f"- **ROUGE-1**: {metricas.get('rouge1_medio', 0.0):.4f} ± {metricas.get('rouge1_std', 0.0):.4f}")
+            relatorio.append(f"- **ROUGE-2**: {metricas.get('rouge2_medio', 0.0):.4f} ± {metricas.get('rouge2_std', 0.0):.4f}")
+            relatorio.append(f"- **ROUGE-L**: {metricas.get('rougeL_medio', 0.0):.4f} ± {metricas.get('rougeL_std', 0.0):.4f}")
             relatorio.append(f"- **Respostas Válidas**: {metricas['respostas_validas']}/{metricas['total_respostas']} ({metricas['taxa_validas']:.1%})")
             relatorio.append("")
         

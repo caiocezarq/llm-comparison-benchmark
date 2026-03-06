@@ -64,8 +64,10 @@ class BertScoreCalculator:
         # Preparar referências
         referencias = []
         for idx in indices_validos:
-            row = df.iloc[idx]
-            referencias.append(str(row.get('reference', '')))
+            # Usa loc para preservar o índice original do DataFrame filtrado.
+            if idx in df.index:
+                row = df.loc[idx]
+                referencias.append(str(row.get('reference', '')))
         
         print(f"🔍 Calculando BERTScore para {len(respostas_validas)} respostas válidas...")
         
@@ -209,9 +211,9 @@ class BertScoreCalculator:
         
         for modelo, metricas in modelos_ordenados:
             relatorio.append(f"### 🤖 {modelo}")
-            relatorio.append(f"- **Precision**: {metricas['bertscore_precision_medio']:.4f} ± {metricas['bertscore_precision_std']:.4f}")
-            relatorio.append(f"- **Recall**: {metricas['bertscore_recall_medio']:.4f} ± {metricas['bertscore_recall_std']:.4f}")
-            relatorio.append(f"- **F1-Score**: {metricas['bertscore_f1_medio']:.4f} ± {metricas['bertscore_f1_std']:.4f}")
+            relatorio.append(f"- **Precision**: {metricas.get('bertscore_precision_medio', 0.0):.4f} ± {metricas.get('bertscore_precision_std', 0.0):.4f}")
+            relatorio.append(f"- **Recall**: {metricas.get('bertscore_recall_medio', 0.0):.4f} ± {metricas.get('bertscore_recall_std', 0.0):.4f}")
+            relatorio.append(f"- **F1-Score**: {metricas.get('bertscore_f1_medio', 0.0):.4f} ± {metricas.get('bertscore_f1_std', 0.0):.4f}")
             relatorio.append(f"- **Respostas Válidas**: {metricas['respostas_validas']}/{metricas['total_respostas']} ({metricas['taxa_validas']:.1%})")
             relatorio.append("")
         
