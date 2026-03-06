@@ -69,7 +69,7 @@ resultado_*/
 results/
 docs/
 *.csv
-analise_consolidada_*/
+#analise_consolidada_*/
 
 # Arquivos JSON específicos (manter prompts/)
 metricas_consolidadas.json
