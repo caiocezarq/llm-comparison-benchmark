@@ -1,4 +1,4 @@
-﻿# 🤖 Framework de Comparação de Modelos de Linguagem (LLMs)
+# 🤖 Framework de Comparação de Modelos de Linguagem (LLMs)
 
 <p align="center">
   <a href="https://github.com/caiocezarq/llm-comparison-benchmark">
@@ -21,7 +21,7 @@
   </a>
 </p>
 
-Framework para comparar e avaliar modelos de linguagem (LLMs) de forma objetiva, com métricas acadêmicas, benchmarks padronizados e relatórios estruturados.
+Framework para comparar e avaliar modelos de linguagem (LLMs) de forma objetiva, com métricas quantitativas, benchmarks padronizados e relatórios estruturados.
 
 ---
 
@@ -176,12 +176,12 @@ analysis/
 
 ---
 
-## 🎓 Uso Acadêmico
+## 💡 Aplicabilidade em Produto e Pesquisa
 
-✅ Ideal para artigos, dissertações e relatórios técnicos  
-✅ Metodologia reprodutível  
-✅ Resultados exportáveis e citáveis  
-✅ Benchmarks amplamente utilizados na literatura
+✅ Apoio à decisão na escolha de modelos (qualidade, consistência e trade-offs) para soluções de IA  
+✅ Metodologia reprodutível para validação de prompts e comparação entre modelos proprietários e open-weight  
+✅ Resultados exportáveis e citáveis para relatórios técnicos, de produto e científicos  
+✅ Benchmarks amplamente utilizados na literatura e na indústria
 
 ---
 
